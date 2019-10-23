@@ -38,8 +38,7 @@ public class ServerClient {
 
 	// write the content from a Json on a ServerClient socket
 	public void send(JSONObject json) {
-		try {
-			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());){
 			out.write(json.toString());
 			out.flush();
 		} catch (IOException e) {
@@ -50,8 +49,7 @@ public class ServerClient {
 	// read from a ServerClient socket and parse the content to a json
 	public JSONObject read() {
 		JSONObject json = null;
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
 			String inputString = in.readLine();
 			JSONParser parser = new JSONParser();
 			json = (JSONObject) parser.parse(inputString);
