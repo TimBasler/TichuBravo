@@ -23,7 +23,7 @@ public class ClientView {
 		lobbyScene.getStylesheets().add(getClass().getResource("lobbyStyle.css").toExternalForm());
 		this.lobbyView.setId("lobbyView");
 		
-		gameScene=new Scene(gameView);
+		gameScene=new Scene(gameView,1000,800);
 		gameScene.getStylesheets().add(getClass().getResource("gameStyle.css").toExternalForm());
 		
 		stage.setScene(lobbyScene);

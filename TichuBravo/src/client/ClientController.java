@@ -8,7 +8,7 @@ public class ClientController {
 		this.clientModel=clientModel;
 		this.clientView=clientView;
 		
-		clientView.lobbyView.button.setOnAction(e->{
+		clientView.lobbyView.loginButton.setOnAction(e->{
 			clientView.stage.setScene(clientView.gameScene);
 		});
 		

@@ -17,7 +17,6 @@ public class LobbyView  extends BorderPane {
 	protected Button loginButton;
 	protected VBox vBox;
 	
-	protected Button button; //Dieser Button ist nur noch zum testen der Scenenwechsel hier
 	
 	public LobbyView() {
 		this.userLabel=new Label("Username");
@@ -40,10 +39,6 @@ public class LobbyView  extends BorderPane {
 		this.vBox.getChildren().addAll(this.userLabel,this.userTextField,this.chooseLabel,this.teamOne,this.teamTwo,this.loginButton);
 		this.vBox.setAlignment(Pos.CENTER);
 		this.setCenter(this.vBox);
-	
-		this.button=new Button("wechlse ins Game");
-		this.setBottom(button);
-	
 	}
 
 }
