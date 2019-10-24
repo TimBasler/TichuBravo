@@ -40,5 +40,6 @@ public class LobbyView  extends BorderPane {
 		this.vBox.setAlignment(Pos.CENTER);
 		this.setCenter(this.vBox);
 	}
+	
 
 }
