@@ -1,5 +1,9 @@
 package client;
 
+/**
+ * @author Dominik
+ *
+ */
 public enum MsgType {
 	name, msg, turn, game;
 	

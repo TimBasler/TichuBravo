@@ -10,6 +10,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * @author Dominik
+ *
+ */
 public class ServerClient {
 
 	private String name;

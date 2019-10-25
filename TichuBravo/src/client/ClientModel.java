@@ -13,6 +13,10 @@ import org.json.simple.parser.ParseException;
 
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * @author Dominik
+ * 
+ */
 public class ClientModel {
 	protected Socket socket;
 	protected int portNr;

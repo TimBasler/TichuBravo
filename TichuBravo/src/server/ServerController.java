@@ -1,5 +1,9 @@
 package server;
 
+/**
+ * @author Dominik
+ *
+ */
 public class ServerController {
 	private ServerModel model;
 	private ServerView view;

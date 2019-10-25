@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
 
+/**
+ * @author Dominik
+ *
+ */
 public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;
