@@ -14,6 +14,9 @@ public class Deck {
 		createDeck();
 	}
 
+	/**
+	 * create all cards and shuffle them
+	 */
 	public void createDeck() {
 		//delete all cards from the list
 		cards.clear();
@@ -33,7 +36,10 @@ public class Deck {
 		Collections.shuffle(cards);
 	}
 	
-	// return a card as long as there is a card on the list
+	/**
+	 * return a card as long as there is a card on the list
+	 * @return card
+	 */
 	public Card deal() {
         Card card = (cards.size() > 0) ? cards.remove(cards.size()-1) : null;
         return card;

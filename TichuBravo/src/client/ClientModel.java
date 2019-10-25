@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -23,14 +25,19 @@ public class ClientModel {
 	protected String ip = null;
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
-	protected SimpleStringProperty sspTurn = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
+	protected ArrayList<String> turn = new ArrayList<>();
 
 	public ClientModel() {
 
 	}
-	
-	//create a socket and connect to the server with ip and port number
+
+	/**
+	 * create a socket and connect to the server with ip and port number
+	 * 
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public void connect() throws UnknownHostException, IOException {
 		// connection
 		socket = new Socket(ip, portNr);
@@ -47,7 +54,11 @@ public class ClientModel {
 		t.start();
 	}
 
-	// write the content from a Json on the socket
+	/**
+	 * write the content from a Json on the socket
+	 * 
+	 * @param json
+	 */
 	public void send(JSONObject json) {
 		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());) {
 			out.write(json.toString());
@@ -57,7 +68,11 @@ public class ClientModel {
 		}
 	}
 
-	// read from the socket and parse the content to a json
+	/**
+	 * read from the socket and parse the content to a json
+	 * 
+	 * @return
+	 */
 	public JSONObject read() {
 		JSONObject json = null;
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
@@ -70,7 +85,11 @@ public class ClientModel {
 		return json;
 	}
 
-	// depending on the type, the message will be stored at a different location
+	/**
+	 * depending on the type, the message will be stored at a different location
+	 * all cards with the key "turn" are saved in an arraylist
+	 * @param json
+	 */
 	public void saveInput(JSONObject json) {
 		if (json.containsKey(MsgType.name.toString())) {
 			sspName.set("");
@@ -81,8 +100,11 @@ public class ClientModel {
 			sspMsg.set((String) json.get(MsgType.msg.toString()));
 		}
 		if (json.containsKey(MsgType.turn.toString())) {
-			sspTurn.set("");
-			sspTurn.set((String) json.get(MsgType.turn.toString()));
+			turn.clear();
+			JSONArray list = (JSONArray) json.get(MsgType.turn.toString());
+			for (int i = 0; i < list.size(); i++) {
+				turn.add((String) list.get(i));
+			}
 		}
 		if (json.containsKey(MsgType.game.toString())) {
 			sspGame.set("");
@@ -90,14 +112,22 @@ public class ClientModel {
 		}
 	}
 
-	// create a Json object with a key and a value
+	/**
+	 * create a Json object with a key and a value
+	 * 
+	 * @param key
+	 * @param value
+	 * @return json
+	 */
 	public JSONObject createJson(String key, String value) {
 		JSONObject json = new JSONObject();
 		json.put(key, value);
 		return json;
 	}
 
-	// close the socket
+	/**
+	 * close the socket
+	 */
 	public void disconnect() {
 		if (socket != null) {
 			try {

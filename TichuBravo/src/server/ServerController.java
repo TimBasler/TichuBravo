@@ -8,6 +8,11 @@ public class ServerController {
 	private ServerModel model;
 	private ServerView view;
 
+	/**
+	 * 
+	 * @param model
+	 * @param view
+	 */
 	public ServerController(ServerModel model, ServerView view) {
 		this.view = view;
 		this.model = model;

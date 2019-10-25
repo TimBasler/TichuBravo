@@ -20,8 +20,14 @@ public class ServerClient {
 	private Socket socket;
 	private ServerModel model;
 
-	// constructor
-	// starts a threat for this object
+	/**
+	 * constructor
+	 * starts a threat for this object
+	 * 
+	 * @param socket
+	 * @param name
+	 * @param model
+	 */
 	public ServerClient(Socket socket, String name, ServerModel model) {
 		this.name = name;
 		this.socket = socket;
@@ -40,7 +46,10 @@ public class ServerClient {
 		t.start();
 	}
 
-	// write the content from a Json on a ServerClient socket
+	/**
+	 * write the content from a Json on a ServerClient socket
+	 * @param json
+	 */
 	public void send(JSONObject json) {
 		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());){
 			out.write(json.toString());
@@ -50,7 +59,10 @@ public class ServerClient {
 		}
 	}
 
-	// read from a ServerClient socket and parse the content to a json
+	/**
+	 * read from a ServerClient socket and parse the content to a json
+	 * @return
+	 */
 	public JSONObject read() {
 		JSONObject json = null;
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
@@ -68,7 +80,9 @@ public class ServerClient {
 		return this.socket;
 	}
 
-	// stop the socket
+	/**
+	 * stop the socket
+	 */
 	public void stop() {
 		try {
 			socket.close();
