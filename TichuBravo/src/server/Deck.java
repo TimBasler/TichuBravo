@@ -34,7 +34,7 @@ public class Deck {
 	}
 	
 	// return a card as long as there is a card on the list
-	public Card dealCard() {
+	public Card deal() {
         Card card = (cards.size() > 0) ? cards.remove(cards.size()-1) : null;
         return card;
     }
