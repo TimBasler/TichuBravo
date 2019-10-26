@@ -124,6 +124,22 @@ public class ClientModel {
 		json.put(key, value);
 		return json;
 	}
+	
+	/**
+	 * create Json with an array
+	 * @param key
+	 * @param strings
+	 * @return JSONObject
+	 */
+	public JSONObject createJsonArray(String key, String...strings) {
+		JSONObject json = new JSONObject();
+		JSONArray list = new JSONArray();
+		for (String s : strings) {
+			list.add(s);
+		}
+		json.put(key, list);
+		return json;
+	}
 
 	/**
 	 * close the socket
