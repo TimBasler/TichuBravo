@@ -6,49 +6,64 @@ package Common;
 
 public class Card implements Comparable<Card> {
 	
+	public enum SpezialCard{Dog,MahJong,Dragon,Phenix;
+		public String toString() {
+			String spezialCard="";
+			switch(this) {
+			case Dog:spezialCard="dog";break;
+			case MahJong:spezialCard="mahJong";break;
+			case Dragon:spezialCard="dragon";break;
+			case Phenix:spezialCard="phenix";break;
+			}
+			return spezialCard;
+		}
+	}
+	
 	public enum Suit{Stars,Swords,Jade,Pagodas;
 		public String toString() {
-			String Suit="";
+			String suit="";
 			switch(this) {
-			case Stars:Suit="stars";break;
-			case Swords:Suit="swords";break;
-			case Jade:Suit="jade";break;
-			case Pagodas:Suit="pagodas";break;
+			case Stars:suit="stars";break;
+			case Swords:suit="swords";break;
+			case Jade:suit="jade";break;
+			case Pagodas:suit="pagodas";break;
 			}
-			return Suit;
+			return suit;
 		}
 	};
 	
-	public enum Rank{Dog,MahJong,Two, Three, Four, Five, Six, Seven, Eight, Nine,Ten,Jack,Queen,King,Ace,Dragon,Phenix;
-		public String toString() {
-			String str="";
-			int ordinal=this.ordinal();
-			
-			if(ordinal==11) {
-				str="jack";
-			}else if(ordinal==12) {
-				str="queen";
-			}else if(ordinal==13) {
-				str="king";
-			}else if(ordinal==14) {
-				str="ace";
-			}else if(ordinal==15) {
-				str="dragon";
-			}else if(ordinal==16) {
-				str="phenix";
-			}else if(ordinal<=10) {
-				str=Integer.toString(ordinal);
-			}
-			return str;
-		}
-	};
+	 public enum Rank { Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace;
+	        @Override
+	        public String toString() {
+	            String str = "ace";  // Assume we have an ace, then cover all other cases
+	            // Get ordinal value, which ranges from 0 to 12
+	            int ordinal = this.ordinal();
+	            if (ordinal <= 8) {
+	                str = Integer.toString(ordinal+2);
+	            } else if (ordinal == 9) { // Jack
+	                str = "jack";
+	            } else if (ordinal == 10) { // Queen
+	                str = "queen";
+	            } else if (ordinal == 11) { // King
+	                str = "king";
+	            }
+	            return str;
+	        }
+	    };
 	
-	private final Rank rank;
-	private final Suit Suit;
+	 //Constructor for the "SpezialCards"
+	private SpezialCard spezialCard;
+	public Card(SpezialCard spezialCard) {
+		this.spezialCard=spezialCard;
+	}
 	
-	public Card(Rank rank,Suit Suit) {
+	
+	//Constructor for the "normal" Cards
+	private  Rank rank;
+	private  Suit suit;
+	public Card(Rank rank,Suit suit) {
 		this.rank=rank;
-		this.Suit=Suit;
+		this.suit=suit;
 	}
 	
 	public Rank getRank() {
@@ -56,11 +71,11 @@ public class Card implements Comparable<Card> {
 	}
 	
 	public Suit getSuit() {
-		return Suit;
+		return suit;
 	}
 	
 	public String toString() {
-		return rank.toString()+Suit.toString();
+		return rank.toString()+suit.toString();
 	}
 	
 	public int compareTo(Card otherCard) {
