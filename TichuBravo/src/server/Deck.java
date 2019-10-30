@@ -3,6 +3,8 @@ package server;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Common.Card;
+
 /**
  * @author Dominik
  *
@@ -23,12 +25,12 @@ public class Deck {
 		// create normal cards
 		for (Card.Suit suit : Card.Suit.values()) {
 			for (Card.Rank rank : Card.Rank.values()) {
-				Card card = new Card(suit, rank);
+				Card card = new Card(rank, suit);
 				cards.add(card);
 			}
 		}
 		// create special cards
-		for (Card.Special special : Card.Special.values()) {
+		for (Card.SpezialCard special : Card.SpezialCard.values()) {
 			Card card = new Card(special);
 			cards.add(card);
 		}
