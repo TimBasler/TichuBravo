@@ -1,0 +1,45 @@
+#teamOneLabel{
+	-fx-pref-width:80.0;
+	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-font-weight:bold;
+}
+
+#pointsOfTeamOneLabel{
+	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-font-weight:bold;
+}
+
+#teamTwoLabel{
+	-fx-pref-width:80.0;
+	-fx-pref-height:80.0;
+	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-font-weight:bold;
+}
+
+#pointsOfTeamTwoLabel{
+	-fx-pref-height:80.0;
+	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-font-weight:bold;
+}
+
+#chatTextArea{
+	-fx-pref-width:300.0;
+}
+
+#chatTextField{
+	-fx-pref-width:250.0;
+}
+
+#sendButton{
+	-fx-pref-width:50.0;
+	-fx-text-fill:rgb(255,255,255);
+	-fx-background-color:#000040;
+}
+#sendButton:hover{
+	-fx-background-color:pink;
+}
+
+#chatLabel{
+	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-font-weight:bold;
+}

@@ -18,6 +18,8 @@ public class ClientController {
 
 			clientView.lobbyView.loginButton.setOnAction(e -> {
 				this.isClicked++;
+				clientView.lobbyView.playerDefaultNumber++;
+				
 				
 				if(this.isClicked<5) {
 					if(this.isPlayerOneCounter>0) {

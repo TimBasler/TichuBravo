@@ -64,7 +64,7 @@ public enum HandType {
 		}
 		boolean secondPairIsOneBiggerThanFirstPair = false;
 		boolean secondPairIsOneSmalerThanFirstPair = false;
-		;
+		
 
 		boolean foundSecond = false;
 		for (int i = 0; i < clonedCards.size() - 1 && !foundSecond; i++) {

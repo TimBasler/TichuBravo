@@ -17,11 +17,13 @@ public class LobbyView  extends BorderPane {
 	protected Button loginButton;
 	protected VBox vBox;
 	
+	protected int playerDefaultNumber=1;
 	
 	public LobbyView() {
 		this.userLabel=new Label("Username");
 		this.userLabel.setId("userLabel");
 		this.userTextField=new TextField();
+		this.userTextField.setText("Player "+this.playerDefaultNumber);
 		this.userTextField.setId("textField");
 		this.chooseLabel=new Label("Choose your Team");
 		this.chooseLabel.setId("chooseLabel");
