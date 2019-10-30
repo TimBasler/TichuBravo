@@ -3,7 +3,8 @@ package client;
 //This Code is written by Tim
 
 import java.util.ArrayList;
-import Common.Card;
+
+import common.Card;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 

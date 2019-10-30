@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 
 //This class is written by Tim Basler

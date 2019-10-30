@@ -3,8 +3,8 @@ package client;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import Common.Card;
-import Common.Card.Suit;
+import common.Card;
+import common.Card.Suit;
 
 public enum HandType {
 	HighCard, OnePair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush;
