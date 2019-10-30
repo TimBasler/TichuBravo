@@ -7,12 +7,21 @@ import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
 
+/**
+ * @author Dominik
+ *
+ */
 public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;
 	public static ArrayList<ServerClient> clients = new ArrayList<>();
+	
 //TODO client name einlesen
-	// for each request create a ServerClient and add it to the list
+	
+	/**
+	 * for each request create a ServerClient and add it to the list
+	 * @param port
+	 */
 	public void serverStart(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
@@ -38,7 +47,9 @@ public class ServerModel {
 		}
 	}
 	
-	// stop each client and close the serverSocket
+		/**
+		 * stop each client and close the serverSocket
+		 */
 		public void stopServer() {
 			for (ServerClient sc : clients)
 				sc.stop();
@@ -52,7 +63,10 @@ public class ServerModel {
 			}
 		}
 
-	// send the received message to all clients
+	/**
+	 * send the received message to all clients
+	 * @param json
+	 */
 	public void broadcast(JSONObject json) {
 		for (ServerClient sc : clients) {
 			sc.send(json);

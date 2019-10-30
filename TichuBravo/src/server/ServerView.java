@@ -9,6 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * @author Dominik
+ *
+ */
 public class ServerView {
 	private Stage stage;
 	private ServerModel model;
@@ -17,6 +21,11 @@ public class ServerView {
 	protected Label portLabel;
 	protected TextField tfPort;
 
+	/**
+	 * create the GUI for the Server
+	 * @param stage
+	 * @param model
+	 */
 	public ServerView(Stage stage, ServerModel model) {
 		this.stage = stage;
 		this.model = model;
