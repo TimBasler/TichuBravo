@@ -1,10 +1,13 @@
 package client;
 
-//This Code is written by Tim
-
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * @author Tim
+ *
+ */
 public class ClientView {
 	protected Stage stage;
 	private ClientModel clientModel;
@@ -21,11 +24,11 @@ public class ClientView {
 		this.lobbyView=new LobbyView();
 		this.gameView=new GameView();
 		
-		lobbyScene=new Scene(lobbyView,1000,800);
+		lobbyScene=new Scene(lobbyView,1500,800);
 		lobbyScene.getStylesheets().add(getClass().getResource("lobbyStyle.css").toExternalForm());
 		this.lobbyView.setId("lobbyView");
 		
-		gameScene=new Scene(gameView,1000,800);
+		gameScene=new Scene(gameView,1500,800);
 		gameScene.getStylesheets().add(getClass().getResource("gameStyle.css").toExternalForm());
 		
 		stage.setScene(lobbyScene);

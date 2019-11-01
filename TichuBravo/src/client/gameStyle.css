@@ -1,23 +1,31 @@
+/*
+ * ChatView start
+ */
 #teamOneLabel{
 	-fx-pref-width:80.0;
 	-fx-text-fill:rgb(0.0,0.0,64.0);
 	-fx-font-weight:bold;
 }
 
-#pointsOfTeamOneLabel{
+#teamOneScoreLabel{
 	-fx-text-fill:rgb(0.0,0.0,64.0);
 	-fx-font-weight:bold;
 }
 
 #teamTwoLabel{
 	-fx-pref-width:80.0;
-	-fx-pref-height:80.0;
+	-fx-pref-height:600.0;
 	-fx-text-fill:rgb(0.0,0.0,64.0);
 	-fx-font-weight:bold;
 }
 
-#pointsOfTeamTwoLabel{
-	-fx-pref-height:80.0;
+#teamTwoScoreLabel{
+	-fx-pref-height:600.0;
+	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-font-weight:bold;
+}
+
+#chatLabel{
 	-fx-text-fill:rgb(0.0,0.0,64.0);
 	-fx-font-weight:bold;
 }
@@ -32,14 +40,86 @@
 
 #sendButton{
 	-fx-pref-width:50.0;
-	-fx-text-fill:rgb(255,255,255);
+	-fx-text-fill:rgb(255.0,255.0,255.0);
 	-fx-background-color:#000040;
 }
 #sendButton:hover{
 	-fx-background-color:pink;
 }
-
-#chatLabel{
-	-fx-text-fill:rgb(0.0,0.0,64.0);
+/*
+ * ChatView finish
+ */
+ 
+ 
+ /*
+ * ControlArea  start
+ */
+ #passButton{
+ 	-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
+ #confirmButton{
+ 	-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
+ #quitGameButton{
+ 	-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
+ #smallTichu{
+ 	-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
+ #grandTichu{
+ 	-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
+ #showRulesButton{
+ 		-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ #bottomPane{
+ 	-fx-border-color:red;
+ }
+ /*
+ * ControlArea finish
+ */
+ 
+ 
+ /*
+ * BoardView start
+ */
+#topLabel{
+	-fx-text-fill:rgb(255,0,0);
 	-fx-font-weight:bold;
+	-fx-font-size:1.5cm;
 }
+
+#leftLabel{
+	-fx-text-fill:rgb(255,0,0);
+	-fx-font-weight:bold;
+	-fx-font-size:1.5cm;
+}
+
+#rightLabel{
+	-fx-text-fill:rgb(255,0,0);
+	-fx-font-weight:bold;
+	-fx-font-size:1.5cm;
+}
+
+
+  /*
+ * BoardView finish
+ */
+

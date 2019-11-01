@@ -9,6 +9,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * @author Tim
+ *
+ */
 public class LobbyView  extends BorderPane {
 	protected Label userLabel,chooseLabel;
 	protected TextField userTextField;

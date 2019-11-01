@@ -1,13 +1,9 @@
 package client;
 
-import java.net.Socket;
-
-import org.json.simple.JSONObject;
-
-import server.ServerClient;
-
-//This Code is written by Tim
-
+/**
+ * @author Tim
+ *
+ */
 public class ClientController {
 	private ClientModel clientModel;
 	private ClientView clientView;
