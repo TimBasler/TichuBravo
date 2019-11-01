@@ -21,8 +21,8 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class ClientModel {
 	protected Socket socket;
-	protected int portNr;
-	protected String ip = null;
+	protected int portNr = 4444;
+	protected String ip = "localhost";
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
