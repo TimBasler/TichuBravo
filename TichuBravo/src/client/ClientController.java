@@ -16,15 +16,22 @@ public class ClientController {
 	private int isPlayerOneCounter = 0;
 	private int isPlayerTwoCounter = 0;
 
+	Player player;
+
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 
-		Player player = new Player();
+		
 
+		clientModel.sspName.addListener((o, oldValue, newValue) -> {
+			System.out.println(newValue);
+		});
+		
 		clientView.lobbyView.loginButton.setOnAction(e -> {
 
-			this.isClicked++;
+ /**
+  * this.isClicked++;
 			clientView.lobbyView.playerDefaultNumber++;
 
 			if (this.isClicked < 5) {
@@ -51,19 +58,29 @@ public class ClientController {
 				player.setIsTeamOne(isTeamOne);
 				clientView.stage.setScene(clientView.gameScene);
 
+  */
+			
+				player = new Player("name", true, 0, 1);
+
+				clientModel.send(clientModel.createJson(MsgType.name.toString(), player.toString()));
+			
+					
+				
 				// TODO Delete This
-				System.out.println(player);
-			} else {
-				clientView.lobbyView.userTextField.setDisable(true);
-				clientView.lobbyView.teamOne.setDisable(true);
-				clientView.lobbyView.teamOne.setDisable(true);
-			}
+				//System.out.println(player);
+//			} else {
+//				clientView.lobbyView.userTextField.setDisable(true);
+//				clientView.lobbyView.teamOne.setDisable(true);
+//				clientView.lobbyView.teamOne.setDisable(true);
+//			}
 		});
 
-		clientView.gameView.button.setOnAction(e -> {
-			clientView.stage.setScene(clientView.lobbyScene);
-		});
+	clientView.gameView.button.setOnAction(e->
 
-	}
+	{
+		clientView.stage.setScene(clientView.lobbyScene);
+	});
+
+}
 
 }

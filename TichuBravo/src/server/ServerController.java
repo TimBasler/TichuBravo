@@ -17,6 +17,10 @@ public class ServerController {
 		this.view = view;
 		this.model = model;
 		
+		this.model.stringP.addListener((o, oV, nV) ->{
+			view.textArea.appendText(nV);
+		});
+		
 		//read port number and start server
 		view.startBtn.setOnAction(e -> {
 			view.startBtn.setDisable(true);

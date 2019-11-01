@@ -29,7 +29,12 @@ public class ClientModel {
 	protected ArrayList<String> turn = new ArrayList<>();
 
 	public ClientModel() {
-
+		try {
+			connect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

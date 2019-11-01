@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
 
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  * @author Dominik
  *
@@ -15,6 +17,7 @@ public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;
 	public static ArrayList<ServerClient> clients = new ArrayList<>();
+	public SimpleStringProperty stringP = new SimpleStringProperty();
 	
 //TODO client name einlesen
 	
@@ -31,6 +34,7 @@ public class ServerModel {
 						try {
 							Socket socket = serverSocket.accept();
 							ServerClient c = new ServerClient(socket, "client ", ServerModel.this);
+							stringP.set("client");
 							clients.add(c);
 						} catch (IOException e) {
 							e.printStackTrace();
