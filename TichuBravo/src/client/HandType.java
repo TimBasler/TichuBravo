@@ -7,7 +7,11 @@ import common.Card;
 import common.Card.Suit;
 
 public enum HandType {
-	HighCard, OnePair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush;
+	HighCard, OnePair, Pairs, ThreeOfAKind, FullHouse, Straight, BombFourOfAKind, BombStraightFlush;
+
+	public static ArrayList<ArrayList<Card>> handTypeList = new ArrayList<ArrayList<Card>>(8);
+
+//	Dog, Mah Jong, 2,3,4,5,6,7,8,9,10,J,Q,K,A,Phenix,Dragon
 
 	public static HandType evaluateHand(ArrayList<Card> cards) {
 		HandType currentEval = HighCard;
@@ -32,15 +36,58 @@ public enum HandType {
 		return currentEval;
 	}
 
-	public static boolean isOnePair(ArrayList<Card> cards) {
+	private static boolean hasPhenix(ArrayList<Card> specialCards) {
 		boolean found = false;
-		for (int i = 0; i < cards.size() - 1 && !found; i++) {
-			for (int j = i + 1; j < cards.size() && !found; j++) {
-				if (cards.get(i).getRank() == cards.get(j).getRank())
-					found = true;
+		for (int i = 0; i < specialCards.size() && !found; i++) {
+			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.Phenix) {
+				found = true;
 			}
 		}
 		return found;
+	}
+
+	private static boolean hasDog(ArrayList<Card> specialCards) {
+		boolean found = false;
+		for (int i = 0; i < specialCards.size() && !found; i++) {
+			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.Dog) {
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	private static boolean hasMahJong(ArrayList<Card> specialCards) {
+		boolean found = false;
+		for (int i = 0; i < specialCards.size() && !found; i++) {
+			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.MahJong) {
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	private static boolean hasDragon(ArrayList<Card> specialCards) {
+		boolean found = false;
+		for (int i = 0; i < specialCards.size() && !found; i++) {
+			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.Dragon) {
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	public static void findPair(ArrayList<Card> cards, ArrayList<Card> specialCards) {
+		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+//		if (hasPhenix(specialCards)) return true;
+		for (int i = 0; i < clonedCards.size() - 1; i++) {
+			for (int j = i + 1; j < clonedCards.size(); j++) {
+				if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank())
+					handTypeList.get(1).add(clonedCards.get(i));
+				handTypeList.get(1).add(clonedCards.get(j));
+				clonedCards.remove(i);
+				clonedCards.remove(j+1);
+			}
+		}
 	}
 
 	// TwoPair
@@ -64,7 +111,6 @@ public enum HandType {
 		}
 		boolean secondPairIsOneBiggerThanFirstPair = false;
 		boolean secondPairIsOneSmalerThanFirstPair = false;
-		
 
 		boolean foundSecond = false;
 		for (int i = 0; i < clonedCards.size() - 1 && !foundSecond; i++) {
