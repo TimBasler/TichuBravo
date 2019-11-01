@@ -20,7 +20,7 @@ import javafx.beans.property.SimpleStringProperty;
  * 
  */
 public class ClientModel {
-	protected Socket socket;
+	private Socket socket;
 	protected int portNr = 4444;
 	protected String ip = "localhost";
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
@@ -65,6 +65,7 @@ public class ClientModel {
 	 * @param json
 	 */
 	public void send(JSONObject json) {
+		if (socket == null)System.out.println("socket = null - ClientModel");
 		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());) {
 			out.write(json.toString());
 			out.flush();

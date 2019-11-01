@@ -1,5 +1,7 @@
 package server;
 
+import javafx.collections.ListChangeListener;
+
 /**
  * @author Dominik
  *
@@ -17,9 +19,8 @@ public class ServerController {
 		this.view = view;
 		this.model = model;
 		
-		this.model.stringP.addListener((o, oV, nV) ->{
-			view.textArea.appendText(nV);
-		});
+		model.clients.addListener((ListChangeListener<? super ServerClient>) (e -> view.textArea.appendText("new client")));
+		
 		
 		//read port number and start server
 		view.startBtn.setOnAction(e -> {

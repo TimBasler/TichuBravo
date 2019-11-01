@@ -24,7 +24,7 @@ public class ClientView {
 		this.lobbyView=new LobbyView();
 		this.gameView=new GameView();
 		
-		lobbyScene=new Scene(lobbyView,1500,800);
+		lobbyScene=new Scene(lobbyView,800,800);
 		lobbyScene.getStylesheets().add(getClass().getResource("lobbyStyle.css").toExternalForm());
 		this.lobbyView.setId("lobbyView");
 		
