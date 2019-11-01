@@ -1,10 +1,13 @@
 package common;
 
 
-//This class is written by Tim Basler
 //the template of this class is the poker game written by Tim and Dominik
 //in the course of Bradley Richards
 
+/**
+ * @author Tim
+ *
+ */
 public class Card implements Comparable<Card> {
 
 	public enum SpezialCard {
@@ -13,16 +16,16 @@ public class Card implements Comparable<Card> {
 			String spezialCard = "";
 			switch (this) {
 			case Dog:
-				spezialCard = "dog";
+				spezialCard = "Dog";
 				break;
 			case MahJong:
-				spezialCard = "mahJong";
+				spezialCard = "MahJong";
 				break;
 			case Dragon:
-				spezialCard = "dragon";
+				spezialCard = "Dragon";
 				break;
 			case Phenix:
-				spezialCard = "phenix";
+				spezialCard = "Phenix";
 				break;
 			}
 			return spezialCard;
@@ -36,16 +39,16 @@ public class Card implements Comparable<Card> {
 			String suit = "";
 			switch (this) {
 			case Stars:
-				suit = "stars";
+				suit = "S";
 				break;
 			case Machete:
-				suit = "machete";
+				suit = "M";
 				break;
 			case Jade:
-				suit = "jade";
+				suit = "J";
 				break;
 			case Pagodas:
-				suit = "pagodas";
+				suit = "P";
 				break;
 			}
 			return suit;
@@ -56,17 +59,17 @@ public class Card implements Comparable<Card> {
 		Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace;
 		@Override
 		public String toString() {
-			String str = "ace"; // Assume we have an ace, then cover all other cases
+			String str = "A"; // Assume we have an ace, then cover all other cases
 			// Get ordinal value, which ranges from 0 to 12
 			int ordinal = this.ordinal();
 			if (ordinal <= 8) {
 				str = Integer.toString(ordinal + 2);
 			} else if (ordinal == 9) { // Jack
-				str = "jack";
+				str = "J";
 			} else if (ordinal == 10) { // Queen
-				str = "queen";
+				str = "Q";
 			} else if (ordinal == 11) { // King
-				str = "king";
+				str = "K";
 			}
 			return str;
 		}
@@ -95,7 +98,35 @@ public class Card implements Comparable<Card> {
 	 */
 	
 	public Card makeCard(String in) {
-		char r = in.charAt(0);
+		if(in.length()>2) {
+			Card.SpezialCard spezialCard=null;
+			switch (in){
+			case  "Phenix":
+				spezialCard=Card.SpezialCard.Phenix;
+				break;
+			case "Dog":
+				spezialCard = Card.SpezialCard.Dog;
+				break;
+			case "MahJong":
+				spezialCard= Card.SpezialCard.MahJong;
+				break;
+			case "dragon":
+				spezialCard= Card.SpezialCard.Dragon;
+			}
+		}
+		
+		char s = in.charAt(0);
+		Card.Suit suit = null;
+		if (s == 'J')
+			suit = Card.Suit.Jade;
+		if (s == 'P')
+			suit = Card.Suit.Pagodas;
+		if (s == 'S')
+			suit = Card.Suit.Stars;
+		if (s == 'M')
+			suit = Card.Suit.Machete;
+		
+		char r = in.charAt(1);
 		Card.Rank rank = null;
 		if (r <= '9')
 			rank = Card.Rank.values()[r - '0' - 2];
@@ -110,17 +141,7 @@ public class Card implements Comparable<Card> {
 		else if (r == 'A')
 			rank = Card.Rank.Ace;
 
-		char s = in.charAt(1);
-		Card.Suit suit = null;
-		if (s == 'J')
-			suit = Card.Suit.Jade;
-		if (s == 'P')
-			suit = Card.Suit.Pagodas;
-		if (s == 'S')
-			suit = Card.Suit.Stars;
-		if (s == 'M')
-			suit = Card.Suit.Machete;
-
+		
 		return new Card(rank, suit);
 	}
 

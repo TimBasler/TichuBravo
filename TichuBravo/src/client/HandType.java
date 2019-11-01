@@ -6,6 +6,10 @@ import java.util.Collections;
 import common.Card;
 import common.Card.Suit;
 
+/**
+ * @author Tim
+ *
+ */
 public enum HandType {
 	HighCard, OnePair, TwoPair, ThreeOfAKind, Straight, Flush, FullHouse, FourOfAKind, StraightFlush;
 

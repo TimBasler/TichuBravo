@@ -1,7 +1,10 @@
 package client;
 
-//This Code is written by Tim
 
+/**
+ * @author Tim
+ *
+ */
 public class ClientController {
 	private ClientModel clientModel;
 	private ClientView clientView;
