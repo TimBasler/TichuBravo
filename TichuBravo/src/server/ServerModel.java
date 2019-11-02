@@ -29,6 +29,7 @@ public class ServerModel {
 		try {
 			serverSocket = new ServerSocket(port);
 			Runnable r = new Runnable() {
+				@Override
 				public void run() {
 					while (!stop) {
 						try {
