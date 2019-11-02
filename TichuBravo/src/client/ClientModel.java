@@ -50,8 +50,7 @@ public class ClientModel {
 					// read and save the message
 					while (true) {
 						//sspMsg.set(read().toJSONString());
-						System.out.println(readString());
-						
+						saveInput(read());
 					}
 					
 				}
@@ -70,10 +69,9 @@ public class ClientModel {
 	 * @param json
 	 */
 	public void send(JSONObject json) {
-		if (socket == null)System.out.println("socket = null - ClientModel");
 		try {
 			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-			out.write(json.toString());
+			out.write(json.toString()+"\n");
 			out.flush();
 			
 		} catch (IOException e) {

@@ -21,6 +21,7 @@ public class ClientController {
 		this.clientView = clientView;
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
+			System.out.println(newValue);
 			clientView.gameView.chatView.chatTextArea.appendText(newValue);
 		});
 
@@ -45,7 +46,8 @@ public class ClientController {
 	});
 	
 	clientView.lobbyView.sendBtn.setOnAction(e -> {
-		clientModel.sendString("asdfkjöl");
+		//clientModel.sendString("asdfkjöl");
+		clientModel.send(clientModel.createJson(MsgType.msg.toString(), "Hallo aldaksjföl"));
 	});
 	
 	

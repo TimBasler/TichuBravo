@@ -40,9 +40,8 @@ public class ServerClient {
 			
 				
 				while (true) {
-						//model.broadcast(read());
-						String s = readString();
-						System.out.println(s);
+						model.broadcast(read());
+						//String s = readString();
 						//model.broadcastString(s);
 				}
 			
@@ -59,7 +58,7 @@ public class ServerClient {
 	public void send(JSONObject json) {
 		try {
 			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-			out.write(json.toString());
+			out.write(json.toString()+"\n");
 			out.flush();
 			
 		} catch (IOException e) {
