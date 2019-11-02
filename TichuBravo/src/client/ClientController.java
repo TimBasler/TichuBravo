@@ -22,7 +22,7 @@ public class ClientController {
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			System.out.println(newValue);
-			clientView.gameView.chatView.chatTextArea.appendText(newValue);
+			clientView.gameView.chatView.chatTextArea.appendText(newValue+"\n");
 		});
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
