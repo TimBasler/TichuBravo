@@ -65,10 +65,11 @@ public class ClientModel {
 	 * @param json
 	 */
 	public void send(JSONObject json) {
-		if (socket == null)System.out.println("socket = null - ClientModel");
-		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());) {
-			out.write(json.toString());
+		try {
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+			out.write(json.toJSONString()+"\n");
 			out.flush();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

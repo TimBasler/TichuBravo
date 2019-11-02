@@ -37,14 +37,12 @@ public class ServerModel {
 							clients.add(c);
 						} catch (IOException e) {
 							e.printStackTrace();
-							break;
 						}
 					}
 				}
 			};
 			Thread t = new Thread(r);
 			t.start();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

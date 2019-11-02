@@ -52,7 +52,7 @@ public class ServerClient {
 	 */
 	public void send(JSONObject json) {
 		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());){
-			out.write(json.toString());
+			out.write(json.toString()+"\n");
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,27 +64,15 @@ public class ServerClient {
 	 * @return
 	 */
 	public JSONObject read() {
-		if (socket.isClosed() ) System.out.println("socket = null - ServerClient");
 		JSONObject json = null;
 		String inputString = null;
-		
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // war in der klammer --- Problem!!
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			inputString = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("socket problem");
-		}
-		
-		
-		JSONParser parser = new JSONParser();
-		try {
+			JSONParser parser = new JSONParser();
 			json = (JSONObject) parser.parse(inputString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException | ParseException e) {
 			e.printStackTrace();
-			System.out.println("parser problem");
-			
 		}
 		return json;
 	}

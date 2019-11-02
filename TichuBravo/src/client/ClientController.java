@@ -21,7 +21,7 @@ public class ClientController {
 		
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
-			System.out.println(newValue);
+			System.out.println(newValue.toString());
 		});
 		
 		clientView.lobbyView.loginButton.setOnAction(e -> {
