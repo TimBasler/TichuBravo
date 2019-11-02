@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 
 import javafx.beans.property.SimpleStringProperty;
 
+
 /**
  * @author Dominik
  * 
@@ -29,12 +30,7 @@ public class ClientModel {
 	protected ArrayList<String> turn = new ArrayList<>();
 
 	public ClientModel() {
-		try {
-			connect();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	/**
@@ -43,20 +39,29 @@ public class ClientModel {
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
-	public void connect() throws UnknownHostException, IOException {
-		// connection
-		socket = new Socket(ip, portNr);
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				// read and save the message
-				while (true) {
-					saveInput(read());
+	public void connect() {
+		try {
+			// connection
+			socket = new Socket(ip, portNr);
+			Runnable r = new Runnable() {
+				@Override
+				public void run() {
+					
+					// read and save the message
+					while (true) {
+						//sspMsg.set(read().toJSONString());
+						System.out.println(readString());
+						
+					}
+					
 				}
-			}
-		};
-		Thread t = new Thread(r);
-		t.start();
+			};
+			Thread t = new Thread(r);
+			t.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -66,9 +71,22 @@ public class ClientModel {
 	 */
 	public void send(JSONObject json) {
 		if (socket == null)System.out.println("socket = null - ClientModel");
-		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());) {
+		try {
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
 			out.write(json.toString());
 			out.flush();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendString(String s) {
+		try {
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+			out.write(s + "\n");
+			out.flush();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -81,14 +99,27 @@ public class ClientModel {
 	 */
 	public JSONObject read() {
 		JSONObject json = null;
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String inputString = in.readLine();
+			
 			JSONParser parser = new JSONParser();
 			json = (JSONObject) parser.parse(inputString);
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
 		return json;
+	}
+	
+	public String readString() {
+		String inputString = null;
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			inputString = in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return inputString;
 	}
 
 	/**

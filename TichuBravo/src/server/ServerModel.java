@@ -29,6 +29,7 @@ public class ServerModel {
 		try {
 			serverSocket = new ServerSocket(port);
 			Runnable r = new Runnable() {
+				@Override
 				public void run() {
 					while (!stop) {
 						try {
@@ -37,7 +38,7 @@ public class ServerModel {
 							clients.add(c);
 						} catch (IOException e) {
 							e.printStackTrace();
-							break;
+							//break;
 						}
 					}
 				}
@@ -73,6 +74,12 @@ public class ServerModel {
 	public void broadcast(JSONObject json) {
 		for (ServerClient sc : clients) {
 			sc.send(json);
+		}
+	}
+	
+	public void broadcastString(String s) {
+		for (ServerClient sc : clients) {
+			sc.sendString(s);
 		}
 	}
 }

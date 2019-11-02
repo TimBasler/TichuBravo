@@ -37,9 +37,15 @@ public class ServerClient {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
+			
+				
 				while (true) {
-						model.broadcast(read());
+						//model.broadcast(read());
+						String s = readString();
+						System.out.println(s);
+						//model.broadcastString(s);
 				}
+			
 			}
 		};
 		Thread t = new Thread(r);
@@ -51,9 +57,22 @@ public class ServerClient {
 	 * @param json
 	 */
 	public void send(JSONObject json) {
-		try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());){
+		try {
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
 			out.write(json.toString());
 			out.flush();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendString(String s) {
+		try {
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+			out.write(s + "\n");
+			out.flush();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -71,6 +90,7 @@ public class ServerClient {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // war in der klammer --- Problem!!
 			inputString = in.readLine();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("socket problem");
@@ -87,6 +107,18 @@ public class ServerClient {
 			
 		}
 		return json;
+	}
+	
+	public String readString() {
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // war in der klammer --- Problem!!
+			String inputString = in.readLine();
+			return inputString;
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("socket problem");
+		}
+		return null;
 	}
 
 	//getter

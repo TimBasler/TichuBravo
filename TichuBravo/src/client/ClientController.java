@@ -1,5 +1,7 @@
 package client;
 
+import java.io.IOException;
+
 /**
  * @author Tim
  *
@@ -18,18 +20,37 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 
-		
+		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
+			clientView.gameView.chatView.chatTextArea.appendText(newValue);
+		});
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
 			System.out.println(newValue);
 		});
 		
-		clientView.lobbyView.loginButton.setOnAction(e -> {
-			clientModel.send(clientModel.createJson(MsgType.name.toString(), "blablabla"));
-		});
+		
 
 	clientView.gameView.button.setOnAction(e-> {
 		clientView.stage.setScene(clientView.lobbyScene);
+	});
+	
+	clientView.lobbyView.btnConnect.setOnAction( event -> {
+			clientModel.connect();
+	});
+	
+	clientView.gameView.chatView.sendButton.setOnAction(e -> {
+		
+		clientModel.send(clientModel.createJson(MsgType.msg.toString(), clientView.gameView.chatView.chatTextField.getText()));
+		
+	});
+	
+	clientView.lobbyView.sendBtn.setOnAction(e -> {
+		clientModel.sendString("asdfkjöl");
+	});
+	
+	
+	clientView.lobbyView.loginButton.setOnAction(e -> {
+		clientView.stage.setScene(clientView.gameScene);
 	});
 
 }
