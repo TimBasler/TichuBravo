@@ -103,6 +103,7 @@ public class Card implements Comparable<Card> {
 		return rank.toString() + suit.toString();
 	}
 
+	@Override
 	public int compareTo(Card otherCard) {
 		if (this.specialCard == null) {
 			if (rank.ordinal() == otherCard.rank.ordinal()) {

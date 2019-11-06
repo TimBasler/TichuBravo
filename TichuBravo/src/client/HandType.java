@@ -13,6 +13,10 @@ public enum HandType {
 	public static ArrayList<ArrayList<Card>> handTypeList = new ArrayList<ArrayList<Card>>(8);
 	// 1.Array = 2Pairs in a row, 2.Array = 3Pairs in a row, etc...
 	public static ArrayList<ArrayList<Card>> pairsInARow = new ArrayList<ArrayList<Card>>(6);
+	// each straight is in an arrayList
+	public static ArrayList<ArrayList<Card>> straightList = new ArrayList<ArrayList<Card>>();
+
+	public static ArrayList<ArrayList<Card>> bombList = new ArrayList<ArrayList<Card>>();
 
 //	Dog, Mah Jong, 2,3,4,5,6,7,8,9,10,J,Q,K,A,Phenix,Dragon
 
@@ -90,19 +94,18 @@ public enum HandType {
 					clonedCards.remove(i);
 					clonedCards.remove(j + 1);
 					i = 0;
-					j = 0; 
+					j = 0;
 				}
 			}
 		}
 	}
 
 	/**
-	 * if 7 pairs in a row, safe it in "pairsInARow" on sixth place
-	 * if 6 pairs in a row, safe it in "pairsInARow" on fifth place
-	 * if 5 pairs in a row, safe it in "pairsInARow" on fourth place
-	 *  if 4 pairs in a row, safe it in "pairsInARow" on third place
-	 *  if 3 pairs in a row, safe it in "pairsInARow" on second place
-	 *  if 2 pairs in a row, safe it in "pairsInARow" on first place (index 0)
+	 * if 7 pairs in a row, safe it in "pairsInARow" on sixth place if 6 pairs in a
+	 * row, safe it in "pairsInARow" on fifth place if 5 pairs in a row, safe it in
+	 * "pairsInARow" on fourth place if 4 pairs in a row, safe it in "pairsInARow"
+	 * on third place if 3 pairs in a row, safe it in "pairsInARow" on second place
+	 * if 2 pairs in a row, safe it in "pairsInARow" on first place (index 0)
 	 */
 	public static void findPairsInARow() {
 		ArrayList<Card> c = (ArrayList<Card>) handTypeList.get(1).clone();
@@ -174,62 +177,44 @@ public enum HandType {
 			}
 		}
 
-	} //end of method pairs
+	} // end of method pairs
 
 	/**
-	// TwoPair
-	private static int ordinal;
-
-	public static boolean isTwoPair(ArrayList<Card> cards) {
-		// Clone the cards, because we will be altering the list
-		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
-
-		// Find the first pair; if found, remove the cards from the list
-		boolean firstPairFound = false;
-		for (int i = 0; i < clonedCards.size() - 1 && !firstPairFound; i++) {
-			for (int j = i + 1; j < clonedCards.size() && !firstPairFound; j++) {
-				if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) {
-					ordinal = clonedCards.get(i).getRank().ordinal();
-					firstPairFound = true;
-					clonedCards.remove(j); // Remove the later card
-					clonedCards.remove(i); // Before the earlier one
-				}
-			}
-		}
-		boolean secondPairIsOneBiggerThanFirstPair = false;
-		boolean secondPairIsOneSmalerThanFirstPair = false;
-
-		boolean foundSecond = false;
-		for (int i = 0; i < clonedCards.size() - 1 && !foundSecond; i++) {
-			for (int j = i + 1; j < clonedCards.size() && !foundSecond; j++) {
-
-				if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank())
-					foundSecond = true;
-				int ordinalSecond = clonedCards.get(i).getRank().ordinal();
-				ordinal++;
-				if (ordinal == ordinalSecond) {
-					secondPairIsOneSmalerThanFirstPair = true;
-					secondPairIsOneBiggerThanFirstPair = true;
-				} else {
-					foundSecond = false;
-				}
-				ordinal--;
-				ordinal--;
-				if (ordinal == ordinalSecond) {
-					secondPairIsOneBiggerThanFirstPair = true;
-					secondPairIsOneSmalerThanFirstPair = true;
-				} else {
-					foundSecond = false;
-				}
-			}
-
-		}
-		return foundSecond;
-	}
-	*/
+	 * // TwoPair private static int ordinal;
+	 * 
+	 * public static boolean isTwoPair(ArrayList<Card> cards) { // Clone the cards,
+	 * because we will be altering the list ArrayList<Card> clonedCards =
+	 * (ArrayList<Card>) cards.clone();
+	 * 
+	 * // Find the first pair; if found, remove the cards from the list boolean
+	 * firstPairFound = false; for (int i = 0; i < clonedCards.size() - 1 &&
+	 * !firstPairFound; i++) { for (int j = i + 1; j < clonedCards.size() &&
+	 * !firstPairFound; j++) { if (clonedCards.get(i).getRank() ==
+	 * clonedCards.get(j).getRank()) { ordinal =
+	 * clonedCards.get(i).getRank().ordinal(); firstPairFound = true;
+	 * clonedCards.remove(j); // Remove the later card clonedCards.remove(i); //
+	 * Before the earlier one } } } boolean secondPairIsOneBiggerThanFirstPair =
+	 * false; boolean secondPairIsOneSmalerThanFirstPair = false;
+	 * 
+	 * boolean foundSecond = false; for (int i = 0; i < clonedCards.size() - 1 &&
+	 * !foundSecond; i++) { for (int j = i + 1; j < clonedCards.size() &&
+	 * !foundSecond; j++) {
+	 * 
+	 * if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) foundSecond
+	 * = true; int ordinalSecond = clonedCards.get(i).getRank().ordinal();
+	 * ordinal++; if (ordinal == ordinalSecond) { secondPairIsOneSmalerThanFirstPair
+	 * = true; secondPairIsOneBiggerThanFirstPair = true; } else { foundSecond =
+	 * false; } ordinal--; ordinal--; if (ordinal == ordinalSecond) {
+	 * secondPairIsOneBiggerThanFirstPair = true; secondPairIsOneSmalerThanFirstPair
+	 * = true; } else { foundSecond = false; } }
+	 * 
+	 * } return foundSecond; }
+	 */
 
 	/**
-	 * search for three of a kind and add it to handTypeList on fourth place (index 3)
+	 * search for three of a kind and add it to handTypeList on fourth place (index
+	 * 3)
+	 * 
 	 * @param cards
 	 */
 	public static void findThreeOfAKind(ArrayList<Card> cards) {
@@ -238,8 +223,8 @@ public enum HandType {
 		for (int i = 0; i < clonedCards.size() - 2; i++) {
 			for (int j = i + 1; j < clonedCards.size() - 1; j++) {
 				for (int k = j + 1; k < clonedCards.size(); k++) {
-					if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank() &&
-							clonedCards.get(j).getRank() == clonedCards.get(k).getRank()) {
+					if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank()
+							&& clonedCards.get(j).getRank() == clonedCards.get(k).getRank()) {
 						handTypeList.get(3).add(clonedCards.get(i));
 						handTypeList.get(3).add(clonedCards.get(j));
 						handTypeList.get(3).add(clonedCards.get(k));
@@ -247,50 +232,229 @@ public enum HandType {
 						clonedCards.remove(j + 1);
 						clonedCards.remove(k + 2);
 						i = 0;
-						j = 0; 
+						j = 0;
 						k = 0;
 					}
 				}
 			}
 		}
 	}
-	
-	/**
-	public static boolean isThreeOfAKind(ArrayList<Card> cards) {
-		boolean found = false;
-		for (int i = 0; i < cards.size() - 2 && !found; i++) {
-			for (int j = i + 1; j < cards.size() - 1 && !found; j++) {
-				for (int k = j + 1; k < cards.size() && !found; k++) {
 
-					if ((cards.get(i).getRank() == cards.get(j).getRank())
-							&& (cards.get(i).getRank() == cards.get(k).getRank()))
-						found = true;
+	/**
+	 * public static boolean isThreeOfAKind(ArrayList<Card> cards) { boolean found =
+	 * false; for (int i = 0; i < cards.size() - 2 && !found; i++) { for (int j = i
+	 * + 1; j < cards.size() - 1 && !found; j++) { for (int k = j + 1; k <
+	 * cards.size() && !found; k++) {
+	 * 
+	 * if ((cards.get(i).getRank() == cards.get(j).getRank()) &&
+	 * (cards.get(i).getRank() == cards.get(k).getRank())) found = true; } } }
+	 * return found; }
+	 */
+
+	public static void findStraight(ArrayList<Card> cards) {
+		ArrayList<Card> sortList = (ArrayList<Card>) cards.clone();
+		Collections.sort(sortList);
+
+		// delete all cards with the same rank
+		for (int i = 0; i < sortList.size() - 1; i++) {
+			for (int j = i + 1; j < sortList.size(); j++) {
+				if (sortList.get(i).getRank() == sortList.get(j).getRank()) {
+					sortList.remove(j);
+					i = 0;
+					j = 0;
 				}
 			}
 		}
-		return found;
-	}
-	*/
 
-	public static boolean isStraight(ArrayList<Card> cards) {
-		ArrayList<Card> sortList = cards;
-		Collections.sort(sortList);
-		// 5 in a row
-		if (sortList.get(0).getRank().ordinal() + 1 == sortList.get(1).getRank().ordinal()
-				&& sortList.get(1).getRank().ordinal() + 1 == sortList.get(2).getRank().ordinal()
-				&& sortList.get(2).getRank().ordinal() + 1 == sortList.get(3).getRank().ordinal()
-				&& sortList.get(3).getRank().ordinal() + 1 == sortList.get(4).getRank().ordinal()) {
-			return true;
-		} else {
-			// Ace as first card Ace, 2, 3, 4, 5
-			if (sortList.get(0).getRank().ordinal() == 0 && sortList.get(1).getRank().ordinal() == 1
-					&& sortList.get(2).getRank().ordinal() == 2 && sortList.get(3).getRank().ordinal() == 3
-					&& sortList.get(4).getRank().ordinal() == 12) {
-				return true;
-			} else
-				return false;
+		// 13 in a row
+		for (int i = 0; i < 2; i++) {
+			if (sortList.get(i + 12) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()
+					&& sortList.get(i + 9).getRank().ordinal() + 1 == sortList.get(i + 10).getRank().ordinal()
+					&& sortList.get(i + 10).getRank().ordinal() + 1 == sortList.get(i + 11).getRank().ordinal()
+					&& sortList.get(i + 11).getRank().ordinal() + 1 == sortList.get(i + 12).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 13; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
 		}
+
+		// 12 in a row
+		for (int i = 0; i < 3; i++) {
+			if (sortList.get(i + 11) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()
+					&& sortList.get(i + 9).getRank().ordinal() + 1 == sortList.get(i + 10).getRank().ordinal()
+					&& sortList.get(i + 10).getRank().ordinal() + 1 == sortList.get(i + 11).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 12; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 11 in a row
+		for (int i = 0; i < 4; i++) {
+			if (sortList.get(i + 10) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()
+					&& sortList.get(i + 9).getRank().ordinal() + 1 == sortList.get(i + 10).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 11; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 10 in a row
+		for (int i = 0; i < 5; i++) {
+			if (sortList.get(i + 9) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 10; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 9 in a row
+		for (int i = 0; i < 6; i++) {
+			if (sortList.get(i + 8) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 9; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 8 in a row
+		for (int i = 0; i < 7; i++) {
+			if (sortList.get(i + 7) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 8; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 7 in a row
+		for (int i = 0; i < 8; i++) {
+			if (sortList.get(i + 6) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 7; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 6 in a row
+		for (int i = 0; i < 9; i++) {
+			if (sortList.get(i + 5) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 6; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
+		// 5 in a row
+		for (int i = 0; i < 10; i++) {
+			if (sortList.get(i + 4) != null
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 5; j++) {
+					newList.add(sortList.get(j));
+				}
+				straightList.add(newList);
+			}
+		}
+
 	}
+
+	/**
+	 * public static boolean isStraight(ArrayList<Card> cards) { ArrayList<Card>
+	 * sortList = cards; Collections.sort(sortList); // 5 in a row if
+	 * (sortList.get(0).getRank().ordinal() + 1 ==
+	 * sortList.get(1).getRank().ordinal() && sortList.get(1).getRank().ordinal() +
+	 * 1 == sortList.get(2).getRank().ordinal() &&
+	 * sortList.get(2).getRank().ordinal() + 1 ==
+	 * sortList.get(3).getRank().ordinal() && sortList.get(3).getRank().ordinal() +
+	 * 1 == sortList.get(4).getRank().ordinal()) { return true; } else { // Ace as
+	 * first card Ace, 2, 3, 4, 5 if (sortList.get(0).getRank().ordinal() == 0 &&
+	 * sortList.get(1).getRank().ordinal() == 1 &&
+	 * sortList.get(2).getRank().ordinal() == 2 &&
+	 * sortList.get(3).getRank().ordinal() == 3 &&
+	 * sortList.get(4).getRank().ordinal() == 12) { return true; } else return
+	 * false; } }
+	 */
 
 	public static boolean isFlush(ArrayList<Card> cards) {
 		int num = 0;
@@ -358,22 +522,29 @@ public enum HandType {
 		return first && second;
 	}
 
-	public static boolean isFourOfAKind(ArrayList<Card> cards) {
-		boolean found = false;
-		for (int i = 0; i < cards.size() - 2 && !found; i++) {
-			for (int j = i + 1; j < cards.size() - 1 && !found; j++) {
-				for (int k = j + 1; k < cards.size() && !found; k++) {
-					for (int h = k + 1; h < cards.size() && !found; h++) {
+	public static void findBomb(ArrayList<Card> cards) {
+		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
 
-						if ((cards.get(i).getRank() == cards.get(j).getRank())
-								&& (cards.get(j).getRank() == cards.get(k).getRank())
-								&& (cards.get(k).getRank() == cards.get(h).getRank()))
-							found = true;
+		for (int i = 0; i < clonedCards.size() - 3; i++) {
+			for (int j = i + 1; j < clonedCards.size() - 2; j++) {
+				for (int k = j + 1; k < clonedCards.size() - 1; k++) {
+					for (int h = k + 1; h < clonedCards.size(); h++) {
+
+						if ((clonedCards.get(i).getRank() == clonedCards.get(j).getRank())
+								&& (clonedCards.get(j).getRank() == clonedCards.get(k).getRank())
+								&& (clonedCards.get(k).getRank() == clonedCards.get(h).getRank())) {
+							ArrayList<Card> newList = new ArrayList<Card>();
+							newList.add(clonedCards.get(i));
+							newList.add(clonedCards.get(j));
+							newList.add(clonedCards.get(k));
+							newList.add(clonedCards.get(h));
+							bombList.add(newList);
+						}
+
 					}
 				}
 			}
 		}
-		return found;
 
 	}
 
