@@ -47,7 +47,7 @@ public class ClientController {
 	
 	clientView.lobbyView.sendBtn.setOnAction(e -> {
 		//clientModel.sendString("asdfkjöl");
-		clientModel.send(clientModel.createJson(MsgType.msg.toString(), "Hallo aldaksjföl"));
+		clientModel.send(clientModel.createJson(MsgType.msg.toString(), "Hallo aldaksjföl")); //muss geändert werden
 	});
 	
 	
