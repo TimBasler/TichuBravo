@@ -9,7 +9,10 @@ import common.Card.Suit;
 public enum HandType {
 	HighCard, OnePair, Pairs, ThreeOfAKind, FullHouse, Straight, BombFourOfAKind, BombStraightFlush;
 
+	// 1.Array = HighCard, 2.Array = OnePair, 3.Array = Pairs, etc...
 	public static ArrayList<ArrayList<Card>> handTypeList = new ArrayList<ArrayList<Card>>(8);
+	// 1.Array = 2Pairs in a row, 2.Array = 3Pairs in a row, etc...
+	public static ArrayList<ArrayList<Card>> pairsInARow = new ArrayList<ArrayList<Card>>(6);
 
 //	Dog, Mah Jong, 2,3,4,5,6,7,8,9,10,J,Q,K,A,Phenix,Dragon
 
@@ -36,7 +39,7 @@ public enum HandType {
 		return currentEval;
 	}
 
-	private static boolean hasPhenix(ArrayList<Card> specialCards) {
+	public static boolean hasPhenix(ArrayList<Card> specialCards) {
 		boolean found = false;
 		for (int i = 0; i < specialCards.size() && !found; i++) {
 			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.Phenix) {
@@ -46,7 +49,7 @@ public enum HandType {
 		return found;
 	}
 
-	private static boolean hasDog(ArrayList<Card> specialCards) {
+	public static boolean hasDog(ArrayList<Card> specialCards) {
 		boolean found = false;
 		for (int i = 0; i < specialCards.size() && !found; i++) {
 			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.Dog) {
@@ -56,7 +59,7 @@ public enum HandType {
 		return found;
 	}
 
-	private static boolean hasMahJong(ArrayList<Card> specialCards) {
+	public static boolean hasMahJong(ArrayList<Card> specialCards) {
 		boolean found = false;
 		for (int i = 0; i < specialCards.size() && !found; i++) {
 			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.MahJong) {
@@ -66,7 +69,7 @@ public enum HandType {
 		return found;
 	}
 
-	private static boolean hasDragon(ArrayList<Card> specialCards) {
+	public static boolean hasDragon(ArrayList<Card> specialCards) {
 		boolean found = false;
 		for (int i = 0; i < specialCards.size() && !found; i++) {
 			if (specialCards.get(i).getSpecialCard() == Card.SpecialCard.Dragon) {
@@ -78,17 +81,92 @@ public enum HandType {
 
 	public static void findPair(ArrayList<Card> cards, ArrayList<Card> specialCards) {
 		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
-//		if (hasPhenix(specialCards)) return true;
+
 		for (int i = 0; i < clonedCards.size() - 1; i++) {
 			for (int j = i + 1; j < clonedCards.size(); j++) {
-				if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank())
+				if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank()) {
 					handTypeList.get(1).add(clonedCards.get(i));
-				handTypeList.get(1).add(clonedCards.get(j));
-				clonedCards.remove(i);
-				clonedCards.remove(j+1);
+					handTypeList.get(1).add(clonedCards.get(j));
+					clonedCards.remove(i);
+					clonedCards.remove(j + 1);
+					i = 0;
+					j = 1; // pruefen ob j = 0 sein muss;
+				}
 			}
 		}
 	}
+
+	public static void Pairs() {
+		ArrayList<Card> c = (ArrayList<Card>) handTypeList.get(1).clone();
+
+		// if 7 pairs in a row, safe it in "pairsInARow" on sixth place
+		if (c.get(12) != null && c.get(0).getRank().ordinal() == c.get(2).getRank().ordinal() + 1
+				&& c.get(2).getRank().ordinal() == c.get(4).getRank().ordinal() + 1
+				&& c.get(4).getRank().ordinal() == c.get(6).getRank().ordinal() + 1
+				&& c.get(6).getRank().ordinal() == c.get(8).getRank().ordinal() + 1
+				&& c.get(8).getRank().ordinal() == c.get(10).getRank().ordinal() + 1
+				&& c.get(10).getRank().ordinal() == c.get(12).getRank().ordinal() + 1) {
+			for (int i = 0; i < 14; i++) {
+				pairsInARow.get(5).add(c.get(i));
+			}
+		}
+
+		// if 6 pairs in a row, safe it in "pairsInARow" on fifth place
+		for (int i = 0; i < 3; i = i + 2) {
+			if (c.get(i + 10) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
+					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1
+					&& c.get(i + 4).getRank().ordinal() == c.get(i + 6).getRank().ordinal() + 1
+					&& c.get(i + 6).getRank().ordinal() == c.get(i + 8).getRank().ordinal() + 1
+					&& c.get(i + 8).getRank().ordinal() == c.get(i + 10).getRank().ordinal() + 1) {
+				for (int j = i; j < i + 12; j++) {
+					pairsInARow.get(4).add(c.get(j));
+				}
+			}
+		}
+
+		// if 5 pairs in a row, safe it in "pairsInARow" on fourth place
+		for (int i = 0; i < 5; i = i + 2) {
+			if (c.get(i + 8) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
+					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1
+					&& c.get(i + 4).getRank().ordinal() == c.get(i + 6).getRank().ordinal() + 1
+					&& c.get(i + 6).getRank().ordinal() == c.get(i + 8).getRank().ordinal() + 1) {
+				for (int j = i; j < i + 10; j++) {
+					pairsInARow.get(3).add(c.get(j));
+				}
+			}
+		}
+
+		// if 4 pairs in a row, safe it in "pairsInARow" on third place
+		for (int i = 0; i < 7; i = i + 2) {
+			if (c.get(i + 6) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
+					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1
+					&& c.get(i + 4).getRank().ordinal() == c.get(i + 6).getRank().ordinal() + 1) {
+				for (int j = i; j < i + 8; j++) {
+					pairsInARow.get(2).add(c.get(j));
+				}
+			}
+		}
+
+		// if 3 pairs in a row, safe it in "pairsInARow" on second place
+		for (int i = 0; i < 9; i = i + 2) {
+			if (c.get(i + 4) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
+					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1) {
+				for (int j = i; j < i + 6; j++) {
+					pairsInARow.get(1).add(c.get(j));
+				}
+			}
+		}
+
+		// if 2 pairs in a row, safe it in "pairsInARow" on first place
+		for (int i = 0; i < 11; i = i + 2) {
+			if (c.get(i + 2) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1) {
+				for (int j = i; j < i + 4; j++) {
+					pairsInARow.get(0).add(c.get(j));
+				}
+			}
+		}
+
+	} //end of method pairs
 
 	// TwoPair
 	private static int ordinal;
