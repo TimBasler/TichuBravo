@@ -79,7 +79,7 @@ public enum HandType {
 		return found;
 	}
 
-	public static void findPair(ArrayList<Card> cards, ArrayList<Card> specialCards) {
+	public static void findPair(ArrayList<Card> cards) {
 		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
 
 		for (int i = 0; i < clonedCards.size() - 1; i++) {
@@ -90,13 +90,21 @@ public enum HandType {
 					clonedCards.remove(i);
 					clonedCards.remove(j + 1);
 					i = 0;
-					j = 1; // pruefen ob j = 0 sein muss;
+					j = 0; 
 				}
 			}
 		}
 	}
 
-	public static void Pairs() {
+	/**
+	 * if 7 pairs in a row, safe it in "pairsInARow" on sixth place
+	 * if 6 pairs in a row, safe it in "pairsInARow" on fifth place
+	 * if 5 pairs in a row, safe it in "pairsInARow" on fourth place
+	 *  if 4 pairs in a row, safe it in "pairsInARow" on third place
+	 *  if 3 pairs in a row, safe it in "pairsInARow" on second place
+	 *  if 2 pairs in a row, safe it in "pairsInARow" on first place (index 0)
+	 */
+	public static void findPairsInARow() {
 		ArrayList<Card> c = (ArrayList<Card>) handTypeList.get(1).clone();
 
 		// if 7 pairs in a row, safe it in "pairsInARow" on sixth place
@@ -168,6 +176,7 @@ public enum HandType {
 
 	} //end of method pairs
 
+	/**
 	// TwoPair
 	private static int ordinal;
 
@@ -217,7 +226,36 @@ public enum HandType {
 		}
 		return foundSecond;
 	}
+	*/
 
+	/**
+	 * search for three of a kind and add it to handTypeList on fourth place (index 3)
+	 * @param cards
+	 */
+	public static void findThreeOfAKind(ArrayList<Card> cards) {
+		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+
+		for (int i = 0; i < clonedCards.size() - 2; i++) {
+			for (int j = i + 1; j < clonedCards.size() - 1; j++) {
+				for (int k = j + 1; k < clonedCards.size(); k++) {
+					if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank() &&
+							clonedCards.get(j).getRank() == clonedCards.get(k).getRank()) {
+						handTypeList.get(3).add(clonedCards.get(i));
+						handTypeList.get(3).add(clonedCards.get(j));
+						handTypeList.get(3).add(clonedCards.get(k));
+						clonedCards.remove(i);
+						clonedCards.remove(j + 1);
+						clonedCards.remove(k + 2);
+						i = 0;
+						j = 0; 
+						k = 0;
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	public static boolean isThreeOfAKind(ArrayList<Card> cards) {
 		boolean found = false;
 		for (int i = 0; i < cards.size() - 2 && !found; i++) {
@@ -232,6 +270,7 @@ public enum HandType {
 		}
 		return found;
 	}
+	*/
 
 	public static boolean isStraight(ArrayList<Card> cards) {
 		ArrayList<Card> sortList = cards;
