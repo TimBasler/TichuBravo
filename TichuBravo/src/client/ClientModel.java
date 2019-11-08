@@ -27,7 +27,17 @@ public class ClientModel {
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
+	protected int clientId;
+	protected String disableConnect="";
+	protected String playerName;
+	protected boolean isTeamOne;
 	protected ArrayList<String> turn = new ArrayList<>();
+	protected Player player;
+	
+	
+	public void createPlayer() {
+		player = new Player(this.playerName,this.isTeamOne,this.clientId);
+	}
 
 	public ClientModel() {
 		
@@ -126,6 +136,18 @@ public class ClientModel {
 	 * @param json
 	 */
 	public void saveInput(JSONObject json) {
+		if(json.containsKey(MsgType.disableConnect.toString())) {
+			System.out.println("Ist beim Client angekommen:" +json.toJSONString());
+			String s = (String) json.get(MsgType.disableConnect.toString());
+			this.disableConnect=s;
+		}else {
+			System.out.println("Ist ins else gekommen");
+		}
+		
+		if(json.containsKey(MsgType.clientId.toString())) {
+			this.clientId=Integer.parseInt((String) json.get(MsgType.clientId.toString()));
+		}
+		
 		if (json.containsKey(MsgType.name.toString())) {
 			sspName.set("");
 			sspName.set((String) json.get(MsgType.name.toString()));

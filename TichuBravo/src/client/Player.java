@@ -16,13 +16,10 @@ public class Player {
 	protected int scorePlayer;
 	protected ArrayList<Card>cardList=new ArrayList<>();
 	
-	public Player() {
-	}
 	
-	public Player(String playerName, boolean isTeamOne, int scorePlayer, int playerID) {
+	public Player(String playerName, boolean isTeamOne,int playerID) {
 	this.playerName=playerName;
 	this.isTeamOne=isTeamOne;
-	this.scorePlayer=scorePlayer;
 	this.playerID=playerID;
 	}
 	
@@ -53,6 +50,10 @@ public class Player {
 			Alert alert = new Alert(AlertType.ERROR, "MAX 4 Players");
 			alert.showAndWait();
 		}
+	}
+	
+	public  Player getPlayer() {
+		return new Player(this.playerName,this.isTeamOne,this.playerID);
 	}
 	
 	public String toString() {

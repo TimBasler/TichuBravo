@@ -13,6 +13,6 @@ package client;
  * 
  */
 public enum MsgType {
-	name, msg, turn, game;
+	name, msg, turn, game, clientId,disableConnect;
 
 }

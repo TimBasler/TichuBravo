@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,9 +18,9 @@ public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;
 	protected final ObservableList<ServerClient> clients = FXCollections.observableArrayList();
-
-	
-//TODO client name einlesen
+	public int clientId=0;
+		
+	//TODO client name einlesen
 	
 	/**
 	 * for each request create a ServerClient and add it to the list
@@ -35,7 +36,26 @@ public class ServerModel {
 						try {
 							Socket socket = serverSocket.accept();
 							ServerClient c = new ServerClient(socket, "client ", ServerModel.this);
-							clients.add(c);
+							
+							//Set the id's
+								clientId++;
+								OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+								JSONObject json = new JSONObject();
+								json.put("clientId", clientId+"");
+								out.write(json.toString() + "\n");
+								out.flush();
+								clients.add(c);
+								
+								if(clients.size()>1) {
+									System.out.println("grösser als 1");
+									JSONObject json2 = new JSONObject();
+									json2.put("disableConnect", "true");
+									out.write(json2.toString() + "\n");
+									out.flush();
+								}
+								
+								
+							
 						} catch (IOException e) {
 							e.printStackTrace();
 							//break;

@@ -22,6 +22,7 @@ public class ServerController {
 		model.clients.addListener((ListChangeListener<? super ServerClient>) (e -> view.textArea.appendText("new client")));
 		
 		
+		
 		//read port number and start server
 		view.startBtn.setOnAction(e -> {
 			view.startBtn.setDisable(true);
