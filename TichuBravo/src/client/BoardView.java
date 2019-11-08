@@ -17,68 +17,76 @@ import javafx.scene.layout.VBox;
  */
 public class BoardView extends VBox {
 	protected HBox topBox, middleBox, bottomBox;
-	protected Image backOfCardImage, backOfCardTurnedImage,backOfCardTurnedImage2, blackImage,backGroundImage;
-	protected ImageView backOfCardImageView, backOfCardTurnedImageView,backOfCardTurnedImageView2, blackImageView,backGroundImageView;
-	protected StackPane topStackPane,leftStackPane,rightStackPane;
-	protected Label topLabel,leftLabel,rightLabel;
+	protected Image backOfCardImage, backOfCardTurnedImage, backOfCardTurnedImage2, blackImage, backGroundImage;
+	protected ImageView backOfCardImageView, backOfCardTurnedImageView, backOfCardTurnedImageView2, blackImageView,
+			backGroundImageView;
+	protected StackPane topStackPane, leftStackPane, rightStackPane;
+	protected Label topLabel, leftLabel, rightLabel;
 	protected CardLabel playerCardLabel;
 	protected Card playerCard;
 
-	public BoardView()  {
-		//topBox	
-		this.backOfCardImage=new Image(BoardView.class.getResourceAsStream("..//images//back.png"));
-		this.backOfCardImageView=new ImageView(backOfCardImage);
+	public BoardView() {
+		// topBox
+		this.backOfCardImage = new Image(BoardView.class.getResourceAsStream("..//images//back.png"));
+		this.backOfCardImageView = new ImageView(backOfCardImage);
 		this.backOfCardImageView.setFitHeight(120);
 		this.backOfCardImageView.setFitWidth(120);
 		this.backOfCardImageView.setPreserveRatio(true);
-		this.topLabel=new Label("14");
+		this.topLabel = new Label("14");
 		this.topLabel.setId("topLabel");
-		this.topStackPane=new StackPane(this.backOfCardImageView,this.topLabel);
-		this.topBox=new HBox(topStackPane);
+		this.topStackPane = new StackPane(this.backOfCardImageView, this.topLabel);
+		this.topBox = new HBox(topStackPane);
 		this.topBox.setAlignment(Pos.CENTER);
-		
-		//middleBox
-		this.backOfCardTurnedImage=new Image(BoardView.class.getResourceAsStream("..//images//backTurned.png"));
-		this.backOfCardTurnedImageView=new ImageView(backOfCardTurnedImage);
+
+		// middleBox
+		this.backOfCardTurnedImage = new Image(BoardView.class.getResourceAsStream("..//images//backTurned.png"));
+		this.backOfCardTurnedImageView = new ImageView(backOfCardTurnedImage);
 		this.backOfCardTurnedImageView.setFitHeight(120);
 		this.backOfCardTurnedImageView.setFitWidth(120);
 		this.backOfCardTurnedImageView.setPreserveRatio(true);
-		this.leftLabel=new Label("14");
+		this.leftLabel = new Label("14");
 		this.leftLabel.setId("leftLabel");
-		this.leftStackPane=new StackPane(this.backOfCardTurnedImageView,this.leftLabel);
-		
-		this.backGroundImage=new Image(BoardView.class.getResourceAsStream("..//images/background.png"));
-		this.backGroundImageView=new ImageView(backGroundImage);
+		this.leftStackPane = new StackPane(this.backOfCardTurnedImageView, this.leftLabel);
+
+		this.backGroundImage = new Image(BoardView.class.getResourceAsStream("..//images/background.png"));
+		this.backGroundImageView = new ImageView(backGroundImage);
 		this.backGroundImageView.setFitHeight(650);
 		this.backGroundImageView.setFitWidth(650);
 		this.backGroundImageView.setPreserveRatio(true);
-		
-		this.backOfCardTurnedImage2=new Image(BoardView.class.getResourceAsStream("..//images//backTurned.png"));
-		this.backOfCardTurnedImageView2=new ImageView(backOfCardTurnedImage2);
+
+		this.backOfCardTurnedImage2 = new Image(BoardView.class.getResourceAsStream("..//images//backTurned.png"));
+		this.backOfCardTurnedImageView2 = new ImageView(backOfCardTurnedImage2);
 		this.backOfCardTurnedImageView2.setFitHeight(120);
 		this.backOfCardTurnedImageView2.setFitWidth(120);
 		this.backOfCardTurnedImageView2.setPreserveRatio(true);
-		this.rightLabel=new Label("14");
+		this.rightLabel = new Label("14");
 		this.rightLabel.setId("rightLabel");
-		this.rightStackPane=new StackPane(this.backOfCardTurnedImageView2,this.rightLabel);
-		
-		this.middleBox=new HBox(this.leftStackPane,this.backGroundImageView,this.rightStackPane);
+		this.rightStackPane = new StackPane(this.backOfCardTurnedImageView2, this.rightLabel);
+
+		this.middleBox = new HBox(this.leftStackPane, this.backGroundImageView, this.rightStackPane);
 		this.middleBox.setAlignment(Pos.CENTER);
 
-		//bottomBox
+		// bottomBox
 		this.bottomBox=new HBox();
-		for(int i =1;i<=14;i++) {
-			this.playerCardLabel=new CardLabel();
-			this.playerCard=new Card(Rank.Ace, Suit.Machete);
+		for (int i = 1; i <= 14; i++) {
+			this.playerCardLabel = new CardLabel();
+			this.playerCard = new Card(Rank.Ace, Suit.Machete);
 			this.playerCardLabel.setCard(playerCard);
 			this.bottomBox.getChildren().addAll(this.playerCardLabel);
 			this.bottomBox.setAlignment(Pos.CENTER);
-			this.bottomBox.setSpacing(10);
+			this.bottomBox.setSpacing(-20);
+			this.bottomBox.getChildren().get(i-1).setStyle("-fx-border-color:green");
+			
+			this.bottomBox.getChildren().get(i-1).setOnMouseClicked(e->{
+				System.out.println(this.bottomBox.getChildren().get(0));
+				System.out.println(this.bottomBox.getChildren().get(1));
+				System.out.println(this.bottomBox.getChildren().get(2));
+				
+			});
 		}
-	
-		
-		//Putting everything in the container
-		this.getChildren().addAll(this.topBox,this.middleBox,this.bottomBox);
+
+		// Putting everything in the container
+		this.getChildren().addAll(this.topBox, this.middleBox, this.bottomBox);
 		this.setAlignment(Pos.CENTER);
 	}
 

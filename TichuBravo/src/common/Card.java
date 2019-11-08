@@ -1,5 +1,6 @@
 package common;
 
+import javafx.scene.control.Label;
 
 //the template of this class is the poker game written by Tim and Dominik
 //in the course of Bradley Richards

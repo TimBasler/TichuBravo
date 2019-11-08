@@ -1,6 +1,9 @@
 package client;
 
 import java.io.IOException;
+import java.util.Collection;
+
+import common.Card;
 
 /**
  * @author Tim
@@ -19,7 +22,7 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
-
+		
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			System.out.println(newValue);
 			clientView.gameView.chatView.chatTextArea.appendText(newValue+"\n");

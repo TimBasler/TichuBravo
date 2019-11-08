@@ -10,14 +10,15 @@ import javafx.scene.image.ImageView;
  *
  */
 public class CardLabel extends Label {
-
+	protected String fileName;
+	
 	public CardLabel() {
 		super();
 	}
 
 	public void setCard(Card card) {
 		if (card != null) {
-			String fileName = cardToFileName(card);
+			this. fileName = cardToFileName(card);
 			Image image = new Image(CardLabel.class.getResourceAsStream("..//images//"+fileName));
 			ImageView imageView = new ImageView(image);
 			imageView.setFitHeight(120);
@@ -34,6 +35,10 @@ public class CardLabel extends Label {
 		String suit = card.getSuit().toString();
 		String rank = card.getRank().toString();
 		return suit + rank + ".jpg";
+	}
+	
+	public String toString() {
+		return this.fileName;
 	}
 
 }
