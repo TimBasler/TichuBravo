@@ -88,7 +88,7 @@ public enum HandType {
 					newList.add(clonedCards.get(i));
 					newList.add(clonedCards.get(j));
 					clonedCards.remove(i);
-					clonedCards.remove(j + 1);
+					clonedCards.remove(j-1);
 					i = 0;
 					j = 0;
 					onePairList.add(newList);
@@ -104,7 +104,10 @@ public enum HandType {
 	 * on third place if 3 pairs in a row, safe it in "pairsInARow" on second place
 	 * if 2 pairs in a row, safe it in "pairsInARow" on first place (index 0)
 	 */
-	public static void findPairsInARow() {
+	public static void findPairsInARow(ArrayList<Card> cards) {
+		//-------------------
+		findPair(cards); // ändern!
+		//------------------
 		ArrayList<Card> c = new ArrayList<Card>();
 
 		for (int i = 0; i < onePairList.size(); i++) {
@@ -112,14 +115,14 @@ public enum HandType {
 				c.add(onePairList.get(i).get(j));
 			}
 		}
-
+		
 		// if 7 pairs in a row, safe it in "pairsInARow" on sixth place
-		if (c.get(12) != null && c.get(0).getRank().ordinal() == c.get(2).getRank().ordinal() + 1
-				&& c.get(2).getRank().ordinal() == c.get(4).getRank().ordinal() + 1
-				&& c.get(4).getRank().ordinal() == c.get(6).getRank().ordinal() + 1
-				&& c.get(6).getRank().ordinal() == c.get(8).getRank().ordinal() + 1
-				&& c.get(8).getRank().ordinal() == c.get(10).getRank().ordinal() + 1
-				&& c.get(10).getRank().ordinal() == c.get(12).getRank().ordinal() + 1) {
+		if (c.size() > 12 && c.get(0).getRank().ordinal() + 1 == c.get(2).getRank().ordinal()
+				&& c.get(2).getRank().ordinal() + 1 == c.get(4).getRank().ordinal()
+				&& c.get(4).getRank().ordinal() + 1 == c.get(6).getRank().ordinal()
+				&& c.get(6).getRank().ordinal() + 1 == c.get(8).getRank().ordinal()
+				&& c.get(8).getRank().ordinal() + 1 == c.get(10).getRank().ordinal()
+				&& c.get(10).getRank().ordinal() + 1 == c.get(12).getRank().ordinal()) {
 			ArrayList<Card> newList = new ArrayList<Card>();
 			for (int i = 0; i < 14; i++) {
 				newList.add(c.get(i));
@@ -129,11 +132,11 @@ public enum HandType {
 
 		// if 6 pairs in a row, safe it in "pairsInARow" on fifth place
 		for (int i = 0; i < 3; i = i + 2) {
-			if (c.get(i + 10) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
-					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1
-					&& c.get(i + 4).getRank().ordinal() == c.get(i + 6).getRank().ordinal() + 1
-					&& c.get(i + 6).getRank().ordinal() == c.get(i + 8).getRank().ordinal() + 1
-					&& c.get(i + 8).getRank().ordinal() == c.get(i + 10).getRank().ordinal() + 1) {
+			if (c.size() > (i + 10) && c.get(i).getRank().ordinal() + 1 == c.get(i + 2).getRank().ordinal()
+					&& c.get(i + 2).getRank().ordinal() + 1 == c.get(i + 4).getRank().ordinal()
+					&& c.get(i + 4).getRank().ordinal() + 1 == c.get(i + 6).getRank().ordinal()
+					&& c.get(i + 6).getRank().ordinal() + 1 == c.get(i + 8).getRank().ordinal()
+					&& c.get(i + 8).getRank().ordinal() + 1 == c.get(i + 10).getRank().ordinal()) {
 				ArrayList<Card> newList = new ArrayList<Card>();
 				for (int j = i; j < i + 12; j++) {
 					newList.add(c.get(j));
@@ -143,10 +146,10 @@ public enum HandType {
 
 		// if 5 pairs in a row, safe it in "pairsInARow" on fourth place
 		for (int i = 0; i < 5; i = i + 2) {
-			if (c.get(i + 8) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
-					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1
-					&& c.get(i + 4).getRank().ordinal() == c.get(i + 6).getRank().ordinal() + 1
-					&& c.get(i + 6).getRank().ordinal() == c.get(i + 8).getRank().ordinal() + 1) {
+			if (c.size() > (i + 8) && c.get(i).getRank().ordinal() + 1 == c.get(i + 2).getRank().ordinal()
+					&& c.get(i + 2).getRank().ordinal() + 1 == c.get(i + 4).getRank().ordinal()
+					&& c.get(i + 4).getRank().ordinal() + 1 == c.get(i + 6).getRank().ordinal()
+					&& c.get(i + 6).getRank().ordinal() + 1 == c.get(i + 8).getRank().ordinal()) {
 				ArrayList<Card> newList = new ArrayList<Card>();
 				for (int j = i; j < i + 10; j++) {
 					newList.add(c.get(j));
@@ -157,9 +160,9 @@ public enum HandType {
 
 		// if 4 pairs in a row, safe it in "pairsInARow" on third place
 		for (int i = 0; i < 7; i = i + 2) {
-			if (c.get(i + 6) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
-					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1
-					&& c.get(i + 4).getRank().ordinal() == c.get(i + 6).getRank().ordinal() + 1) {
+			if (c.size() > (i + 6) && c.get(i).getRank().ordinal() + 1 == c.get(i + 2).getRank().ordinal()
+					&& c.get(i + 2).getRank().ordinal() + 1 == c.get(i + 4).getRank().ordinal()
+					&& c.get(i + 4).getRank().ordinal() + 1 == c.get(i + 6).getRank().ordinal()) {
 				ArrayList<Card> newList = new ArrayList<Card>();
 				for (int j = i; j < i + 8; j++) {
 					newList.add(c.get(j));
@@ -170,8 +173,8 @@ public enum HandType {
 
 		// if 3 pairs in a row, safe it in "pairsInARow" on second place
 		for (int i = 0; i < 9; i = i + 2) {
-			if (c.get(i + 4) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1
-					&& c.get(i + 2).getRank().ordinal() == c.get(i + 4).getRank().ordinal() + 1) {
+			if (c.size() > (i + 4) && c.get(i).getRank().ordinal() +1 == (c.get(i + 2).getRank().ordinal())
+					&& c.get(i + 2).getRank().ordinal()+1 == (c.get(i + 4).getRank().ordinal())) {
 				ArrayList<Card> newList = new ArrayList<Card>();
 				for (int j = i; j < i + 6; j++) {
 					newList.add(c.get(j));
@@ -182,7 +185,7 @@ public enum HandType {
 
 		// if 2 pairs in a row, safe it in "pairsInARow" on first place
 		for (int i = 0; i < 11; i = i + 2) {
-			if (c.get(i + 2) != null && c.get(i).getRank().ordinal() == c.get(i + 2).getRank().ordinal() + 1) {
+			if (c.size() > (i + 2) && c.get(i).getRank().ordinal() + 1 == c.get(i + 2).getRank().ordinal()) {
 				ArrayList<Card> newList = new ArrayList<Card>();
 				for (int j = i; j < i + 4; j++) {
 					newList.add(c.get(j));
@@ -201,6 +204,7 @@ public enum HandType {
 	 */
 	public static void findThreeOfAKind(ArrayList<Card> cards) {
 		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+		System.out.println(clonedCards.toString());
 
 		for (int i = 0; i < clonedCards.size() - 2; i++) {
 			for (int j = i + 1; j < clonedCards.size() - 1; j++) {
@@ -212,11 +216,15 @@ public enum HandType {
 						newList.add(clonedCards.get(j));
 						newList.add(clonedCards.get(k));
 						clonedCards.remove(i);
-						clonedCards.remove(j + 1);
-						clonedCards.remove(k + 2);
+						clonedCards.remove(j - 1);
+						clonedCards.remove(k - 2);
+						System.out.println(i);
+						System.out.println(j);
+						System.out.println(k);
 						i = 0;
 						j = 0;
 						k = 0;
+						System.out.println(newList.toString());
 						threeOfAKindList.add(newList);
 					}
 				}
@@ -247,7 +255,7 @@ public enum HandType {
 
 		// 13 in a row
 		for (int i = 0; i < 2; i++) {
-			if (sortList.get(i + 12) != null
+			if (sortList.size() > (i + 12)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -270,7 +278,7 @@ public enum HandType {
 
 		// 12 in a row
 		for (int i = 0; i < 3; i++) {
-			if (sortList.get(i + 11) != null
+			if (sortList.size() > (i + 11)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -292,7 +300,7 @@ public enum HandType {
 
 		// 11 in a row
 		for (int i = 0; i < 4; i++) {
-			if (sortList.get(i + 10) != null
+			if (sortList.size() > (i + 10)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -313,7 +321,7 @@ public enum HandType {
 
 		// 10 in a row
 		for (int i = 0; i < 5; i++) {
-			if (sortList.get(i + 9) != null
+			if (sortList.size() > (i + 9)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -333,7 +341,7 @@ public enum HandType {
 
 		// 9 in a row
 		for (int i = 0; i < 6; i++) {
-			if (sortList.get(i + 8) != null
+			if (sortList.size() > (i + 8)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -352,7 +360,7 @@ public enum HandType {
 
 		// 8 in a row
 		for (int i = 0; i < 7; i++) {
-			if (sortList.get(i + 7) != null
+			if (sortList.size() > (i + 7)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -370,7 +378,7 @@ public enum HandType {
 
 		// 7 in a row
 		for (int i = 0; i < 8; i++) {
-			if (sortList.get(i + 6) != null
+			if (sortList.size() > (i + 6)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -387,7 +395,7 @@ public enum HandType {
 
 		// 6 in a row
 		for (int i = 0; i < 9; i++) {
-			if (sortList.get(i + 5) != null
+			if (sortList.size() > (i + 5)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
@@ -403,7 +411,7 @@ public enum HandType {
 
 		// 5 in a row
 		for (int i = 0; i < 10; i++) {
-			if (sortList.get(i + 4) != null
+			if (sortList.size() > (i + 4)
 					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
 					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
 					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
