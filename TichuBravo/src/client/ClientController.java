@@ -2,6 +2,8 @@ package client;
 
 import java.io.IOException;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 /**
  * @author Tim
  *
@@ -15,11 +17,6 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 		
-		if(clientModel.disableConnect.equals("true")) {
-			clientView.lobbyView.btnConnect.setDisable(true);
-		}
-		
-
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			System.out.println(newValue);
 			clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
@@ -34,7 +31,7 @@ public class ClientController {
 		});
 
 		clientView.lobbyView.btnConnect.setOnAction(event -> {
-			clientModel.connect();
+				clientModel.connect();
 		});
 
 		clientView.gameView.chatView.sendButton.setOnAction(e -> {
