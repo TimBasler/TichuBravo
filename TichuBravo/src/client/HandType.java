@@ -234,6 +234,7 @@ public enum HandType {
 
 
 
+
 	/**
 	 * search for five or more cards in a row and add it to straightList
 	 * @param cards
@@ -241,17 +242,19 @@ public enum HandType {
 	public static void findStraight(ArrayList<Card> cards) {
 		ArrayList<Card> sortList = (ArrayList<Card>) cards.clone();
 		Collections.sort(sortList);
-
 		// delete all cards with the same rank
-		for (int i = 0; i < sortList.size() - 1; i++) {
-			for (int j = i + 1; j < sortList.size(); j++) {
-				if (sortList.get(i).getRank() == sortList.get(j).getRank()) {
-					sortList.remove(j);
-					i = 0;
-					j = 0;
+				for (int i = 0; i < sortList.size() - 1; i++) {
+					for (int j = i + 1; j < sortList.size(); j++) {
+						if (sortList.get(i).getRank() == sortList.get(j).getRank()) {
+							sortList.remove(j);
+							i = 0;
+							j = 0;
+						}
+					}
 				}
-			}
-		}
+		
+		
+		
 
 		// 13 in a row
 		for (int i = 0; i < 2; i++) {
@@ -426,6 +429,184 @@ public enum HandType {
 
 	}
 
+	public static void findBombStraightFlush3(ArrayList<Card> cards) {
+		ArrayList<Card> sortList = (ArrayList<Card>) cards.clone();
+		Collections.sort(sortList);
+	
+		// 13 in a row
+		for (int i = 0; i < 2; i++) {
+			if (sortList.size() > (i + 12)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()
+					&& sortList.get(i + 9).getRank().ordinal() + 1 == sortList.get(i + 10).getRank().ordinal()
+					&& sortList.get(i + 10).getRank().ordinal() + 1 == sortList.get(i + 11).getRank().ordinal()
+					&& sortList.get(i + 11).getRank().ordinal() + 1 == sortList.get(i + 12).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 13; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 12 in a row
+		for (int i = 0; i < 3; i++) {
+			if (sortList.size() > (i + 11)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()
+					&& sortList.get(i + 9).getRank().ordinal() + 1 == sortList.get(i + 10).getRank().ordinal()
+					&& sortList.get(i + 10).getRank().ordinal() + 1 == sortList.get(i + 11).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 12; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 11 in a row
+		for (int i = 0; i < 4; i++) {
+			if (sortList.size() > (i + 10)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()
+					&& sortList.get(i + 9).getRank().ordinal() + 1 == sortList.get(i + 10).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 11; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 10 in a row
+		for (int i = 0; i < 5; i++) {
+			if (sortList.size() > (i + 9)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()
+					&& sortList.get(i + 8).getRank().ordinal() + 1 == sortList.get(i + 9).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 10; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 9 in a row
+		for (int i = 0; i < 6; i++) {
+			if (sortList.size() > (i + 8)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()
+					&& sortList.get(i + 7).getRank().ordinal() + 1 == sortList.get(i + 8).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 9; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 8 in a row
+		for (int i = 0; i < 7; i++) {
+			if (sortList.size() > (i + 7)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()
+					&& sortList.get(i + 6).getRank().ordinal() + 1 == sortList.get(i + 7).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 8; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 7 in a row
+		for (int i = 0; i < 8; i++) {
+			if (sortList.size() > (i + 6)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()
+					&& sortList.get(i + 5).getRank().ordinal() + 1 == sortList.get(i + 6).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 7; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 6 in a row
+		for (int i = 0; i < 9; i++) {
+			if (sortList.size() > (i + 5)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()
+					&& sortList.get(i + 4).getRank().ordinal() + 1 == sortList.get(i + 5).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 6; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+		// 5 in a row
+		for (int i = 0; i < 10; i++) {
+			if (sortList.size() > (i + 4)
+					&& sortList.get(i + 0).getRank().ordinal() + 1 == sortList.get(i + 1).getRank().ordinal()
+					&& sortList.get(i + 1).getRank().ordinal() + 1 == sortList.get(i + 2).getRank().ordinal()
+					&& sortList.get(i + 2).getRank().ordinal() + 1 == sortList.get(i + 3).getRank().ordinal()
+					&& sortList.get(i + 3).getRank().ordinal() + 1 == sortList.get(i + 4).getRank().ordinal()) {
+				ArrayList<Card> newList = new ArrayList<Card>();
+				for (int j = i; j < i + 5; j++) {
+					newList.add(sortList.get(j));
+				}
+				BombStraightFlushList.add(newList);
+			}
+		}
+
+	}
+
+	
 	/**
 	 * if the threeOfAKind and onePair are not the same cards, then add it to fullHouseList
 	 */
@@ -485,6 +666,37 @@ public enum HandType {
 
 	}
 
+	public static void findBombStraightFlush2(ArrayList<Card> cards) {
+		ArrayList<Card> cc = (ArrayList<Card>) cards.clone();
+		
+		ArrayList<Card> JadeList = new ArrayList<Card>();
+		ArrayList<Card> StarsList = new ArrayList<Card>();
+		ArrayList<Card> MacheteList = new ArrayList<Card>();
+		ArrayList<Card> PagodasList = new ArrayList<Card>();
+		
+		for (Card card : cc) {
+			switch (card.getSuit()) {
+			case Jade:
+				JadeList.add(card);
+				break;
+			case Stars:
+				StarsList.add(card);
+				break;
+			case Machete:
+				MacheteList.add(card);
+				break;
+			case Pagodas:
+				PagodasList.add(card);
+				break;
+			}
+		}
+		findBombStraightFlush3(JadeList);
+		findBombStraightFlush3(StarsList);
+		findBombStraightFlush3(MacheteList);
+		findBombStraightFlush3(PagodasList);
+		
+	}
+	
 	/**
 	 * if the straightList contains a Straight Flush, then add it to the BombStraightFlushList
 	 */

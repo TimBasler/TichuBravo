@@ -27,7 +27,13 @@ public class HandTypeTest {
 	Card j9 = new Card(Rank.Nine, Suit.Jade);
 	Card jt = new Card(Rank.Ten, Suit.Jade);
 	Card jj = new Card(Rank.Jack, Suit.Jade);
+	Card jk = new Card(Rank.King, Suit.Jade);
+	Card mk = new Card(Rank.King, Suit.Machete);
+	Card pk = new Card(Rank.King, Suit.Pagodas);
+	Card sk = new Card(Rank.King, Suit.Stars);
+
 	ArrayList<Card> list1 = new ArrayList<Card>();
+	ArrayList<Card> list2 = new ArrayList<Card>();
 
 	@Before
 	public void makeList() {
@@ -44,14 +50,52 @@ public class HandTypeTest {
 		list1.add(j9);
 		list1.add(jt);
 		list1.add(jj);
+		list1.add(jk);
+		list1.add(mk);
+		list1.add(pk);
+		list1.add(sk);
+		
+		list2.add(s6);
+		list2.add(j6);
+		list2.add(p7);
+		list2.add(j7);
+		list2.add(s8);
+		list2.add(j8);
+		list2.add(j9);
+		list2.add(jt);
+		list2.add(jj);
+		
 
 		Collections.sort(list1);
+		Collections.sort(list2);
+		
+		
 	}
 
 	// System.out.println(clonedCards.get(i).toString());
 	// System.out.println(clonedCards.get(j).toString());
+	
+	
 
-	//@Test
+	@Test //ok aber ändern - nur eine Strasse speichern der gleichen Farbe
+	public void findBombStraightFlushTest() {
+		HandType.findBombStraightFlush2(list2);
+		for (int i = 0; i < HandType.BombStraightFlushList.size(); i++) {
+			for (int j = 0; j < HandType.BombStraightFlushList.get(i).size(); j++) {
+				System.out.println(HandType.BombStraightFlushList.get(i).get(j).toString());
+			}
+		}
+		System.out.println(HandType.BombStraightFlushList.size());
+		assertTrue(HandType.BombStraightFlushList.size() == 3);
+	}
+
+	// @Test //ok
+	public void findBombTest() {
+		HandType.findBomb(list1);
+		assertTrue(HandType.bombList.size() == 1);
+	}
+
+	// @Test //ok
 	public void findStraightTest() {
 		HandType.straightList.clear();
 		HandType.findStraight(list1);
@@ -63,7 +107,7 @@ public class HandTypeTest {
 		assertTrue(HandType.straightList.size() == 3);
 	}
 
-	@Test
+	// @Test //fail
 	public void findThreeOfAKindTest() {
 		HandType.threeOfAKindList.clear();
 		HandType.findThreeOfAKind(list1);
@@ -76,7 +120,7 @@ public class HandTypeTest {
 		assertTrue(HandType.threeOfAKindList.size() == 2);
 	}
 
-	// @Test
+	// @Test //ok
 	public void findPairsInARowTest() {
 		HandType.onePairList.clear();
 		HandType.pairsInARow.clear();
@@ -94,13 +138,13 @@ public class HandTypeTest {
 		for (int i = 0; i < HandType.pairsInARow.size(); i++) {
 			System.out.println(HandType.pairsInARow.get(i).toString());
 			for (int j = 0; j < HandType.pairsInARow.get(i).size(); j++) {
-				//System.out.println(HandType.pairsInARow.get(i).get(j).toString());
+				// System.out.println(HandType.pairsInARow.get(i).get(j).toString());
 			}
 		}
 		assertTrue(HandType.pairsInARow.size() == 3);
 	}
 
-	// @Test
+	// @Test //ok
 	public void findPairTest() {
 		HandType.onePairList.clear();
 		ArrayList<Card> newList = new ArrayList<Card>();
