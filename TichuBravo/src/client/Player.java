@@ -5,6 +5,8 @@ package client;
 import java.util.ArrayList;
 
 import common.Card;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -14,7 +16,7 @@ public class Player {
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int scorePlayer;
-	protected ArrayList<Card>cardList=new ArrayList<>();
+	protected final ObservableList<Card> cardList = FXCollections.observableArrayList();
 	
 	public Player() {
 	}

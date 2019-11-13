@@ -26,6 +26,10 @@ public class ServerModel {
 	
 	public void sendNewCards() {
 		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
+		lists.add(new ArrayList<String>());
+		lists.add(new ArrayList<String>());
+		lists.add(new ArrayList<String>());
+		lists.add(new ArrayList<String>());
 		deck.createDeck();
 		Card c = null;
 		do {

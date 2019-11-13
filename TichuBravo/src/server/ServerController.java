@@ -21,7 +21,7 @@ public class ServerController {
 		
 		model.sspGame.addListener((o, oldValue, newValue) -> {
 			if (newValue.equals("dealCards")) {
-				
+				model.sendNewCards();
 			}
 		});
 		

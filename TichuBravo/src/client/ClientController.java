@@ -2,6 +2,10 @@ package client;
 
 import java.io.IOException;
 
+import common.Card;
+import javafx.collections.ListChangeListener;
+
+
 /**
  * @author Tim
  *
@@ -21,14 +25,15 @@ public class ClientController {
 		this.clientView = clientView;
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
-			System.out.println(newValue);
 			clientView.gameView.chatView.chatTextArea.appendText(newValue+"\n");
 		});
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
-			System.out.println(newValue);
 		});
 		
+		clientModel.cardList.addListener((ListChangeListener<? super Card>) (e -> {
+			System.out.println(clientModel.cardList);
+		}));
 		
 
 	clientView.gameView.button.setOnAction(e-> {
@@ -46,8 +51,7 @@ public class ClientController {
 	});
 	
 	clientView.lobbyView.sendBtn.setOnAction(e -> {
-		//clientModel.sendString("asdfkjöl");
-		clientModel.send(clientModel.createJson(MsgType.msg.toString(), "Hallo aldaksjföl")); //muss geändert werden
+		clientModel.send(clientModel.createJson(MsgType.game.toString(), "dealCards"));	//nur zum testen
 	});
 	
 	
