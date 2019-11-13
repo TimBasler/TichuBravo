@@ -50,14 +50,6 @@ public class ClientController {
 		});
 
 		// Card
-		/*
-		 * for(int i =0;i<=14;i++) {
-		 * clientView.gameView.boardView.bottomBox.getChildren().get(i).
-		 * setOnMouseClicked(e->{
-		 * this.cardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(i
-		 * )); }); }
-		 */
-
 		// 1Card
 		clientView.gameView.boardView.bottomBox.getChildren().get(0).setOnMouseClicked(e -> {
 			clientModel.cardList.add((CardLabel) clientView.gameView.boardView.bottomBox.getChildren().get(0));
