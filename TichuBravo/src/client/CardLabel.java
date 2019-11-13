@@ -1,6 +1,7 @@
 package client;
 
 import common.Card;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,7 +10,7 @@ import javafx.scene.image.ImageView;
  * @author Tim
  *
  */
-public class CardLabel extends Label {
+public class CardLabel extends Button {
 	protected String fileName;
 	
 	public CardLabel() {

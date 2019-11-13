@@ -14,7 +14,7 @@ public class Player {
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int scorePlayer;
-	protected ArrayList<Card>cardList=new ArrayList<>();
+	protected ArrayList<Object>cardList=new ArrayList<>();
 	
 	public Player() {
 	}

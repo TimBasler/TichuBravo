@@ -29,6 +29,8 @@ public class ClientModel {
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
 	protected ArrayList<String> turn = new ArrayList<>();
+	protected ArrayList<CardLabel> cardList = new ArrayList<>();
+	
 
 	public ClientModel() {
 		
