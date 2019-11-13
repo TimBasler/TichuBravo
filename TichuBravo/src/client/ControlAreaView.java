@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
  *
  */
 public class ControlAreaView extends HBox {
-	protected Button passButton, quitGameButton, confirmButton,smallTichu,grandTichu,showRulesButton;
+	protected Button passButton, quitGameButton, confirmButton,smallTichu,grandTichu,resetSelectedCardsButton;
 	
 	public ControlAreaView() {
 		this.passButton=new Button("Pass");
@@ -27,12 +27,12 @@ public class ControlAreaView extends HBox {
 		this.grandTichu=new Button("Grand Tichu");
 		this.grandTichu.setId("grandTichu");
 		
-		this.showRulesButton=new Button("Show Rules");
-		this.showRulesButton.setId("showRulesButton");
+		this.resetSelectedCardsButton=new Button("Delete Selected Cards");
+		this.resetSelectedCardsButton.setId("resetSelectedCardsButton");
 		
-		this.getChildren().addAll(this.passButton,this.quitGameButton,this.confirmButton,this.smallTichu,this.grandTichu,this.showRulesButton);
+		this.getChildren().addAll(this.passButton,this.quitGameButton,this.confirmButton,this.smallTichu,this.grandTichu,this.resetSelectedCardsButton);
 		this.setAlignment(Pos.CENTER_LEFT);
-		this.setSpacing(100);
+		this.setSpacing(90);
 		
 	}
 

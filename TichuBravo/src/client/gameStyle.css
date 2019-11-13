@@ -1,3 +1,5 @@
+
+
 /*
  * ChatView start
  */
@@ -116,6 +118,21 @@
 	-fx-text-fill:rgb(255,0,0);
 	-fx-font-weight:bold;
 	-fx-font-size:1.5cm;
+}
+
+#clickedCard{
+	-fx-border-color:yellow;
+}
+
+#cardButton{
+	-fx-border-color:black ;
+}
+
+#cardButton:hover{
+	-fx-border-color:blue ;
+	-fx-pref-width:130px;
+	-fx-pref-height:130px;
+	-fx-background-color:black;
 }
 
 

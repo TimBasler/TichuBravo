@@ -32,7 +32,7 @@ public class ClientModel {
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
 	protected ArrayList<String> turn = new ArrayList<>();
-	
+	protected ArrayList <Object> selectedCardList=new ArrayList();
 	protected final ObservableList<Card> cardList = FXCollections.observableArrayList(); //kommt in die Player Klasse
 
 	public ClientModel() {

@@ -1,6 +1,7 @@
 package client;
 
 import common.Card;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,15 +10,16 @@ import javafx.scene.image.ImageView;
  * @author Tim
  *
  */
-public class CardLabel extends Label {
-
+public class CardLabel extends Button {
+	protected String fileName;
+	
 	public CardLabel() {
 		super();
 	}
 
 	public void setCard(Card card) {
 		if (card != null) {
-			String fileName = cardToFileName(card);
+			this. fileName = cardToFileName(card);
 			Image image = new Image(CardLabel.class.getResourceAsStream("..//images//"+fileName));
 			ImageView imageView = new ImageView(image);
 			imageView.setFitHeight(120);
@@ -34,6 +36,10 @@ public class CardLabel extends Label {
 		String suit = card.getSuit().toString();
 		String rank = card.getRank().toString();
 		return suit + rank + ".jpg";
+	}
+	
+	public String toString() {
+		return this.fileName;
 	}
 
 }
