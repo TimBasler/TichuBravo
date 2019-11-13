@@ -19,6 +19,12 @@ public class ServerController {
 		this.view = view;
 		this.model = model;
 		
+		model.sspGame.addListener((o, oldValue, newValue) -> {
+			if (newValue.equals("dealCards")) {
+				
+			}
+		});
+		
 		model.clients.addListener((ListChangeListener<? super ServerClient>) (e -> view.textArea.appendText("new client")));
 		
 		

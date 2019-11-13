@@ -5,10 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import client.MsgType;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author Dominik
@@ -19,6 +24,7 @@ public class ServerClient {
 	private String name;
 	private Socket socket;
 	private ServerModel model;
+	
 
 	/**
 	 * constructor
@@ -40,13 +46,26 @@ public class ServerClient {
 			
 				
 				while (true) {
-						model.broadcast(read());
+						decide(read());
 				}
 			
 			}
 		};
 		Thread t = new Thread(r);
 		t.start();
+	}
+	
+	public void decide(JSONObject json) {
+		if (json.containsKey(MsgType.name.toString())
+				|| json.containsKey(MsgType.msg.toString())
+				|| json.containsKey(MsgType.turn.toString())) {
+			model.broadcast(json);
+		} else if (json.containsKey(MsgType.game.toString())) {
+				model.sspGame.set("");
+				model.sspGame.set((String) json.get(MsgType.game.toString()));
+			} else {
+			// wrong Key
+		}
 	}
 
 	/**
@@ -111,6 +130,22 @@ public class ServerClient {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * create Json with an array
+	 * @param key
+	 * @param strings
+	 * @return JSONObject
+	 */
+	public JSONObject createJsonArray(String key, ArrayList<String> strings) {
+		JSONObject json = new JSONObject();
+		JSONArray list = new JSONArray();
+		for (String s : strings) {
+			list.add(s);
+		}
+		json.put(key, list);
+		return json;
 	}
 
 	//getter

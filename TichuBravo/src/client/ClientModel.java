@@ -165,7 +165,7 @@ public class ClientModel {
 	 * @param strings
 	 * @return JSONObject
 	 */
-	public JSONObject createJsonArray(String key, String...strings) {
+	public JSONObject createJsonArray(String key, ArrayList<String> strings) {
 		JSONObject json = new JSONObject();
 		JSONArray list = new JSONArray();
 		for (String s : strings) {

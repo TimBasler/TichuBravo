@@ -3,9 +3,13 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import common.Card;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,6 +21,27 @@ public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;
 	protected final ObservableList<ServerClient> clients = FXCollections.observableArrayList();
+	protected SimpleStringProperty sspGame = new SimpleStringProperty();
+	protected Deck deck = new Deck();
+	
+	public void sendNewCards() {
+		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
+		deck.createDeck();
+		Card c = null;
+		do {
+			for(ArrayList<String> list : lists) {
+				c = deck.deal();
+				if (c != null)
+				list.add(c.toString());
+			}
+		} while (c != null);
+		for (int i = 0; i < clients.size(); i++) {
+			JSONObject json = clients.get(i).createJsonArray("Cards", lists.get(i));
+			clients.get(i).send(json);
+		}
+	}
+	
+	
 
 	
 //TODO client name einlesen
@@ -82,4 +107,6 @@ public class ServerModel {
 			sc.sendString(s);
 		}
 	}
+	
+	
 }
