@@ -35,9 +35,8 @@ public class ServerModel {
 				@Override
 				public void run() {
 					while (!stop) {
-						if (clientId <= 4) {
+						if (clientId <=3) {
 							try {
-
 								Socket socket = serverSocket.accept();
 								ServerClient c = new ServerClient(socket, "client ", ServerModel.this);
 
@@ -49,21 +48,11 @@ public class ServerModel {
 								out.write(json.toString() + "\n");
 								out.flush();
 								clients.add(c);
-
-								if (clients.size() > 0) {
-									JSONObject json2 = new JSONObject();
-									OutputStreamWriter out2 = new OutputStreamWriter(socket.getOutputStream());
-									json2.put("disableConnect", "true");
-									out2.write(json2.toString() + "\n");
-									out2.flush();
-								}
-
 							} catch (IOException e) {
 								e.printStackTrace();
 								// break;
 							}
 						}
-
 					}
 				}
 			};
