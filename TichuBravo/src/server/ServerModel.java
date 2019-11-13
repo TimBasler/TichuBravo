@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
  * @author Dominik
  *
  */
+//
 public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;
