@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
 import common.Card;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -34,7 +35,15 @@ public class ClientModel {
 	protected ArrayList<String> turn = new ArrayList<>();
 	protected ArrayList <Object> selectedCardList=new ArrayList();
 	protected final ObservableList<Card> cardList = FXCollections.observableArrayList(); //kommt in die Player Klasse
-
+	protected int clientId;
+	protected String playerName;
+	protected boolean isTeamOne;
+	protected Player player;
+	
+	public void createPlayer() {
+		player = new Player(this.playerName,this.isTeamOne,this.clientId);
+	}
+	
 	public ClientModel() {
 		
 	}
@@ -131,6 +140,10 @@ public class ClientModel {
 	 * @param json
 	 */
 	public void saveInput(JSONObject json) {
+		if(json.containsKey(MsgType.clientId.toString())) {
+			this.clientId=Integer.parseInt((String) json.get(MsgType.clientId.toString()));
+		}
+		
 		if (json.containsKey(MsgType.name.toString())) {
 			sspName.set("");
 			sspName.set((String) json.get(MsgType.name.toString()));

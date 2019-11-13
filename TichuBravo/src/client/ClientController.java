@@ -55,8 +55,17 @@ public class ClientController {
 		});
 
 		clientView.lobbyView.loginButton.setOnAction(e -> {
+			clientModel.send(
+					clientModel.createJson(MsgType.name.toString(), clientView.lobbyView.userTextField.getText()));
 			clientView.stage.setScene(clientView.gameScene);
+
+			clientModel.playerName = clientView.lobbyView.userTextField.getText();
+			clientModel.isTeamOne = clientView.lobbyView.teamOne.isSelected();
+			clientModel.createPlayer();
+
+			System.out.println(clientModel.player);
 		});
+
 
 		// Card
 		// 1Card

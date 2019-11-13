@@ -21,10 +21,9 @@ public class Player {
 	public Player() {
 	}
 	
-	public Player(String playerName, boolean isTeamOne, int scorePlayer, int playerID) {
+	public Player(String playerName, boolean isTeamOne, int playerID) {
 	this.playerName=playerName;
 	this.isTeamOne=isTeamOne;
-	this.scorePlayer=scorePlayer;
 	this.playerID=playerID;
 	}
 	

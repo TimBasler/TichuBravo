@@ -1,12 +1,14 @@
 package server;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 
 import common.Card;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,6 +26,7 @@ public class ServerModel {
 	protected final ObservableList<ServerClient> clients = FXCollections.observableArrayList();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
 	protected Deck deck = new Deck();
+	protected int clientId=0;
 	
 	public void sendNewCards() {
 		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
@@ -62,13 +65,23 @@ public class ServerModel {
 				@Override
 				public void run() {
 					while (!stop) {
-						try {
-							Socket socket = serverSocket.accept();
-							ServerClient c = new ServerClient(socket, "client ", ServerModel.this);
-							clients.add(c);
-						} catch (IOException e) {
-							e.printStackTrace();
-							//break;
+						if (clientId <=3) {
+							try {
+								Socket socket = serverSocket.accept();
+								ServerClient c = new ServerClient(socket, "client ", ServerModel.this);
+
+								// Set the id's
+								clientId++;
+								OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+								JSONObject json = new JSONObject();
+								json.put("clientId", clientId + "");
+								out.write(json.toString() + "\n");
+								out.flush();
+								clients.add(c);
+							} catch (IOException e) {
+								e.printStackTrace();
+								// break;
+							}
 						}
 					}
 				}
