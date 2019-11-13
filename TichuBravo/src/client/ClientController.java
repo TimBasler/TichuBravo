@@ -16,7 +16,7 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
-		
+
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			System.out.println(newValue);
 			clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
@@ -31,7 +31,7 @@ public class ClientController {
 		});
 
 		clientView.lobbyView.btnConnect.setOnAction(event -> {
-				clientModel.connect();
+			clientModel.connect();
 		});
 
 		clientView.gameView.chatView.sendButton.setOnAction(e -> {
@@ -55,6 +55,8 @@ public class ClientController {
 			System.out.println(clientModel.player);
 		});
 
+		
+		
 	}
 
 }

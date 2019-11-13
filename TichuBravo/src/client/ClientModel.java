@@ -59,7 +59,6 @@ public class ClientModel {
 					
 					// read and save the message
 					while (true) {
-						//sspMsg.set(read().toJSONString());
 						saveInput(read());
 					}
 					

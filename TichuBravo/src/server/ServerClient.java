@@ -41,8 +41,6 @@ public class ServerClient {
 				
 				while (true) {
 						model.broadcast(read());
-						//String s = readString();
-						//model.broadcastString(s);
 				}
 			
 			}
@@ -82,17 +80,15 @@ public class ServerClient {
 	 * @return
 	 */
 	public JSONObject read() {
-		if (socket.isClosed() ) System.out.println("socket = null - ServerClient");
 		JSONObject json = null;
 		String inputString = null;
 		
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // war in der klammer --- Problem!!
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
 			inputString = in.readLine();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("socket problem");
 		}
 		
 		
@@ -102,20 +98,17 @@ public class ServerClient {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("parser problem");
-			
 		}
 		return json;
 	}
 	
 	public String readString() {
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // war in der klammer --- Problem!!
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
 			String inputString = in.readLine();
 			return inputString;
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("socket problem");
 		}
 		return null;
 	}
