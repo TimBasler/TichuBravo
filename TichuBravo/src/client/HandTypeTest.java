@@ -75,9 +75,15 @@ public class HandTypeTest {
 	// System.out.println(clonedCards.get(i).toString());
 	// System.out.println(clonedCards.get(j).toString());
 	
-	
+	@Test //ok
+		public void findFullHouseTest() {
+			HandType.findPair(list1);
+			HandType.findThreeOfAKind(list1);
+			HandType.findFullHouse();
+			assertTrue(HandType.fullHouseList.size() == 14);
+		}
 
-	@Test //ok aber ändern - nur eine Strasse speichern der gleichen Farbe
+	//@Test //ok aber ändern - nur eine Strasse speichern der gleichen Farbe
 	public void findBombStraightFlushTest() {
 		HandType.findBombStraightFlush2(list2);
 		for (int i = 0; i < HandType.BombStraightFlushList.size(); i++) {
@@ -107,7 +113,7 @@ public class HandTypeTest {
 		assertTrue(HandType.straightList.size() == 3);
 	}
 
-	// @Test //fail
+	// @Test //ok
 	public void findThreeOfAKindTest() {
 		HandType.threeOfAKindList.clear();
 		HandType.findThreeOfAKind(list1);
@@ -117,7 +123,7 @@ public class HandTypeTest {
 			}
 		}
 		System.out.println(HandType.threeOfAKindList.size());
-		assertTrue(HandType.threeOfAKindList.size() == 2);
+		assertTrue(HandType.threeOfAKindList.size() == 3);
 	}
 
 	// @Test //ok

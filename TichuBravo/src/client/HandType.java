@@ -204,10 +204,10 @@ public enum HandType {
 	 */
 	public static void findThreeOfAKind(ArrayList<Card> cards) {
 		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
-		System.out.println(clonedCards.toString());
+		
 
-		for (int i = 0; i < clonedCards.size() - 2; i++) {
-			for (int j = i + 1; j < clonedCards.size() - 1; j++) {
+		for (int i = 0; i < (clonedCards.size() - 2); i++) {
+			for (int j = i + 1; j < (clonedCards.size() - 1); j++) {
 				for (int k = j + 1; k < clonedCards.size(); k++) {
 					if (clonedCards.get(i).getRank() == clonedCards.get(j).getRank()
 							&& clonedCards.get(j).getRank() == clonedCards.get(k).getRank()) {
@@ -216,15 +216,11 @@ public enum HandType {
 						newList.add(clonedCards.get(j));
 						newList.add(clonedCards.get(k));
 						clonedCards.remove(i);
-						clonedCards.remove(j - 1);
-						clonedCards.remove(k - 2);
-						System.out.println(i);
-						System.out.println(j);
-						System.out.println(k);
+						clonedCards.remove(j-1);
+						clonedCards.remove(k-2);
 						i = 0;
-						j = 0;
-						k = 0;
-						System.out.println(newList.toString());
+						j = 1;
+						k = 1;
 						threeOfAKindList.add(newList);
 					}
 				}

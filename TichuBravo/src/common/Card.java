@@ -119,7 +119,7 @@ public class Card implements Comparable<Card> {
 	}
 
 	public boolean isEqual(Card other) {
-		if (this.specialCard == other.specialCard || this.rank == other.rank && this.suit == other.suit) {
+		if (this.specialCard == other.specialCard && this.rank == other.rank && this.suit == other.suit) {
 			return true;
 		}
 		return false;
