@@ -3,7 +3,10 @@ package client;
 import java.io.IOException;
 
 import common.Card;
+import common.Card.Rank;
+import common.Card.Suit;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 
 /**
@@ -67,7 +70,8 @@ public class ClientController {
 		});
 
 
-		// Card
+		// Card	
+		
 		// 1Card
 		clientView.gameView.boardView.bottomBox.getChildren().get(0).setOnMouseClicked(e -> {
 			clientModel.selectedCardList.add((CardLabel) clientView.gameView.boardView.bottomBox.getChildren().get(0));
@@ -190,6 +194,8 @@ public class ClientController {
 			clientModel.selectedCardList.clear();
 		});
 
+		 
+		
 	}
 
 }
