@@ -12,9 +12,27 @@ import javafx.scene.image.ImageView;
  */
 public class CardLabel extends Button {
 	protected String fileName;
+	protected CardLabel cardLabel;
 	
 	public CardLabel() {
 		super();
+	}
+	
+	public CardLabel makeCardLabel(Card card) {
+		if(card!=null) {
+			String fileNameString=cardToFileName(card);
+			System.out.println(fileNameString);
+			Image image = new Image(CardLabel.class.getResourceAsStream("..//images//"+fileNameString));
+			ImageView imageView = new ImageView(image);
+			imageView.setFitHeight(120);
+			imageView.setFitWidth(120);
+			imageView.setPreserveRatio(true);
+			this.cardLabel=new CardLabel();
+			this.cardLabel.setGraphic(imageView);
+		} else {
+			this.cardLabel.setGraphic(null);
+		}
+		return this.cardLabel;
 	}
 
 	public void setCard(Card card) {
@@ -32,10 +50,14 @@ public class CardLabel extends Button {
 	}
 
 	// TODO do it 4 spezialCards
-	private String cardToFileName(Card card) {
-		String suit = card.getSuit().toString();
-		String rank = card.getRank().toString();
-		return suit + rank + ".jpg";
+	private static String cardToFileName(Card card) {
+		if(!card.isSpecial()) {
+			String suit = card.getSuit().toString();
+			String rank = card.getRank().toString();
+			return suit + rank + ".jpg";
+		}else {
+			return card.toString()+".jpg";
+		}
 	}
 	
 	public String toString() {

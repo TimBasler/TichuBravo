@@ -5,6 +5,7 @@ package client;
 import java.util.ArrayList;
 
 import common.Card;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -17,6 +18,8 @@ public class Player {
 	protected boolean isTeamOne;
 	protected int scorePlayer;
 	protected final ObservableList<Card> cardList = FXCollections.observableArrayList();
+	protected final ObservableList<Card> specialCardList = FXCollections.observableArrayList();
+	protected SimpleBooleanProperty hasMahJong = new SimpleBooleanProperty(false);
 	
 	public Player() {
 	}
@@ -27,6 +30,10 @@ public class Player {
 	this.playerID=playerID;
 	}
 	
+	public boolean isTeamOne() {
+		return isTeamOne;
+	}
+
 	public void setPlayerID(int playerID) {
 		this.playerID=playerID;
 	}
