@@ -51,7 +51,7 @@ public class ClientController {
 		});
 
 		clientView.lobbyView.sendBtn.setOnAction(e -> {
-			clientModel.send(clientModel.createJson(MsgType.card.toString(), "dealCards")); // nur zum testen
+			clientModel.send(clientModel.createJson(MsgType.game.toString(), "dealCards")); // nur zum testen
 			System.out.println(clientModel.cardList.toString());
 		});
 
@@ -64,13 +64,13 @@ public class ClientController {
 			clientModel.isTeamOne = clientView.lobbyView.teamOne.isSelected();
 			clientModel.createPlayer();
 			
-			clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView.getPlayerCardLabel().makeCardLabel(clientModel.cardList.get(0)));
+			//clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView.getPlayerCardLabel().makeCardLabel(clientModel.cardList.get(0)));
 			
-			/*
-			 * 	for(int i =0;i<=14;i++) {
+			
+			 	for(int i =0;i<=13;i++) {
 				clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView.getPlayerCardLabel().makeCardLabel(clientModel.cardList.get(i)));
 			}
-			 */
+			
 		
 			System.out.println(clientModel.player);
 		});

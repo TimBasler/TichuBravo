@@ -20,8 +20,9 @@ public class CardLabel extends Button {
 	
 	public CardLabel makeCardLabel(Card card) {
 		if(card!=null) {
-			String fileName=cardToFileName(card);
-			Image image = new Image(CardLabel.class.getResourceAsStream("..//images"+fileName));
+			String fileNameString=cardToFileName(card);
+			System.out.println(fileNameString);
+			Image image = new Image(CardLabel.class.getResourceAsStream("..//images//"+fileNameString));
 			ImageView imageView = new ImageView(image);
 			imageView.setFitHeight(120);
 			imageView.setFitWidth(120);
@@ -50,9 +51,13 @@ public class CardLabel extends Button {
 
 	// TODO do it 4 spezialCards
 	private static String cardToFileName(Card card) {
-		String suit = card.getSuit().toString();
-		String rank = card.getRank().toString();
-		return suit + rank + ".jpg";
+		if(!card.isSpecial) {
+			String suit = card.getSuit().toString();
+			String rank = card.getRank().toString();
+			return suit + rank + ".jpg";
+		}else {
+			return card.toString()+".jpg";
+		}
 	}
 	
 	public String toString() {
