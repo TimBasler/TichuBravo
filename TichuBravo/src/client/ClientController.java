@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import common.Card;
 import javafx.collections.ListChangeListener;
@@ -23,9 +24,17 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
+		
+		clientModel.player.hasMahJong.addListener((o, oldValue, newValue) -> {
+			clientModel.send(clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID+""));
+		});
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
+		});
+		
+		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
+			
 		});
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
