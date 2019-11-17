@@ -1,5 +1,7 @@
 package common;
 
+
+//This class is written by Tim Basler
 //the template of this class is the poker game written by Tim and Dominik
 //in the course of Bradley Richards
 
@@ -8,31 +10,44 @@ package common;
  *
  */
 public class Card implements Comparable<Card> {
+
+	public boolean isSpecial() {
+		return isSpecial;
+	}
+
+	private SpecialCard specialCard;
 	private Rank rank;
 	private Suit suit;
-	private SpezialCard spezialCard;
-	public boolean isSpecial;
+	private boolean isSpecial;
 
 	// Constructor for the "SpezialCards"
-	public Card(SpezialCard spezialCard) {
-		this.spezialCard = spezialCard;
+	public Card(SpecialCard specialCard) {
+		this.specialCard = specialCard;
+		this.rank = null;
+		this.suit = null;
 		isSpecial = true;
+		
+
 	}
+
 
 	// Constructor for the "normal" Cards
 	public Card(Rank rank, Suit suit) {
 		this.rank = rank;
 		this.suit = suit;
+		this.specialCard = null;
 		isSpecial = false;
 	}
 
-	public enum SpezialCard {
-		Dog, MahJong, Dragon, Phenix;
+	public enum SpecialCard {
+		Dog, MahJong, Phenix, Dragon;
 	}
+
 
 	// Had to change the Swords to Machete that i can create Cards
 	public enum Suit {
 		Stars, Machete, Jade, Pagodas;
+
 		public String toString() {
 			String suit = "";
 			switch (this) {
@@ -52,6 +67,9 @@ public class Card implements Comparable<Card> {
 			return suit;
 		}
 	};
+
+	
+
 
 	public enum Rank {
 		Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace;
@@ -79,22 +97,24 @@ public class Card implements Comparable<Card> {
 	 * Create a card from a 2-character String. First character is the rank (2-9, T,
 	 * J, Q, K, A) Second character is the suit (C, D, H, S)
 	 */
+
+
 	public static Card makeCard(String in) {
 		Card card = null;
 		if (in.length() > 2) {
 
 			switch (in) {
 			case "Phenix":
-				card = new Card(Card.SpezialCard.Phenix);
+				card = new Card(Card.SpecialCard.Phenix);
 				break;
 			case "Dog":
-				card = new Card(Card.SpezialCard.Dog);
+				card = new Card(Card.SpecialCard.Dog);
 				break;
 			case "MahJong":
-				card = new Card(Card.SpezialCard.MahJong);
+				card = new Card(Card.SpecialCard.MahJong);
 				break;
 			case "Dragon":
-				card = new Card(Card.SpezialCard.Dragon);
+				card = new Card(Card.SpecialCard.Dragon);
 			}
 		} else {
 
@@ -138,23 +158,37 @@ public class Card implements Comparable<Card> {
 		return suit;
 	}
 
+	public SpecialCard getSpecialCard() {
+		return specialCard;
+	}
+
 	public String toString() {
 		if (isSpecial) {
-			return this.spezialCard.toString();
+			return this.specialCard.toString();
 		}
 			return rank.toString() + suit.toString();
 	}
 
+	@Override
 	public int compareTo(Card otherCard) {
-		if (rank.ordinal() == otherCard.rank.ordinal()) {
-			return 0;
-		} else {
-			if (rank.ordinal() > otherCard.rank.ordinal()) {
-				return 1;
+		if (this.specialCard == null) {
+			if (rank.ordinal() == otherCard.rank.ordinal()) {
+				return 0;
 			} else {
-				return -1;
+				return (rank.ordinal() > otherCard.rank.ordinal()) ? 1 : -1;
 			}
 		}
+		if (specialCard.ordinal() == otherCard.specialCard.ordinal()) {
+			return 0;
+		}
+		return (specialCard.ordinal() > otherCard.specialCard.ordinal()) ? 1 : -1;
+	}
+
+	public boolean isEqual(Card other) {
+		if (this.specialCard == other.specialCard && this.rank == other.rank && this.suit == other.suit) {
+			return true;
+		}
+		return false;
 	}
 
 }

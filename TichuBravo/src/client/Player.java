@@ -27,6 +27,10 @@ public class Player {
 	this.playerID=playerID;
 	}
 	
+	public boolean isTeamOne() {
+		return isTeamOne;
+	}
+
 	public void setPlayerID(int playerID) {
 		this.playerID=playerID;
 	}

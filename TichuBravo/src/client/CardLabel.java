@@ -51,7 +51,7 @@ public class CardLabel extends Button {
 
 	// TODO do it 4 spezialCards
 	private static String cardToFileName(Card card) {
-		if(!card.isSpecial) {
+		if(!card.isSpecial()) {
 			String suit = card.getSuit().toString();
 			String rank = card.getRank().toString();
 			return suit + rank + ".jpg";
