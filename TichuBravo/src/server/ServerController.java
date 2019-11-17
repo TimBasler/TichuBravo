@@ -19,6 +19,10 @@ public class ServerController {
 		this.view = view;
 		this.model = model;
 		
+		model.game.players.addListener((ListChangeListener<? super Player>)(e ->{
+			if (model.game.players.size() == 4) model.game.sendNewCards();
+		}));
+		
 		model.sspGame.addListener((o, oldValue, newValue) -> {
 			if (newValue.equals("dealCards")) {
 				model.game.sendNewCards();

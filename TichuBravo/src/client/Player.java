@@ -17,9 +17,9 @@ public class Player {
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int scorePlayer;
-	protected final ObservableList<Card> cardList = FXCollections.observableArrayList();
+	protected final ObservableList<Card> normalCardList = FXCollections.observableArrayList();
 	protected final ObservableList<Card> specialCardList = FXCollections.observableArrayList();
-	protected SimpleBooleanProperty hasMahJong = new SimpleBooleanProperty(false);
+	protected SimpleBooleanProperty myTurn = new SimpleBooleanProperty(false);
 	
 	public Player() {
 	}

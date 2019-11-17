@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import common.Card;
+import common.MsgType;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 
@@ -25,8 +26,9 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 		
-		clientModel.player.hasMahJong.addListener((o, oldValue, newValue) -> {
-			clientModel.send(clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID+""));
+		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
+			//Spielzug start, Buttens aktivieren
+			//Speilzug machen, danach Buttons deaktivieren und myTurn = false setzen
 		});
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
@@ -40,8 +42,14 @@ public class ClientController {
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
 		});
 
-		clientModel.cardList.addListener((ListChangeListener<? super Card>) (e -> {
-			System.out.println(clientModel.cardList);
+		clientModel.player.normalCardList.addListener((ListChangeListener<? super Card>) (e -> {
+			
+		}));
+		
+		clientModel.player.specialCardList.addListener((ListChangeListener<? super Card>) (e -> {
+			if (HandType.hasMahJong((ArrayList<Card>) clientModel.player.specialCardList)) {
+				clientModel.send(clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID+""));
+			}
 		}));
 
 		clientView.gameView.button.setOnAction(e -> {
@@ -61,7 +69,7 @@ public class ClientController {
 
 		clientView.lobbyView.sendBtn.setOnAction(e -> {
 			clientModel.send(clientModel.createJson(MsgType.game.toString(), "dealCards")); // nur zum testen
-			System.out.println(clientModel.cardList.toString());
+			
 		});
 
 		clientView.lobbyView.loginButton.setOnAction(e -> {
@@ -72,6 +80,9 @@ public class ClientController {
 			clientModel.playerName = clientView.lobbyView.userTextField.getText();
 			clientModel.isTeamOne = clientView.lobbyView.teamOne.isSelected();
 			clientModel.createPlayer();
+			
+			clientModel.send(
+					clientModel.createJson(MsgType.player.toString(), clientModel.player.playerID+","+clientModel.player.isTeamOne));
 			
 			//Display the player Cards
 			 	for(int i =0;i<=13;i++) {

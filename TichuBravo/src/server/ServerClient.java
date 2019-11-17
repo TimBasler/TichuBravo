@@ -12,7 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import client.MsgType;
+import common.MsgType;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -64,7 +64,10 @@ public class ServerClient {
 				model.sspGame.set("");
 				model.sspGame.set((String) json.get(MsgType.game.toString()));
 			} else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
-				
+				model.game.newSequence((int) json.get(MsgType.whoHasMahJong));
+			} else if (json.containsKey(MsgType.player.toString())) {
+				String[] strings = ((String) json.get(MsgType.player.toString())).split(",");
+				model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
 			} else {
 			// wrong Key
 		}

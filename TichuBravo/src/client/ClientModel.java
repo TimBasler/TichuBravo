@@ -15,9 +15,9 @@ import org.json.simple.parser.ParseException;
 
 
 import common.Card;
+import common.MsgType;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 
 
 /**
@@ -33,7 +33,6 @@ public class ClientModel {
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
 	protected ArrayList<String> turn = new ArrayList<>();
 	protected ArrayList <Object> selectedCardList=new ArrayList();
-	protected final ObservableList<Card> cardList = FXCollections.observableArrayList(); //kommt in die Player Klasse
 	protected int clientId;
 	protected String playerName;
 	protected boolean isTeamOne;
@@ -162,12 +161,20 @@ public class ClientModel {
 			sspGame.set("");
 			sspGame.set((String) json.get(MsgType.game.toString()));
 		}
-		if (json.containsKey("Cards")) {
-			cardList.clear();
-			JSONArray list = (JSONArray) json.get("Cards");
+		if (json.containsKey(MsgType.cards.toString())) {
+			player.normalCardList.clear();
+			player.specialCardList.clear();
+			JSONArray list = (JSONArray) json.get(MsgType.cards.toString());
 			for (int i = 0; i < list.size(); i++) {
-				cardList.add(Card.makeCard((String) list.get(i)));
+				Card c = Card.makeCard((String) list.get(i));
+				if (c.isSpecial()) player.specialCardList.add(c);
+				else player.normalCardList.add(c);
 			}
+		}
+		if (json.containsKey(MsgType.currentPlayerID.toString())) {
+			if(clientId == Integer.parseInt((String) json.get(MsgType.currentPlayerID.toString()))){
+				player.myTurn.set(true);
+			} 
 		}
 	}
 
