@@ -11,7 +11,7 @@ public class Card implements Comparable<Card> {
 	private Rank rank;
 	private Suit suit;
 	private SpezialCard spezialCard;
-	private boolean isSpecial;
+	public boolean isSpecial;
 
 	// Constructor for the "SpezialCards"
 	public Card(SpezialCard spezialCard) {

@@ -23,7 +23,7 @@ public class BoardView extends VBox {
 			backGroundImageView;
 	protected StackPane topStackPane, leftStackPane, rightStackPane,middleBoardStackPane;
 	protected Label topLabel, leftLabel, rightLabel;
-	protected CardLabel playerCardLabel;
+	protected CardLabel playerCardLabel=new CardLabel();
 	protected Card playerCard;
 
 	public BoardView() {
@@ -72,19 +72,11 @@ public class BoardView extends VBox {
 		this.middleBox.setAlignment(Pos.CENTER);
 
 		this.bottomBox=new HBox();
-		// bottomBox
+		this.bottomBox.setAlignment(Pos.CENTER);
+
 		
-		this.bottomBox=new HBox();
-		for (int i = 0; i <= 13; i++) {
-			this.playerCardLabel = new CardLabel();
-			this.playerCard = new Card(Rank.Ace, Suit.Machete);
-			this.playerCardLabel.setCard(playerCard);
-			this.playerCardLabel.setId("cardButton");
-			this.bottomBox.getChildren().add(this.playerCardLabel);
-			this.bottomBox.setAlignment(Pos.CENTER);
-			this.bottomBox.setSpacing(-20);
-		}
-		
+	
+
 
 		// Putting everything in the container
 		this.getChildren().addAll(this.topBox, this.middleBox, this.bottomBox);
