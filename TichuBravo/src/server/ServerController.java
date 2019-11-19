@@ -21,11 +21,11 @@ public class ServerController {
 		
 		model.sspGame.addListener((o, oldValue, newValue) -> {
 			if (newValue.equals("dealCards")) {
-				model.sendNewCards();
+				model.game.sendNewCards();
 			}
 		});
 		
-		model.clients.addListener((ListChangeListener<? super ServerClient>) (e -> view.textArea.appendText("new client")));
+		ServerModel.clients.addListener((ListChangeListener<? super ServerClient>) (e -> view.textArea.appendText("new client")));
 		
 		
 		//read port number and start server

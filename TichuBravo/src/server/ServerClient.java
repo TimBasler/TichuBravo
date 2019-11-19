@@ -63,6 +63,8 @@ public class ServerClient {
 		} else if (json.containsKey(MsgType.game.toString())) {
 				model.sspGame.set("");
 				model.sspGame.set((String) json.get(MsgType.game.toString()));
+			} else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
+				
 			} else {
 			// wrong Key
 		}

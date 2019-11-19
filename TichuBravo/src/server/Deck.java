@@ -29,7 +29,7 @@ public class Deck{
 			}
 		}
 		//create spezial cards
-		for(Card.SpezialCard spezial : Card.SpezialCard.values()) {
+		for(Card.SpecialCard spezial : Card.SpecialCard.values()) {
 			Card card = new Card(spezial);
 			cards.add(card);
 		}
