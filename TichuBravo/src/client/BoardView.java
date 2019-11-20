@@ -71,22 +71,10 @@ public class BoardView extends VBox {
 		this.middleBox = new HBox(this.leftStackPane, this.middleBoardStackPane, this.rightStackPane);
 		this.middleBox.setAlignment(Pos.CENTER);
 
-		// bottomBox
 		this.bottomBox=new HBox();
-		
-		/*
-		 * 	for (int i = 1; i <= 14; i++) {
-			this.playerCardLabel = new CardLabel();
-			this.playerCard = new Card(Rank.Ace, Suit.Machete);
-			this.playerCardLabel.setCard(playerCard);
-			this.playerCardLabel.setId("cardButton");
-			this.bottomBox.getChildren().addAll(this.playerCardLabel);
-			this.bottomBox.setAlignment(Pos.CENTER);
-			this.bottomBox.setSpacing(-20);
-		}
-		 */
-	
+		this.bottomBox.setAlignment(Pos.CENTER);
 
+	
 		// Putting everything in the container
 		this.getChildren().addAll(this.topBox, this.middleBox, this.bottomBox);
 		this.setAlignment(Pos.CENTER);

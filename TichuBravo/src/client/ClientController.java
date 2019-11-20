@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import common.Card;
 import common.MsgType;
+
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 
 /**
@@ -96,8 +98,13 @@ public class ClientController {
 			 		
 			 		int x=i;
 			 		int y=i;
+			 		
 			 		clientView.gameView.boardView.bottomBox.getChildren().get(i).setOnMouseClicked(event->{
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==14) {
+			 			clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x));
+			 			clientView.gameView.boardView.bottomBox.getChildren().get(y).setId("clickedCard");
+			 			
+			 			/*
+			 			 * 	if(clientView.gameView.boardView.bottomBox.getChildren().size()==14) {
 			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x));
 				 			clientView.gameView.boardView.bottomBox.getChildren().get(y).setId("clickedCard");
 			 			}
@@ -153,6 +160,8 @@ public class ClientController {
 			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-13));
 				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-13).setId("clickedCard");
 			 			}
+			 			 */
+			 		
 			 			
 			 		});
 			 	}
@@ -175,7 +184,6 @@ public class ClientController {
  					
 			System.out.println(clientModel.player);
 		});
-
 
 		
 	}
