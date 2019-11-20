@@ -14,12 +14,14 @@ public class ControlAreaView extends HBox {
 	public ControlAreaView() {
 		this.passButton=new Button("Pass");
 		this.passButton.setId("passButton");
+		this.passButton.setDisable(true);
 		
 		this.quitGameButton=new Button("Quit Game");
 		this.quitGameButton.setId("quitGameButton");
 		
 		this.confirmButton=new Button("Confirm");
 		this.confirmButton.setId("confirmButton");
+		this.confirmButton.setDisable(true);
 		
 		this.smallTichu=new Button("Small Tichu");
 		this.smallTichu.setId("smallTichu");
