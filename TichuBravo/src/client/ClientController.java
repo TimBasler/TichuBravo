@@ -26,10 +26,19 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 		
-		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
+		
+		 clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
+			if(clientModel.player != null && (int)newValue == clientModel.player.getPlayerID()) {
+				//Buttons aktivieren
+				System.out.println(clientModel.player.getPlayerID());//test
+			} else {
+				//Buttons deaktivieren
+			}
 			//Spielzug start, Buttens aktivieren
-			//Speilzug machen, danach Buttons deaktivieren und myTurn = false setzen
+			//Speilzug machen, danach Buttons deaktivieren
 		});
+		 
+		
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
@@ -47,7 +56,8 @@ public class ClientController {
 		}));
 		
 		clientModel.player.specialCardList.addListener((ListChangeListener<? super Card>) (e -> {
-			if (HandType.hasMahJong((ArrayList<Card>) clientModel.player.specialCardList)) {
+		
+			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {			//Liste ausgeben zum testen
 				clientModel.send(clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID+""));
 			}
 		}));
@@ -85,13 +95,13 @@ public class ClientController {
 					clientModel.createJson(MsgType.player.toString(), clientModel.player.playerID+","+clientModel.player.isTeamOne));
 			
 			//Display the player Cards
-			 	for(int i =0;i<=13;i++) {
-				clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView.getPlayerCardLabel().makeCardLabel(clientModel.cardList.get(i)));
+			 	for(int i =0; i < clientModel.player.normalCardList.size(); i++) { //nur zum testen, es müssen beide listen (special und normal) setonAction gesetzt werden
+				clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView.getPlayerCardLabel().makeCardLabel(clientModel.player.normalCardList.get(i))); 
 				clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 			}
 			 
 			 	//Add the selected Cards to the selectedCardList and set the Id for css styling
-			 	for(int i=0;i<=13;i++) {
+			 	for(int i = 0; i < clientModel.player.normalCardList.size(); i++) {
 			 		
 			 		int x=i;
 			 		int y=i;

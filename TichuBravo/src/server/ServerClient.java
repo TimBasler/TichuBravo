@@ -64,12 +64,12 @@ public class ServerClient {
 				model.sspGame.set("");
 				model.sspGame.set((String) json.get(MsgType.game.toString()));
 			} else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
-				model.game.newSequence((int) json.get(MsgType.whoHasMahJong));
+				model.game.newSequence(Integer.parseInt((String) json.get(MsgType.whoHasMahJong.toString())));
 			} else if (json.containsKey(MsgType.player.toString())) {
 				String[] strings = ((String) json.get(MsgType.player.toString())).split(",");
 				model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
 			} else {
-			// wrong Key
+			// wrong key
 		}
 	}
 
@@ -135,6 +135,19 @@ public class ServerClient {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * create a Json object with a key and a value
+	 * 
+	 * @param key
+	 * @param value
+	 * @return json
+	 */
+	public static JSONObject createJson(String key, String value) {
+		JSONObject json = new JSONObject();
+		json.put(key, value);
+		return json;
 	}
 	
 	/**

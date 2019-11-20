@@ -1,5 +1,6 @@
 package server;
 
+import common.MsgType;
 import javafx.collections.ListChangeListener;
 
 /**
@@ -18,6 +19,10 @@ public class ServerController {
 	public ServerController(ServerModel model, ServerView view) {
 		this.view = view;
 		this.model = model;
+		
+		model.game.currentPlayerID.addListener(((o, oldValue, newValue) ->{
+			model.broadcast(ServerClient.createJson(MsgType.currentPlayerID.toString(),newValue.toString()));
+		}));
 		
 		model.game.players.addListener((ListChangeListener<? super Player>)(e ->{
 			if (model.game.players.size() == 4) model.game.sendNewCards();

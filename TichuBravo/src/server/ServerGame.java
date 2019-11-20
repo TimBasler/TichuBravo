@@ -14,7 +14,7 @@ public class ServerGame {
 	protected Deck deck = new Deck();
 	protected ObservableList<Player> players = FXCollections.observableArrayList();
 	protected ObservableList<Player> newSequence = FXCollections.observableArrayList();
-	protected SimpleIntegerProperty currentPlayerID;
+	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty();
 	
 	public ServerGame() {
 		
@@ -40,6 +40,7 @@ public class ServerGame {
 		newSequence.add(1, players.get(0));
 		newSequence.add(players.get(1));
 		players.clear();
+		currentPlayerID.set(newSequence.get(0).getID());
 	}
 	
 	public void sendNewCards() {

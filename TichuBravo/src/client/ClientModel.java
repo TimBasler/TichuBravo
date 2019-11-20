@@ -33,13 +33,15 @@ public class ClientModel {
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
 	protected ArrayList<String> turn = new ArrayList<>();
 	protected ArrayList <Object> selectedCardList=new ArrayList();
-	protected int clientId;
 	protected String playerName;
 	protected boolean isTeamOne;
-	protected Player player;
+	protected int clientId;
+	protected Player player = new Player();
 	
 	public void createPlayer() {
-		player = new Player(this.playerName,this.isTeamOne,this.clientId);
+		player.setPlayerName(playerName);
+		player.setIsTeamOne(isTeamOne);
+		player.setPlayerID(clientId);
 	}
 	
 	public ClientModel() {
@@ -172,9 +174,7 @@ public class ClientModel {
 			}
 		}
 		if (json.containsKey(MsgType.currentPlayerID.toString())) {
-			if(clientId == Integer.parseInt((String) json.get(MsgType.currentPlayerID.toString()))){
-				player.myTurn.set(true);
-			} 
+			player.myTurn.set(Integer.parseInt((String) json.get(MsgType.currentPlayerID.toString())));
 		}
 	}
 

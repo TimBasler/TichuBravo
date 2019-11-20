@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import common.Card;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -19,9 +20,11 @@ public class Player {
 	protected int scorePlayer;
 	protected final ObservableList<Card> normalCardList = FXCollections.observableArrayList();
 	protected final ObservableList<Card> specialCardList = FXCollections.observableArrayList();
-	protected SimpleBooleanProperty myTurn = new SimpleBooleanProperty(false);
+	protected SimpleIntegerProperty myTurn = new SimpleIntegerProperty();
 	
 	public Player() {
+		this.playerName=null;
+		this.isTeamOne=true;
 	}
 	
 	public Player(String playerName, boolean isTeamOne, int playerID) {
