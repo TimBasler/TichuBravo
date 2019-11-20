@@ -37,6 +37,7 @@ public class ClientController {
 				//Buttons deaktivieren
 			}
 			//Spielzug start, Buttens aktivieren
+			
 			//Speilzug machen, danach Buttons deaktivieren
 		});
 		 
