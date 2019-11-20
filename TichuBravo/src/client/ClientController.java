@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import common.Card;
 import common.MsgType;
-
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -27,40 +27,42 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
-		
-		
-		 clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
-			if(clientModel.player != null && (int)newValue == clientModel.player.getPlayerID()) {
-				//Buttons aktivieren
-				System.out.println(clientModel.player.getPlayerID());//test
+
+		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
+			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
+				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
+				clientView.gameView.controlAreaView.passButton.setDisable(false);
 			} else {
-				//Buttons deaktivieren
+				// Buttons deaktivieren
 			}
-			//Spielzug start, Buttens aktivieren
-			//Speilzug machen, danach Buttons deaktivieren
+			// Spielzug start, Buttens aktivieren
+			// Speilzug machen, danach Buttons deaktivieren
 		});
-		 
-		
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
 		});
-		
+
 		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
-			
+
 		});
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
 		});
 
 		clientModel.player.normalCardList.addListener((ListChangeListener<? super Card>) (e -> {
-			
+			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
+				clientModel.player.allCardsReceived.set(true);
+			}
 		}));
-		
+
 		clientModel.player.specialCardList.addListener((ListChangeListener<? super Card>) (e -> {
-		
-			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {			
-				clientModel.send(clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID+""));
+			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
+				clientModel.player.allCardsReceived.set(true);
+			}
+			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {
+				clientModel.send(
+						clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID + ""));
 			}
 		}));
 
@@ -75,117 +77,68 @@ public class ClientController {
 
 		});
 
+		clientModel.player.allCardsReceived.addListener((o, oldValue, newValue) -> {
+			// Display the player Cards
+			Platform.runLater(() -> {
+				for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { // nur zum testen, es müssen beide
+																						// listen (special und normal)
+																						// setonAction gesetzt werden
+					clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView
+							.getPlayerCardLabel().makeCardLabel(clientModel.player.normalCardList.get(i)));
+					clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
+				}
+
+				for (int i = 0; i < clientModel.player.specialCardList.size(); i++) {
+					clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView
+							.getPlayerCardLabel().makeCardLabel(clientModel.player.specialCardList.get(i)));
+					clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
+				}
+
+				// Add the selected Cards to the selectedCardList and set the Id for css styling
+				for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
+					int x = i;
+					int y = i;
+
+					clientView.gameView.boardView.bottomBox.getChildren().get(i).setOnMouseClicked(event -> {
+
+						clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x));
+						clientView.gameView.boardView.bottomBox.getChildren().get(y).setId("clickedCard");
+					});
+				}
+
+				// Delete Selected Cards from the selected CardList
+				clientView.gameView.controlAreaView.resetSelectedCardsButton.setOnMouseClicked(ev -> {
+					clientModel.selectedCardList.clear();
+					for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
+						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
+					}
+				});
+			});
+		});
+
 		clientView.lobbyView.loginButton.setOnAction(e -> {
 			clientModel.send(
 					clientModel.createJson(MsgType.name.toString(), clientView.lobbyView.userTextField.getText()));
 			clientView.stage.setScene(clientView.gameScene);
-
 			clientModel.playerName = clientView.lobbyView.userTextField.getText();
 			clientModel.isTeamOne = clientView.lobbyView.teamOne.isSelected();
 			clientModel.createPlayer();
-			
-			clientModel.send(
-					clientModel.createJson(MsgType.player.toString(), clientModel.player.playerID+","+clientModel.player.isTeamOne));
-			
-			//Display the player Cards
-			 	for(int i =0; i < clientModel.player.normalCardList.size(); i++) { //nur zum testen, es müssen beide listen (special und normal) setonAction gesetzt werden
-				clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView.getPlayerCardLabel().makeCardLabel(clientModel.player.normalCardList.get(i))); 
-				clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
-			}
-			 
-			 	//Add the selected Cards to the selectedCardList and set the Id for css styling
-			 	for(int i = 0; i < clientModel.player.normalCardList.size(); i++) {
-			 		
-			 		int x=i;
-			 		int y=i;
-			 		
-			 		clientView.gameView.boardView.bottomBox.getChildren().get(i).setOnMouseClicked(event->{
-			 			clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x));
-			 			clientView.gameView.boardView.bottomBox.getChildren().get(y).setId("clickedCard");
-			 			
-			 			/*
-			 			 * 	if(clientView.gameView.boardView.bottomBox.getChildren().size()==14) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==13) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-1));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-1).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==12) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-2));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-2).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==11) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-3));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-3).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==10) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-4));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-4).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==9) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-5));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-5).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==8) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-6));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-6).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==7) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-7));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-7).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==6) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-8));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-8).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==5) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-9));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-9).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==4) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-10));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-10).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==3) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-11));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-11).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==2) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-12));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-12).setId("clickedCard");
-			 			}
-			 			if(clientView.gameView.boardView.bottomBox.getChildren().size()==1) {
-			 				clientModel.selectedCardList.add(clientView.gameView.boardView.bottomBox.getChildren().get(x-13));
-				 			clientView.gameView.boardView.bottomBox.getChildren().get(y-13).setId("clickedCard");
-			 			}
-			 			 */
-			 		
-			 			
-			 		});
-			 	}
-			 	
-			 	//Delete Selected Cards from the selected CardList
-			 	clientView.gameView.controlAreaView.resetSelectedCardsButton.setOnMouseClicked(ev->{
-			 		clientModel.selectedCardList.clear();
-			 		for (int i=0;i<=13;i++) {
-				 		clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
-				 	}
-			 	});
-			 
-			 	//confirm Cards
-			 	clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc->{
-			 		for(int i=0;i<clientModel.selectedCardList.size();i++) {
-			 				clientView.gameView.boardView.middleBoxForCards.getChildren().add((Node) clientModel.selectedCardList.get(i));
-			 		}
-			 		clientModel.selectedCardList.clear();
-			 	});
- 					
+
+			clientModel.send(clientModel.createJson(MsgType.player.toString(),
+					clientModel.player.playerID + "," + clientModel.player.isTeamOne));
+
+			// confirm Cards
+			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
+				for (int i = 0; i < clientModel.selectedCardList.size(); i++) {
+					clientView.gameView.boardView.middleBoxForCards.getChildren()
+							.add((Node) clientModel.selectedCardList.get(i));
+				}
+				clientModel.selectedCardList.clear();
+			});
+
 			System.out.println(clientModel.player);
 		});
 
-		
 	}
 
 }

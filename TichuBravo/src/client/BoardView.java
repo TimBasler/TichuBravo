@@ -1,8 +1,6 @@
 package client;
 
 import common.Card;
-import common.Card.Rank;
-import common.Card.Suit;
 import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

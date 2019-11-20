@@ -37,7 +37,7 @@ public class ServerGame {
 				break;
 			}
 		}
-		newSequence.add(1, players.get(0));
+		newSequence.add(1, players.get(0));	//Fehler
 		newSequence.add(players.get(1));
 		players.clear();
 		currentPlayerID.set(newSequence.get(0).getID());
