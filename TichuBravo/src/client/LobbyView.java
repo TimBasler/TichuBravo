@@ -23,9 +23,6 @@ public class LobbyView  extends BorderPane {
 	
 	protected int playerDefaultNumber=1;
 	
-	Button btnConnect = new Button("Connect");
-	Button sendBtn = new Button("send");
-	
 	public LobbyView() {
 		this.userLabel=new Label("Username");
 		this.userLabel.setId("userLabel");
@@ -38,6 +35,7 @@ public class LobbyView  extends BorderPane {
 		this.teamOne=new RadioButton("Team one");
 		this.teamOne.setId("teamOne");
 		this.teamOne.setToggleGroup(toggleGroup);
+		this.teamOne.setSelected(true);
 		this.teamTwo= new RadioButton("Team two");
 		this.teamTwo.setId("teamTwo");
 		this.teamTwo.setToggleGroup(toggleGroup);
@@ -46,7 +44,7 @@ public class LobbyView  extends BorderPane {
 		
 		this.vBox=new VBox();
 		this.vBox.getChildren().addAll(this.userLabel,this.userTextField,
-				this.chooseLabel,this.teamOne,this.teamTwo,this.loginButton, this.btnConnect, sendBtn);
+				this.chooseLabel,this.teamOne,this.teamTwo,this.loginButton);
 		this.vBox.setAlignment(Pos.CENTER);
 		this.setCenter(this.vBox);
 	}

@@ -19,5 +19,6 @@ public class TichuClient extends Application {
 		ClientView view = new ClientView(stage, model);
 		ClientController controller = new ClientController(model, view);
 		view.start();
+		model.connect();
 	}
 }

@@ -57,7 +57,7 @@ public class ClientController {
 		
 		clientModel.player.specialCardList.addListener((ListChangeListener<? super Card>) (e -> {
 		
-			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {			//Liste ausgeben zum testen
+			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {			
 				clientModel.send(clientModel.createJson(MsgType.whoHasMahJong.toString(), clientModel.player.playerID+""));
 			}
 		}));
@@ -66,20 +66,11 @@ public class ClientController {
 			clientView.stage.setScene(clientView.lobbyScene);
 		});
 
-		clientView.lobbyView.btnConnect.setOnAction(event -> {
-			clientModel.connect();
-		});
-
 		clientView.gameView.chatView.sendButton.setOnAction(e -> {
 
 			clientModel.send(clientModel.createJson(MsgType.msg.toString(),
 					clientView.gameView.chatView.chatTextField.getText()));
 
-		});
-
-		clientView.lobbyView.sendBtn.setOnAction(e -> {
-			clientModel.send(clientModel.createJson(MsgType.game.toString(), "dealCards")); // nur zum testen
-			
 		});
 
 		clientView.lobbyView.loginButton.setOnAction(e -> {
