@@ -13,12 +13,18 @@ import javafx.scene.image.ImageView;
 public class CardLabel extends Button {
 	protected String fileName;
 	protected CardLabel cardLabel;
+	protected Card card;
 	
 	public CardLabel() {
 		super();
 	}
 	
+	public Card getCard() {
+		return card;
+	}
+
 	public CardLabel makeCardLabel(Card card) {
+		this.card = card;
 		if(card!=null) {
 			String fileNameString=cardToFileName(card);
 			System.out.println(fileNameString);
@@ -36,6 +42,7 @@ public class CardLabel extends Button {
 	}
 
 	public void setCard(Card card) {
+		this.card = card;
 		if (card != null) {
 			this. fileName = cardToFileName(card);
 			Image image = new Image(CardLabel.class.getResourceAsStream("..//images//"+fileName));

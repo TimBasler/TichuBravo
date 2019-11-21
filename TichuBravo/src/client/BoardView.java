@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -15,7 +16,8 @@ import javafx.scene.layout.VBox;
  *
  */
 public class BoardView extends VBox {
-	protected HBox topBox, middleBox, bottomBox,middleBoxForCards;
+	protected FlowPane middleBoxForCards;
+	protected HBox topBox, middleBox, bottomBox;
 	protected Image backOfCardImage, backOfCardTurnedImage, backOfCardTurnedImage2, blackImage, backGroundImage;
 	protected ImageView backOfCardImageView, backOfCardTurnedImageView, backOfCardTurnedImageView2, blackImageView,
 			backGroundImageView;
@@ -47,8 +49,9 @@ public class BoardView extends VBox {
 		this.leftLabel.setId("leftLabel");
 		this.leftStackPane = new StackPane(this.backOfCardTurnedImageView, this.leftLabel);
 		
-		this.middleBoxForCards=new HBox();
-		this.middleBoxForCards.setSpacing(-20);
+		this.middleBoxForCards=new FlowPane();
+		//this.middleBoxForCards=new HBox();
+		//this.middleBoxForCards.setSpacing(-20);
 		
 		this.backGroundImage = new Image(BoardView.class.getResourceAsStream("..//images/background.png"));
 		this.backGroundImageView = new ImageView(backGroundImage);
