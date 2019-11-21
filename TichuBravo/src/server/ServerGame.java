@@ -1,6 +1,7 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.json.simple.JSONObject;
 
@@ -10,18 +11,44 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * @author Dominik
+ *
+ */
 public class ServerGame {
 	protected Deck deck = new Deck();
 	protected ObservableList<Player> players = FXCollections.observableArrayList();
 	protected ObservableList<Player> newSequence = FXCollections.observableArrayList();
 	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty();
 	
+	
 	public ServerGame() {
 		
 	}
 	
+	/**
+	 * check the currentPlayerID and set the next ID on the SimpleIntegerProperty
+	 */
+	public void nextPlayer() {
+		int i = currentPlayerID.get();
+		for (int j = 0; j < newSequence.size(); j++) {
+			if (newSequence.get(j).getID() == i) {
+				if(j == newSequence.size()-1) {
+					currentPlayerID.set(newSequence.get(0).getID());
+				} else {
+					currentPlayerID.set(newSequence.get(j + 1).getID());
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * add the player with MahJong on the first place and the team colleague on the third place to the list, 
+	 * then add the others
+	 * @param firstID
+	 */
 	public void newSequence(int firstID) {
-		
 		newSequence.clear();
 		for (Player p : players) {
 			if (p.getID() == firstID) {
@@ -43,6 +70,9 @@ public class ServerGame {
 		currentPlayerID.set(newSequence.get(0).getID());
 	}
 	
+	/**
+	 * deal all cards into four lists and send each list to a client
+	 */
 	public void sendNewCards() {
 		ArrayList<ArrayList<String>> lists = new ArrayList<ArrayList<String>>();
 		lists.add(new ArrayList<String>());

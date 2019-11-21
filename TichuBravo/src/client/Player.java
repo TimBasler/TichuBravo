@@ -20,10 +20,8 @@ public class Player {
 	protected int scorePlayer;
 	protected final ObservableList<Card> normalCardList = FXCollections.observableArrayList();
 	protected final ObservableList<Card> specialCardList = FXCollections.observableArrayList();
-	//protected final ObservableList<Card> selectedCardList = FXCollections.observableArrayList();
 	protected ArrayList <CardLabel> selectedCardList=new ArrayList<>();
 	protected SimpleBooleanProperty allCardsReceived = new SimpleBooleanProperty(false);
-	protected SimpleBooleanProperty updateCardLabels = new SimpleBooleanProperty(false);
 	protected SimpleIntegerProperty myTurn = new SimpleIntegerProperty();
 	
 	public Player() {

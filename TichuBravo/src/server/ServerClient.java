@@ -58,7 +58,7 @@ public class ServerClient {
 	public void decide(JSONObject json) {
 		if (json.containsKey(MsgType.name.toString())
 				|| json.containsKey(MsgType.msg.toString())
-				|| json.containsKey(MsgType.turn.toString())) {
+				|| json.containsKey(MsgType.turn.toString())) {			//ändern currentPlayerID ändern + Karten weitergeben
 			model.broadcast(json);
 		} else if (json.containsKey(MsgType.game.toString())) {
 				model.sspGame.set("");
@@ -68,6 +68,8 @@ public class ServerClient {
 			} else if (json.containsKey(MsgType.player.toString())) {
 				String[] strings = ((String) json.get(MsgType.player.toString())).split(",");
 				model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
+			} else if (json.containsKey(MsgType.pass.toString())) {
+				model.game.nextPlayer();
 			} else {
 			// wrong key
 		}

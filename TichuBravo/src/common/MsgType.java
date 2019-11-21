@@ -16,6 +16,6 @@ package common;
  * 
  */
 public enum MsgType {
-	name, msg, turn, game, clientId, card, cards, whoHasMahJong, player, currentPlayerID;
+	name, msg, turn, game, clientId, card, cards, whoHasMahJong, player, currentPlayerID, pass;
 
 }
