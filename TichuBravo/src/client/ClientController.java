@@ -113,13 +113,12 @@ public class ClientController {
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 					}
 				});
+				
+				
+				
 			});
 			
 		});
-
-		
-
-		
 
 		clientView.lobbyView.loginButton.setOnAction(e -> {
 			clientModel.send(
@@ -134,6 +133,8 @@ public class ClientController {
 			
 			// confirm Cards
 			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
+				//Disable Small Tichu
+				clientView.gameView.controlAreaView.smallTichu.setDisable(true);
 				for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
 					clientView.gameView.boardView.middleBoxForCards.getChildren()
 							.add((CardLabel) clientModel.player.selectedCardList.get(i));
@@ -149,6 +150,11 @@ public class ClientController {
 //				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));		
 			});
 			
+			//SmallTichu
+			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event->{
+				clientModel.player.saidSmallTichu=true;
+			});
+			
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {
 				clientModel.player.selectedCardList.clear();
@@ -158,7 +164,7 @@ public class ClientController {
 			});
 			
 
-			System.out.println(clientModel.player);						//löschen
+			System.out.println(clientModel.player);						//TODO löschen
 		});
 
 	}
