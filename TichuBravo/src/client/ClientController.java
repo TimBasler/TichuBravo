@@ -36,8 +36,10 @@ public class ClientController {
 			} else {
 				// Buttons deaktivieren
 			}
+
 			// Spielzug start, Buttens aktivieren
 			// Speilzug machen, danach Buttons deaktivieren
+
 		});
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
