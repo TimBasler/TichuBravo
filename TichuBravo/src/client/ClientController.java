@@ -135,15 +135,15 @@ public class ClientController {
 					clientView.gameView.boardView.middleBoxForCards.getChildren()
 							.add((CardLabel) clientModel.player.selectedCardList.get(i));
 				}
-				ArrayList<String> temp = new ArrayList<String>();
-				for (CardLabel cl : clientModel.player.selectedCardList) {
-					temp.add(cl.getCard().toString());
-				}
+//				ArrayList<String> temp = new ArrayList<String>();
+//				for (CardLabel cl : clientModel.player.selectedCardList) {
+//					temp.add(cl.getCard().toString());
+//				}
 				clientModel.player.selectedCardList.clear();
 				updateCardEvents();
-				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
-				clientView.gameView.controlAreaView.passButton.setDisable(true);
-				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));
+//				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
+//				clientView.gameView.controlAreaView.passButton.setDisable(true);
+//				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));		
 			});
 			
 			// pass
