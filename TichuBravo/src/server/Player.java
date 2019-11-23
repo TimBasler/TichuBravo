@@ -21,4 +21,9 @@ public class Player {
 		return isTeamOne;
 	}
 
+	@Override
+	public String toString() {
+		return "Player [ID=" + ID + ", isTeamOne=" + isTeamOne + "]";
+	}
+
 }

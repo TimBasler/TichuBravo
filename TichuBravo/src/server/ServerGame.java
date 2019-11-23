@@ -1,7 +1,6 @@
 package server;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import org.json.simple.JSONObject;
 
@@ -49,25 +48,27 @@ public class ServerGame {
 	 * @param firstID
 	 */
 	public void newSequence(int firstID) {
-		newSequence.clear();
-		for (Player p : players) {
-			if (p.getID() == firstID) {
-				newSequence.add(p);
-				players.remove(p);
-				break;
-			} 
-		}
-		for (Player p : players) {
-			if (p.isTeamOne() == newSequence.get(0).isTeamOne()) {
-				newSequence.add(p);
-				players.remove(p);
-				break;
+		if (newSequence.isEmpty()) {
+			newSequence.clear();
+			for (Player p : players) {
+				if (p.getID() == firstID) {
+					newSequence.add(p);
+					players.remove(p);
+					break;
+				} 
 			}
+			for (Player p : players) {
+				if (p.isTeamOne() == newSequence.get(0).isTeamOne()) {
+					newSequence.add(p);
+					players.remove(p);
+					break;
+				}
+			}
+			newSequence.add(1, players.get(0));	//Fehler
+			newSequence.add(players.get(1));
+			players.clear();
+			currentPlayerID.set(newSequence.get(0).getID());
 		}
-		newSequence.add(1, players.get(0));	//Fehler
-		newSequence.add(players.get(1));
-		players.clear();
-		currentPlayerID.set(newSequence.get(0).getID());
 	}
 	
 	/**

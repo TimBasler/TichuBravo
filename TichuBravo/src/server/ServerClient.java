@@ -13,7 +13,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import common.MsgType;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * @author Dominik
@@ -24,11 +23,9 @@ public class ServerClient {
 	private String name;
 	private Socket socket;
 	private ServerModel model;
-	
 
 	/**
-	 * constructor
-	 * starts a threat for this object
+	 * constructor starts a threat for this object
 	 * 
 	 * @param socket
 	 * @param name
@@ -43,59 +40,62 @@ public class ServerClient {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
-			
-				
+
 				while (true) {
-						decide(read());
+					decide(read());
 				}
-			
+
 			}
 		};
 		Thread t = new Thread(r);
 		t.start();
 	}
-	
+
 	public void decide(JSONObject json) {
-		if (json.containsKey(MsgType.name.toString())
-				|| json.containsKey(MsgType.msg.toString())
-				|| json.containsKey(MsgType.turn.toString())) {			//ändern currentPlayerID ändern + Karten weitergeben
+		if (json.containsKey(MsgType.name.toString()) || json.containsKey(MsgType.msg.toString())
+				|| json.containsKey(MsgType.turn.toString())) { // ändern currentPlayerID ändern + Karten weitergeben
 			model.broadcast(json);
 		} else if (json.containsKey(MsgType.game.toString())) {
-				model.sspGame.set("");
-				model.sspGame.set((String) json.get(MsgType.game.toString()));
-			} else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
-				model.game.newSequence(Integer.parseInt((String) json.get(MsgType.whoHasMahJong.toString())));
-			} else if (json.containsKey(MsgType.player.toString())) {
-				String[] strings = ((String) json.get(MsgType.player.toString())).split(",");
-				model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
-			} else if (json.containsKey(MsgType.pass.toString())) {
-				model.game.nextPlayer();
-			} else {
+			model.sspGame.set("");
+			model.sspGame.set((String) json.get(MsgType.game.toString()));
+			
+		} else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
+			model.game.newSequence(Integer.parseInt((String) json.get(MsgType.whoHasMahJong.toString())));
+			
+		} else if (json.containsKey(MsgType.player.toString())) {
+			String[] strings = ((String) json.get(MsgType.player.toString())).split(",");
+			model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
+			
+		} else if (json.containsKey(MsgType.pass.toString())) {
+			model.game.nextPlayer();
+
+		} else {
 			// wrong key
 		}
 	}
 
 	/**
 	 * write the content from a Json on a ServerClient socket
+	 * 
 	 * @param json
 	 */
 	public void send(JSONObject json) {
 		try {
 			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-			out.write(json.toString()+"\n");
+			out.write(json.toString() + "\n");
 			out.flush();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void sendString(String s) {
 		try {
 			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
 			out.write(s + "\n");
 			out.flush();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,21 +103,21 @@ public class ServerClient {
 
 	/**
 	 * read from a ServerClient socket and parse the content to a json
+	 * 
 	 * @return
 	 */
 	public JSONObject read() {
 		JSONObject json = null;
 		String inputString = null;
-		
+
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			inputString = in.readLine();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		JSONParser parser = new JSONParser();
 		try {
 			json = (JSONObject) parser.parse(inputString);
@@ -127,10 +127,10 @@ public class ServerClient {
 		}
 		return json;
 	}
-	
+
 	public String readString() {
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String inputString = in.readLine();
 			return inputString;
 		} catch (IOException e) {
@@ -138,7 +138,7 @@ public class ServerClient {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * create a Json object with a key and a value
 	 * 
@@ -151,9 +151,10 @@ public class ServerClient {
 		json.put(key, value);
 		return json;
 	}
-	
+
 	/**
 	 * create Json with an array
+	 * 
 	 * @param key
 	 * @param strings
 	 * @return JSONObject
@@ -168,7 +169,7 @@ public class ServerClient {
 		return json;
 	}
 
-	//getter
+	// getter
 	public Socket getSocket() {
 		return this.socket;
 	}

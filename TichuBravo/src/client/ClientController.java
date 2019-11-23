@@ -25,10 +25,15 @@ public class ClientController {
 	
 	ArrayList <Integer> intLIst  = new ArrayList<Integer>();
 
+	/**
+	 * @param clientModel
+	 * @param clientView
+	 */
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 
+		// if myTurn is equal to my ID then my buttons are able to click
 		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
@@ -89,9 +94,9 @@ public class ClientController {
 			Platform.runLater(() -> {
 				Collections.sort(clientModel.player.normalCardList);
 				Collections.sort(clientModel.player.specialCardList);
-				for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { // nur zum testen, es müssen beide
-																						// listen (special und normal)
-																						// setonAction gesetzt werden
+				for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { 
+																						
+																						
 					clientView.gameView.boardView.bottomBox.getChildren().add(clientView.gameView.boardView
 							.getPlayerCardLabel().makeCardLabel(clientModel.player.normalCardList.get(i)));
 					clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
@@ -135,6 +140,30 @@ public class ClientController {
 			
 		});
 
+
+		// confirm Cards
+					clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
+						
+						for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
+							clientView.gameView.boardView.middleBoxForCards.getChildren()
+									.add((CardLabel) clientModel.player.selectedCardList.get(i));
+						}
+						updateCardEvents();
+//						ArrayList<String> temp = new ArrayList<String>();
+//						for (CardLabel cl : clientModel.player.selectedCardList) {
+//							temp.add(cl.getCard().toString());
+//						}
+//						System.out.println(temp);
+						clientModel.player.selectedCardList.clear();
+						
+//						clientView.gameView.controlAreaView.confirmButton.setDisable(true);
+//						clientView.gameView.controlAreaView.passButton.setDisable(true);
+//						clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));		
+					});
+					
+					
+
+	
 		clientView.lobbyView.loginButton.setOnAction(e -> {
 			clientModel.send(
 					clientModel.createJson(MsgType.name.toString(), clientView.lobbyView.userTextField.getText()));
@@ -145,6 +174,7 @@ public class ClientController {
 
 			clientModel.send(clientModel.createJson(MsgType.player.toString(),
 					clientModel.player.playerID + "," + clientModel.player.isTeamOne));
+
 			
 			// confirm Cards
 			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
@@ -194,11 +224,11 @@ public class ClientController {
 				clientModel.player.selectedCardList.clear();
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
-				clientModel.send(clientModel.createJson(MsgType.pass.toString(), "x"));
+				clientModel.send(clientModel.createJson(MsgType.pass.toString(), new String("x")));
 			});
 			
-
 			System.out.println(clientModel.player);						//TODO löschen
+
 		});
 
 	}
