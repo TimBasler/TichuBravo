@@ -1,0 +1,9 @@
+#grandTichuView{
+	-fx-background-image: url("LobbyBackground.jpg");
+	-fx-background-size: cover;
+}
+
+#infoLabel{
+	-fx-font-size:80%;
+	-fx-font-weight:bold;
+}

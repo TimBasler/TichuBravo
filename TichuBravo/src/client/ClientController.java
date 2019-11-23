@@ -1,15 +1,13 @@
 package client;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import common.Card;
 import common.MsgType;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 
 /**
  * @author Tim
@@ -24,6 +22,8 @@ public class ClientController {
 	private int isPlayerTwoCounter = 0;
 
 	Player player;
+	
+	ArrayList <Integer> intLIst  = new ArrayList<Integer>();
 
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
@@ -102,6 +102,21 @@ public class ClientController {
 							.getPlayerCardLabel().makeCardLabel(clientModel.player.specialCardList.get(i)));
 					clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 				}
+				//here
+				//generate 6 random inex numbers from 0-13 
+				Random random = new Random();
+				for (int i =0;i<6;i++) {
+					int randomInt=random.nextInt(14);
+					while(this.intLIst.contains(randomInt)) {
+						randomInt=random.nextInt(14);
+					}
+					this.intLIst.add(randomInt);
+					clientView.gameView.boardView.bottomBox.getChildren().get(randomInt).setVisible(false);
+					
+				}
+				
+				clientView.grandTichuStage.setScene(clientView.grandTichuScene);
+				clientView.grandTichuStage.show();
 
 				// Add the selected Cards to the selectedCardList and set the Id for css styling
 				updateCardEvents();
@@ -154,6 +169,25 @@ public class ClientController {
 			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event->{
 				clientModel.player.saidSmallTichu=true;
 			});
+			
+			//GrandTichu
+		clientView.grandTichuView.yesButton.setOnMouseClicked(event->{
+			clientModel.player.saidGrandTichu=true;
+			clientView.grandTichuStage.close();
+			for(int i=0;i<intLIst.size();i++) {
+				clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
+			}
+			
+		});
+		
+		clientView.grandTichuView.noButton.setOnAction(event->{
+			clientView.grandTichuStage.close();
+			for(int i=0;i<intLIst.size();i++) {
+				clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
+				System.out.println(this.intLIst.get(i));
+			}
+			System.out.println(this.intLIst);
+		});
 			
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {

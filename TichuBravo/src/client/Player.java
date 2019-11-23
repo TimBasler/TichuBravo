@@ -24,6 +24,7 @@ public class Player {
 	protected SimpleBooleanProperty allCardsReceived = new SimpleBooleanProperty(false);
 	protected SimpleIntegerProperty myTurn = new SimpleIntegerProperty();
 	protected boolean saidSmallTichu=false;
+	protected boolean saidGrandTichu=false;
 	
 	public Player() {
 		this.playerName=null;

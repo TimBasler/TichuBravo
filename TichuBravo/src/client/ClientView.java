@@ -9,13 +9,14 @@ import javafx.stage.Stage;
  *
  */
 public class ClientView {
-	protected Stage stage;
+	protected Stage stage ,grandTichuStage;
 	private ClientModel clientModel;
 	
-	protected Scene lobbyScene,gameScene;
+	protected Scene lobbyScene,gameScene,grandTichuScene;
 	
 	protected LobbyView lobbyView;
 	protected GameView gameView; //GameView = ContorlArea
+	protected GrandTichuView grandTichuView;
 
 	public ClientView(Stage stage,ClientModel clientModel) {
 		this.stage=stage;
@@ -30,6 +31,13 @@ public class ClientView {
 		
 		gameScene=new Scene(gameView,800,800);
 		gameScene.getStylesheets().add(getClass().getResource("gameStyle.css").toExternalForm());
+		
+		this.grandTichuView=new GrandTichuView();
+		this.grandTichuStage=new Stage();
+		this.grandTichuScene=new Scene(grandTichuView,200,200);
+		this.grandTichuView.setId("grandTichuView");
+		grandTichuScene.getStylesheets().add(getClass().getResource("grandTichuViewStyle.css").toExternalForm());
+		
 		
 		stage.setScene(lobbyScene);
 		stage.setTitle("Tichu");
