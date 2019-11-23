@@ -27,7 +27,7 @@ public class BoardView extends VBox {
 	protected Card playerCard;
 
 	public BoardView() {
-		// topBox
+		// topBoxx
 		this.backOfCardImage = new Image(BoardView.class.getResourceAsStream("..//images//back.png"));
 		this.backOfCardImageView = new ImageView(backOfCardImage);
 		this.backOfCardImageView.setFitHeight(120);
