@@ -13,12 +13,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
 import common.Card;
 import common.MsgType;
 import javafx.beans.property.SimpleStringProperty;
-
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * @author Dominik
@@ -31,7 +30,8 @@ public class ClientModel {
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
-	protected ArrayList<String> turn = new ArrayList<>();
+//	protected ArrayList<String> turn = new ArrayList<>();
+//	protected ObservableList<String> turn = FXCollections.observableArrayList(); //nicht mehr gebraucht
 	//protected ArrayList <Object> selectedCardList=new ArrayList<>();
 	protected String playerName;
 	protected boolean isTeamOne;
@@ -153,10 +153,11 @@ public class ClientModel {
 			sspMsg.set((String) json.get(MsgType.msg.toString()));
 		}
 		if (json.containsKey(MsgType.turn.toString())) {
-			turn.clear();
+			player.table.clear();
 			JSONArray list = (JSONArray) json.get(MsgType.turn.toString());
 			for (int i = 0; i < list.size(); i++) {
-				turn.add((String) list.get(i));
+				Card c = Card.makeCard((String) list.get(i));
+				player.table.add(c);
 			}
 		}
 		if (json.containsKey(MsgType.game.toString())) {

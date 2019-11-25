@@ -52,14 +52,17 @@ public class ServerClient {
 	}
 
 	public void decide(JSONObject json) {
-		if (json.containsKey(MsgType.name.toString()) || json.containsKey(MsgType.msg.toString())
-				|| json.containsKey(MsgType.turn.toString())) { // ändern currentPlayerID ändern + Karten weitergeben
+		if (json.containsKey(MsgType.name.toString()) || json.containsKey(MsgType.msg.toString())) {
 			model.broadcast(json);
 		} else if (json.containsKey(MsgType.game.toString())) {
 			model.sspGame.set("");
 			model.sspGame.set((String) json.get(MsgType.game.toString()));
 			
-		} else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
+		} else if (json.containsKey(MsgType.turn.toString())) {
+			model.game.nextPlayer();
+			model.broadcast(json);
+			
+		}else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
 			model.game.newSequence(Integer.parseInt((String) json.get(MsgType.whoHasMahJong.toString())));
 			
 		} else if (json.containsKey(MsgType.player.toString())) {

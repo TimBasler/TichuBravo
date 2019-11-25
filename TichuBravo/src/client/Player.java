@@ -18,8 +18,11 @@ public class Player {
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int scorePlayer;
-	protected final ObservableList<Card> normalCardList = FXCollections.observableArrayList();
-	protected final ObservableList<Card> specialCardList = FXCollections.observableArrayList();
+	protected ObservableList<Card> earnedCards = FXCollections.observableArrayList(); //cards that this player earned
+	protected ObservableList<Card> playedCardsThisRound = FXCollections.observableArrayList(); //all cards on the table
+	protected ObservableList<Card> table = FXCollections.observableArrayList();	//showed cards on the table
+	protected ObservableList<Card> normalCardList = FXCollections.observableArrayList();
+	protected ObservableList<Card> specialCardList = FXCollections.observableArrayList();
 	protected ArrayList <CardLabel> selectedCardList=new ArrayList<>();
 	protected SimpleBooleanProperty allCardsReceived = new SimpleBooleanProperty(false);
 	protected SimpleIntegerProperty myTurn = new SimpleIntegerProperty();

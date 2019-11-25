@@ -2,7 +2,6 @@ package client;
 
 import common.Card;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -12,18 +11,14 @@ import javafx.scene.image.ImageView;
  */
 public class CardLabel extends Button {
 	protected String fileName;
-	protected CardLabel cardLabel;
 	protected Card card;
-	
-	public CardLabel() {
-		super();
-	}
 	
 	public Card getCard() {
 		return card;
 	}
 
-	public CardLabel makeCardLabel(Card card) {
+	public CardLabel(Card card) {
+		super();
 		this.card = card;
 		if(card!=null) {
 			String fileNameString=cardToFileName(card);
@@ -33,12 +28,10 @@ public class CardLabel extends Button {
 			imageView.setFitHeight(120);
 			imageView.setFitWidth(120);
 			imageView.setPreserveRatio(true);
-			this.cardLabel=new CardLabel();
-			this.cardLabel.setGraphic(imageView);
+			this.setGraphic(imageView);
 		} else {
-			this.cardLabel.setGraphic(null);
+			this.setGraphic(null);
 		}
-		return this.cardLabel;
 	}
 
 	public void setCard(Card card) {
