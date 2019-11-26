@@ -177,6 +177,9 @@ public class ClientModel {
 		if (json.containsKey(MsgType.currentPlayerID.toString())) {
 			player.myTurn.set(Integer.parseInt((String) json.get(MsgType.currentPlayerID.toString())));
 		}
+		if (json.containsKey(MsgType.winnerOfTheRound.toString())) {
+			player.myTurn.set(Integer.parseInt((String) json.get(MsgType.winnerOfTheRound.toString()))); //ändern
+		}
 	}
 
 	/**

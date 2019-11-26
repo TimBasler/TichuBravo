@@ -26,6 +26,7 @@ public class Player {
 	protected ArrayList <CardLabel> selectedCardList=new ArrayList<>();
 	protected SimpleBooleanProperty allCardsReceived = new SimpleBooleanProperty(false);
 	protected SimpleIntegerProperty myTurn = new SimpleIntegerProperty();
+	protected SimpleIntegerProperty winnerOfTheRound = new SimpleIntegerProperty();
 	protected boolean saidSmallTichu=false;
 	protected boolean saidGrandTichu=false;
 	

@@ -8,6 +8,7 @@ import common.Card;
 import common.MsgType;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import server.ServerClient;
 
 /**
  * @author Tim
@@ -38,13 +39,17 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
-			} else {
-				// Buttons deaktivieren
-			}
-
-			// Spielzug start, Buttens aktivieren
-			// Speilzug machen, danach Buttons deaktivieren
-
+			} 
+		});
+		
+		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
+			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
+				//add cards to earnedCards
+				for(Card c : clientModel.player.table) {
+					clientModel.player.earnedCards.add(c);
+				}
+				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
+			} 
 		});
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
@@ -54,7 +59,9 @@ public class ClientController {
 		});
 
 		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
-
+			if (newValue.equals("resetTable")) {
+				clientModel.player.table.clear();
+			}
 		});
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
@@ -67,6 +74,10 @@ public class ClientController {
 				for (int i = 0; i < clientModel.player.table.size(); i++) {
 					clientView.gameView.boardView.middleBoxForCards.getChildren()
 					.add(new CardLabel(clientModel.player.table.get(i)));
+					
+					if (!clientModel.player.playedCardsThisRound.contains(clientModel.player.table.get(i))) {
+						clientModel.player.playedCardsThisRound.add(clientModel.player.table.get(i));
+					}
 				}
 			});
 		}));
@@ -103,53 +114,51 @@ public class ClientController {
 		});
 
 		clientModel.player.allCardsReceived.addListener((o, oldValue, newValue) -> {
-			// Display the player Cards
-			Platform.runLater(() -> {
-				Collections.sort(clientModel.player.normalCardList);
-				Collections.sort(clientModel.player.specialCardList);
-				for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { 
-																						
-					clientView.gameView.boardView.bottomBox.getChildren().add(
-							new CardLabel(clientModel.player.normalCardList.get(i)));
-					clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
-				}
-
-				for (int i = 0; i < clientModel.player.specialCardList.size(); i++) {
-					clientView.gameView.boardView.bottomBox.getChildren().add(
-							new CardLabel(clientModel.player.specialCardList.get(i)));
-					clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
-				}
-				//here
-				//generate 6 random inex numbers from 0-13 
-				Random random = new Random();
-				for (int i =0;i<6;i++) {
-					int randomInt=random.nextInt(14);
-					while(this.intLIst.contains(randomInt)) {
-						randomInt=random.nextInt(14);
-					}
-					this.intLIst.add(randomInt);
-					clientView.gameView.boardView.bottomBox.getChildren().get(randomInt).setVisible(false);
-					
-				}
-				
-				clientView.grandTichuStage.setScene(clientView.grandTichuScene);
-				clientView.grandTichuStage.show();
-
-				// Add the selected Cards to the selectedCardList and set the Id for css styling
-				updateCardEvents();
-
-				// Delete Selected Cards from the selected CardList
-				clientView.gameView.controlAreaView.resetSelectedCardsButton.setOnMouseClicked(ev -> {
-					clientModel.player.selectedCardList.clear();
-					for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
+			if(newValue == true) {
+				// Display the player Cards
+				Platform.runLater(() -> {
+					Collections.sort(clientModel.player.normalCardList);
+					Collections.sort(clientModel.player.specialCardList);
+					for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { 
+																							
+						clientView.gameView.boardView.bottomBox.getChildren().add(
+								new CardLabel(clientModel.player.normalCardList.get(i)));
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 					}
+
+					for (int i = 0; i < clientModel.player.specialCardList.size(); i++) {
+						clientView.gameView.boardView.bottomBox.getChildren().add(
+								new CardLabel(clientModel.player.specialCardList.get(i)));
+						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
+					}
+					//here
+					//generate 6 random inex numbers from 0-13 
+					Random random = new Random();
+					for (int i =0;i<6;i++) {
+						int randomInt=random.nextInt(14);
+						while(this.intLIst.contains(randomInt)) {
+							randomInt=random.nextInt(14);
+						}
+						this.intLIst.add(randomInt);
+						clientView.gameView.boardView.bottomBox.getChildren().get(randomInt).setVisible(false);
+						
+					}
+					
+					clientView.grandTichuStage.setScene(clientView.grandTichuScene);
+					clientView.grandTichuStage.show();
+
+					// Add the selected Cards to the selectedCardList and set the Id for css styling
+					updateCardEvents();
+
+					// Delete Selected Cards from the selected CardList
+					clientView.gameView.controlAreaView.resetSelectedCardsButton.setOnMouseClicked(ev -> {
+						clientModel.player.selectedCardList.clear();
+						for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
+							clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
+						}
+					});
 				});
-				
-				
-				
-			});
-			
+			}
 		});
 
 		clientView.lobbyView.loginButton.setOnAction(e -> {
@@ -170,10 +179,10 @@ public class ClientController {
 				//Disable Small Tichu
 				clientView.gameView.controlAreaView.smallTichu.setDisable(true);
 				for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
-					clientView.gameView.boardView.middleBoxForCards.getChildren()
-							.add((CardLabel) clientModel.player.selectedCardList.get(i));
-				}
-				
+						clientModel.player.normalCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
+						clientModel.player.specialCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
+					clientView.gameView.boardView.bottomBox.getChildren().remove((CardLabel) clientModel.player.selectedCardList.get(i));
+				}	
 				for (CardLabel cl : clientModel.player.selectedCardList) {
 					temp.add(cl.getCard().toString());
 				}

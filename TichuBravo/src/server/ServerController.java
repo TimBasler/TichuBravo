@@ -32,7 +32,17 @@ public class ServerController {
 			if (newValue.equals("dealCards")) {
 				model.game.sendNewCards();
 			}
+			if (newValue.equals("resetTable")) {
+				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "resetTable"));
+			}
 		});
+		
+		model.game.passCounter.addListener(((o, oldValue, newValue) ->{
+			if ((Integer)newValue == 4) {
+				model.broadcast(ServerClient.createJson(MsgType.winnerOfTheRound.toString(), model.game.lastMove.get()+""));
+			}
+			
+		}));
 		
 		ServerModel.clients.addListener((ListChangeListener<? super ServerClient>) (e -> view.textArea.appendText("new client")));
 		

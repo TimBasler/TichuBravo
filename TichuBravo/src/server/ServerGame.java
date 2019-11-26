@@ -19,7 +19,8 @@ public class ServerGame {
 	protected ObservableList<Player> players = FXCollections.observableArrayList();
 	protected ObservableList<Player> newSequence = FXCollections.observableArrayList();
 	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty();
-	
+	protected SimpleIntegerProperty passCounter = new SimpleIntegerProperty(0);
+	protected SimpleIntegerProperty lastMove = new SimpleIntegerProperty(0);
 	
 	public ServerGame() {
 		
@@ -49,7 +50,6 @@ public class ServerGame {
 	 */
 	public void newSequence(int firstID) {
 		if (newSequence.isEmpty()) {
-			newSequence.clear();
 			for (Player p : players) {
 				if (p.getID() == firstID) {
 					newSequence.add(p);
@@ -64,7 +64,7 @@ public class ServerGame {
 					break;
 				}
 			}
-			newSequence.add(1, players.get(0));	//Fehler
+			newSequence.add(1, players.get(0));
 			newSequence.add(players.get(1));
 			players.clear();
 			currentPlayerID.set(newSequence.get(0).getID());

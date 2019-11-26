@@ -59,6 +59,7 @@ public class ServerClient {
 			model.sspGame.set((String) json.get(MsgType.game.toString()));
 			
 		} else if (json.containsKey(MsgType.turn.toString())) {
+			model.game.lastMove.set(model.game.currentPlayerID.get());
 			model.game.nextPlayer();
 			model.broadcast(json);
 			
@@ -70,7 +71,10 @@ public class ServerClient {
 			model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
 			
 		} else if (json.containsKey(MsgType.pass.toString())) {
-			model.game.nextPlayer();
+			model.game.passCounter.set(model.game.passCounter.get()+1);
+			if(model.game.passCounter.get() != 4) {
+				model.game.nextPlayer();
+			}
 
 		} else {
 			// wrong key
