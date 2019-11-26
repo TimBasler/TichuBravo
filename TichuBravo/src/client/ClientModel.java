@@ -16,8 +16,6 @@ import org.json.simple.parser.ParseException;
 import common.Card;
 import common.MsgType;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * @author Dominik
@@ -30,9 +28,6 @@ public class ClientModel {
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
-//	protected ArrayList<String> turn = new ArrayList<>();
-//	protected ObservableList<String> turn = FXCollections.observableArrayList(); //nicht mehr gebraucht
-	//protected ArrayList <Object> selectedCardList=new ArrayList<>();
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int clientId;
