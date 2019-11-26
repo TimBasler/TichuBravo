@@ -59,6 +59,7 @@ public class ServerClient {
 			model.sspGame.set((String) json.get(MsgType.game.toString()));
 			
 		} else if (json.containsKey(MsgType.turn.toString())) {
+			model.game.passCounter.set(0);
 			model.game.lastMove.set(model.game.currentPlayerID.get());
 			model.game.nextPlayer();
 			model.broadcast(json);

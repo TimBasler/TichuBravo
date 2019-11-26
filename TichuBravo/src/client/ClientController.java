@@ -45,9 +45,10 @@ public class ClientController {
 		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				//add cards to earnedCards
-				for(Card c : clientModel.player.table) {
+				for(Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
+				System.out.println(clientModel.player.earnedCards);
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
 			} 
 		});
@@ -61,6 +62,7 @@ public class ClientController {
 		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
 			if (newValue.equals("resetTable")) {
 				clientModel.player.table.clear();
+				clientModel.player.playedCardsThisRound.clear();
 			}
 		});
 
