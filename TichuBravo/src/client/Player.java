@@ -1,7 +1,5 @@
 package client;
 
-//This Code is written by Tim
-
 import java.util.ArrayList;
 
 import common.Card;
@@ -12,6 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * @author Tim
+ *
+ */
 public class Player {
 	
 	protected int playerID=0;
