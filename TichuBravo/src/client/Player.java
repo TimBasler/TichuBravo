@@ -76,6 +76,7 @@ public class Player {
 		}
 	}
 	
+	
 	public String toString() {
 		return this.playerName +" player is in Team One " + this.isTeamOne +" he has the Player ID: "+this.playerID;
 	}

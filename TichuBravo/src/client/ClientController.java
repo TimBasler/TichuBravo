@@ -48,7 +48,21 @@ public class ClientController {
 				for(Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
-				System.out.println(clientModel.player.earnedCards);
+				
+				//count points 
+				Platform.runLater(() -> {
+					if(clientModel.player.isTeamOne) {
+						clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
+						clientView.gameView.chatView.teamOneScoreLabel.setText(clientModel.scoreTeamOne+" Points");
+					}
+					if(!clientModel.player.isTeamOne) {
+						clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
+						clientView.gameView.chatView.teamTwoScoreLabel.setText(clientModel.ScoreTeamTwo+" Points");
+					}
+					});
+				
+				
+				System.out.println(clientModel.player.earnedCards +"kommt vom here");
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
 			} 
 		});
@@ -133,7 +147,6 @@ public class ClientController {
 								new CardLabel(clientModel.player.specialCardList.get(i)));
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 					}
-					//here
 					//generate 6 random inex numbers from 0-13 
 					Random random = new Random();
 					for (int i =0;i<6;i++) {
@@ -192,7 +205,9 @@ public class ClientController {
 				updateCardEvents();
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
-				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));		
+				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));	
+				
+				
 			});
 			
 			//SmallTichu

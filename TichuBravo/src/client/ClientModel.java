@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 import common.Card;
 import common.MsgType;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 
 /**
  * @author Dominik
@@ -32,15 +33,17 @@ public class ClientModel {
 	protected boolean isTeamOne;
 	protected int clientId;
 	protected Player player = new Player();
-	
+	protected int scoreTeamOne = 0;
+	protected int ScoreTeamTwo = 0;
+
 	public void createPlayer() {
 		player.setPlayerName(playerName);
 		player.setIsTeamOne(isTeamOne);
 		player.setPlayerID(clientId);
 	}
-	
+
 	public ClientModel() {
-		
+
 	}
 
 	/**
@@ -56,12 +59,12 @@ public class ClientModel {
 			Runnable r = new Runnable() {
 				@Override
 				public void run() {
-					
+
 					// read and save the message
 					while (true) {
 						saveInput(read());
 					}
-					
+
 				}
 			};
 			Thread t = new Thread(r);
@@ -69,7 +72,7 @@ public class ClientModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
@@ -80,20 +83,20 @@ public class ClientModel {
 	public void send(JSONObject json) {
 		try {
 			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-			out.write(json.toString()+"\n");
+			out.write(json.toString() + "\n");
 			out.flush();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void sendString(String s) {
 		try {
 			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
 			out.write(s + "\n");
 			out.flush();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,7 +112,7 @@ public class ClientModel {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String inputString = in.readLine();
-			
+
 			JSONParser parser = new JSONParser();
 			json = (JSONObject) parser.parse(inputString);
 		} catch (IOException | ParseException e) {
@@ -117,7 +120,7 @@ public class ClientModel {
 		}
 		return json;
 	}
-	
+
 	public String readString() {
 		String inputString = null;
 		try {
@@ -130,15 +133,16 @@ public class ClientModel {
 	}
 
 	/**
-	 * depending on the type, the message will be stored at a different location
-	 * all cards with the key "turn" are saved in an arraylist
+	 * depending on the type, the message will be stored at a different location all
+	 * cards with the key "turn" are saved in an arraylist
+	 * 
 	 * @param json
 	 */
 	public void saveInput(JSONObject json) {
-		if(json.containsKey(MsgType.clientId.toString())) {
-			this.clientId=Integer.parseInt((String) json.get(MsgType.clientId.toString()));
+		if (json.containsKey(MsgType.clientId.toString())) {
+			this.clientId = Integer.parseInt((String) json.get(MsgType.clientId.toString()));
 		}
-		
+
 		if (json.containsKey(MsgType.name.toString())) {
 			sspName.set("");
 			sspName.set((String) json.get(MsgType.name.toString()));
@@ -165,8 +169,10 @@ public class ClientModel {
 			JSONArray list = (JSONArray) json.get(MsgType.cards.toString());
 			for (int i = 0; i < list.size(); i++) {
 				Card c = Card.makeCard((String) list.get(i));
-				if (c.isSpecial()) player.specialCardList.add(c);
-				else player.normalCardList.add(c);
+				if (c.isSpecial())
+					player.specialCardList.add(c);
+				else
+					player.normalCardList.add(c);
 			}
 		}
 		if (json.containsKey(MsgType.currentPlayerID.toString())) {
@@ -189,9 +195,10 @@ public class ClientModel {
 		json.put(key, value);
 		return json;
 	}
-	
+
 	/**
 	 * create Json with an array
+	 * 
 	 * @param key
 	 * @param strings
 	 * @return JSONObject
@@ -217,6 +224,81 @@ public class ClientModel {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	// count Points Team one
+	public void countPointsFromTeamOne(ObservableList<Card> earnedCards) {
+		int points = 0;
+		for (Card c : earnedCards) {
+			if (c.isSpecial() == false) {// Normal Cards
+				switch (c.getRank().ordinal()) {
+				case 3:
+					points += 5;
+					break;
+				case 8:
+					points += 10;
+					break;
+				case 11:
+					points += 10;
+					break;
+				default: // no such cards found
+					break;
+				}
+			}
+
+			if (c.isSpecial()) {
+				switch (c.getSpecialCard().ordinal()) {// Spezial Cards
+				case 2:
+					points -= 25;
+					break;
+				case 3:
+					points += 25;
+					break;
+				default: // no such cards found
+					break;
+				}
+			}
+
+		}
+
+		this.scoreTeamOne = points;
+	}
+
+	// count Points Team two
+	public void countPointsFromTeamTwo(ObservableList<Card> earnedCards) {
+		int points = 0;
+		for (Card c : earnedCards) {
+			if (c.isSpecial() == false) {// Normal Cards
+				switch (c.getRank().ordinal()) {
+				case 3:
+					points += 5;
+					break;
+				case 8:
+					points += 10;
+					break;
+				case 11:
+					points += 10;
+					break;
+				default: // no such cards found
+					break;
+				}
+			}
+
+			if (c.isSpecial()) {
+				switch (c.getSpecialCard().ordinal()) {// Spezial Cards
+				case 2:
+					points -= 25;
+					break;
+				case 3:
+					points += 25;
+					break;
+				default: // no such cards found
+					break;
+				}
+			}
+
+		}
+		this.ScoreTeamTwo = points;
 	}
 
 }
