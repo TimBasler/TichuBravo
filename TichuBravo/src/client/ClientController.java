@@ -3,12 +3,12 @@ package client;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import common.Card;
 import common.MsgType;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import server.ServerClient;
 
 /**
  * @author Tim
@@ -39,6 +39,19 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
+				//evaluate table...
+				//TODO delete
+				HandType.evaluateCards(new ArrayList<Card>(clientModel.player.normalCardList.stream().collect(Collectors.toList())));
+				System.out.println(HandType.onePairList.toString());
+				System.out.println(HandType.pairsInARow.toString());
+				System.out.println(HandType.threeOfAKindList.toString());
+				System.out.println(HandType.fullHouseList.toString());
+				System.out.println(HandType.straightList.toString());
+				System.out.println(HandType.bombList.toString());
+				System.out.println(HandType.BombStraightFlushList.toString());
+				
+				System.out.println(clientModel.player.table.toString());
+				
 			} 
 		});
 		
@@ -48,7 +61,6 @@ public class ClientController {
 				for(Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
-				System.out.println(clientModel.player.earnedCards);
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
 			} 
 		});
@@ -79,6 +91,29 @@ public class ClientController {
 					
 					if (!clientModel.player.playedCardsThisRound.contains(clientModel.player.table.get(i))) {
 						clientModel.player.playedCardsThisRound.add(clientModel.player.table.get(i));
+					}
+				}
+				System.out.println(HandType.evalueateHandType(new ArrayList<Card>(clientModel.player.table)).toString()); //TODO delete
+				if (clientModel.player.table.size() > 0) {
+					ArrayList<ArrayList<Card>> list = HandType.showlegalCards(
+							HandType.evalueateHandType(new ArrayList<Card>(clientModel.player.table)), 
+							new ArrayList<Card>(clientModel.player.normalCardList));
+					for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
+						clientView.gameView.boardView.bottomBox.getChildren().get(i).setDisable(true);
+					}
+					for (int i = 0; i < list.size(); i++) {
+						for (int j = 0; j < list.get(i).size(); j++) {
+							for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
+								if (list.get(i).get(j).getRank() == 
+										((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank()) {
+									clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
+								}
+							}
+						}
+					}
+				} else {
+					for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
+						clientView.gameView.boardView.bottomBox.getChildren().get(i).setDisable(false);
 					}
 				}
 			});
@@ -121,8 +156,8 @@ public class ClientController {
 				Platform.runLater(() -> {
 					Collections.sort(clientModel.player.normalCardList);
 					Collections.sort(clientModel.player.specialCardList);
-					for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { 
-																							
+
+					for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { 																
 						clientView.gameView.boardView.bottomBox.getChildren().add(
 								new CardLabel(clientModel.player.normalCardList.get(i)));
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
@@ -192,7 +227,7 @@ public class ClientController {
 				updateCardEvents();
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
-				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));		
+				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));	
 			});
 			
 			//SmallTichu

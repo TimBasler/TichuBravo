@@ -36,6 +36,49 @@ public enum HandType {
 
 	// normal cards order: 2,3,4,5,6,7,8,9,10,J,Q,K,A
 	// special cards order: Dog, MahJong, Phenix, Dragon
+	
+	public static ArrayList<ArrayList<Card>> showlegalCards(HandType ht, ArrayList<Card> cards){
+		evaluateCards(cards);
+		if (ht == OnePair) return onePairList;
+		if (ht == Pairs) return pairsInARow;
+		if (ht == ThreeOfAKind) return threeOfAKindList;
+		if (ht == FullHouse) return fullHouseList;
+		if (ht == Straight) return straightList;
+		if (ht == BombFourOfAKind) return bombList;
+		if (ht == BombStraightFlush) return BombStraightFlushList;
+		return null;
+	}
+	
+	public static HandType evalueateHandType(ArrayList<Card> cards) {
+		HandType ht = HighCard;
+		evaluateCards(cards);
+		if (onePairList.size() > 0) ht = OnePair;
+		if (pairsInARow.size() > 0) ht = Pairs;
+		if (threeOfAKindList.size() > 0) ht = ThreeOfAKind;
+		if (fullHouseList.size() > 0) ht = FullHouse;
+		if (straightList.size() > 0) ht = Straight;
+		if (bombList.size() > 0) ht = BombFourOfAKind;
+		if (BombStraightFlushList.size() > 0) ht = BombStraightFlush;
+		return ht;
+	}
+	
+	public static void evaluateCards(ArrayList<Card> cards) {
+		onePairList.clear();
+		pairsInARow.clear();
+		threeOfAKindList.clear();
+		fullHouseList.clear();
+		straightList.clear();
+		bombList.clear();
+		BombStraightFlushList.clear();
+		
+		findPair(cards);
+		findPairsInARow(cards);
+		findThreeOfAKind(cards);
+		findFullHouse();
+		findStraight(cards);
+		findBomb(cards);
+		findBombStraightFlush(cards);
+	}
 
 	public static boolean hasPhenix(ArrayList<Card> specialCards) {
 		boolean found = false;
@@ -109,9 +152,6 @@ public enum HandType {
 	 * if 2 pairs in a row, safe it in "pairsInARow" on first place (index 0)
 	 */
 	public static void findPairsInARow(ArrayList<Card> cards) {
-		//-------------------
-		findPair(cards); // ändern!
-		//------------------
 		ArrayList<Card> c = new ArrayList<Card>();
 
 		for (int i = 0; i < onePairList.size(); i++) {
@@ -666,7 +706,7 @@ public enum HandType {
 
 	}
 
-	public static void findBombStraightFlush2(ArrayList<Card> cards) {
+	public static void findBombStraightFlush(ArrayList<Card> cards) {
 		ArrayList<Card> cc = (ArrayList<Card>) cards.clone();
 		
 		ArrayList<Card> JadeList = new ArrayList<Card>();
@@ -698,9 +738,11 @@ public enum HandType {
 	}
 	
 	/**
+	 *
 	 * if the straightList contains a Straight Flush, then add it to the BombStraightFlushList
-	 */
-	public static void findBombStraightFlush() {
+	 * 
+	 * 
+	 * public static void findBombStraightFlush() {
 		for (int i = 0; i < straightList.size(); i++) {
 			int counter = 0;
 			for (int j = 0; j < straightList.get(i).size() - 1; j++) {
@@ -716,5 +758,7 @@ public enum HandType {
 			}
 		}
 	}
+	 */
+	
 
 }
