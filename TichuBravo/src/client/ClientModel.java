@@ -32,6 +32,8 @@ public class ClientModel {
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
 	protected SimpleIntegerProperty sipPointsTeamOne=new SimpleIntegerProperty();
 	protected SimpleIntegerProperty sipPointsTeamTwo= new SimpleIntegerProperty();
+	protected SimpleStringProperty sspWinnerLabelTeamOne=new SimpleStringProperty();
+	protected SimpleStringProperty sspWinnerLabelTeamTwo=new SimpleStringProperty();
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int clientId;
@@ -187,12 +189,18 @@ public class ClientModel {
 		
 		if(json.containsKey(MsgType.pointsTeamOne.toString())) {
 			sipPointsTeamOne.set(Integer.parseInt((String) json.get(MsgType.pointsTeamOne.toString())));
-			System.out.println("Kommt vom ClientModel 1");
 		}
 		
 		if(json.containsKey(MsgType.pointsTeamTwo.toString())) {
 			sipPointsTeamTwo.set(Integer.parseInt((String) json.get(MsgType.pointsTeamTwo.toString())));
-			System.out.println("Kommt vom ClientModel 2");
+		}
+		
+		if(json.containsKey(MsgType.winnerLabelTeamOne.toString())) {
+			sspWinnerLabelTeamOne.set((String) json.get(MsgType.winnerLabelTeamOne.toString()));
+		}
+		
+		if(json.containsKey(MsgType.winnerLabelTeamTwo.toString())) {
+			sspWinnerLabelTeamTwo.set((String) json.get(MsgType.winnerLabelTeamTwo.toString()));
 		}
 		
 	}

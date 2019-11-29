@@ -3,6 +3,12 @@
 /*
  * ChatView start
  */
+#winnerLabel{
+	-fx-text-fill:red ;
+	-fx-font-weight:bold;
+	-fx-font-size:0.5cm; 
+}
+ 
 #teamOneLabel{
 	-fx-pref-width:80.0;
 	-fx-text-fill:rgb(0.0,0.0,64.0);

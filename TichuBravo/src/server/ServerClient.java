@@ -53,9 +53,9 @@ public class ServerClient {
 
 	public void decide(JSONObject json) {
 		if (json.containsKey(MsgType.name.toString()) || json.containsKey(MsgType.msg.toString())||
-				json.containsKey(MsgType.pointsTeamOne.toString())||json.containsKey(MsgType.pointsTeamTwo.toString())) {
+				json.containsKey(MsgType.pointsTeamOne.toString())||json.containsKey(MsgType.pointsTeamTwo.toString())||
+				json.containsKey(MsgType.winnerLabelTeamOne.toString())||json.containsKey(MsgType.winnerLabelTeamTwo)) {
 			model.broadcast(json);
-			System.out.println("Kommt vom ServerClient");
 		} else if (json.containsKey(MsgType.game.toString())) {
 			model.sspGame.set("");
 			model.sspGame.set((String) json.get(MsgType.game.toString()));

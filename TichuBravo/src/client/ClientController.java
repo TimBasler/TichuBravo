@@ -8,7 +8,7 @@ import common.Card;
 import common.MsgType;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import server.ServerClient;
+import javafx.scene.control.Label;
 
 /**
  * @author Tim
@@ -34,10 +34,37 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 		
-		//Update pointsView
+		//Update View after the Winner evaluation
+				clientModel.sspWinnerLabelTeamTwo.addListener((obs,oV,nV)->{
+					Platform.runLater(() -> {
+						clientView.gameView.chatView.winnerLabel.setText(nV);
+						});
+				});
+		
+		//Update View after the Winner evaluation
+		clientModel.sspWinnerLabelTeamOne.addListener((obs,oV,nV)->{
+			Platform.runLater(() -> {
+				clientView.gameView.chatView.winnerLabel.setText(nV);
+				});
+		});
+		
+		//Update pointsView Team 1
 		clientModel.sipPointsTeamOne.addListener((obs,oV,nV)->{
 			Platform.runLater(() -> {
 				clientView.gameView.chatView.teamOneScoreLabel.setText(nV+" Points");
+				if((int)nV>=1000) {
+					clientModel.send(clientModel.createJson(MsgType.winnerLabelTeamOne.toString(), "Team 1 is the Winner"));
+				}
+				});
+		});
+
+		//Update pointsView Team 2
+		clientModel.sipPointsTeamTwo.addListener((obs,oV,nV)->{
+			Platform.runLater(() -> {
+				clientView.gameView.chatView.teamTwoScoreLabel.setText(nV+" Points");
+				if((int)nV>=1000) {
+					clientModel.send(clientModel.createJson(MsgType.winnerLabelTeamTwo.toString(), "Team 2 is the Winner"));
+				}
 				});
 		});
 
@@ -247,8 +274,6 @@ public class ClientController {
 				clientModel.send(clientModel.createJson(MsgType.pass.toString(), new String("x")));
 			});
 			
-			System.out.println(clientModel.player);						//TODO löschen
-
 		});
 
 	}
