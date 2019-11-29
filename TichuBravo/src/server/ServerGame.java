@@ -18,7 +18,7 @@ public class ServerGame {
 	protected Deck deck = new Deck();
 	protected ObservableList<Player> players = FXCollections.observableArrayList();
 	protected ObservableList<Player> newSequence = FXCollections.observableArrayList();
-	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty();
+	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty(0);
 	protected SimpleIntegerProperty passCounter = new SimpleIntegerProperty(0);
 	protected SimpleIntegerProperty lastMove = new SimpleIntegerProperty(0);
 	protected int teamOne = 0;
@@ -29,6 +29,12 @@ public class ServerGame {
 		
 	}
 	
+	/**
+	 * create a player and check if there is place available in the desired team
+	 * @param ID
+	 * @param isteamOne
+	 * @return player
+	 */
 	public Player createPlayer(int ID, boolean isteamOne) {
 		if (teamOne < 2 && isteamOne == true) {
 			teamOne++;

@@ -41,7 +41,6 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
-				//evaluate table...
 				//TODO delete
 				HandType.evaluateCards(new ArrayList<Card>(clientModel.player.normalCardList.stream().collect(Collectors.toList())));
 				System.out.println(HandType.onePairList.toString());
@@ -59,6 +58,8 @@ public class ClientController {
 		
 		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
+				if (clientModel.player.isTeamOne()) clientModel.player.setIsTeamOne(false);
+				else clientModel.player.setIsTeamOne(true);
 				Platform.runLater(() -> {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information");

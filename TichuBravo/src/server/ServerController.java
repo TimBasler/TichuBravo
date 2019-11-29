@@ -34,7 +34,8 @@ public class ServerController {
 			}
 			if (newValue.equals("resetTable")) {
 				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "resetTable"));
-				model.game.nextPlayer();
+				model.game.currentPlayerID.set(0);
+				model.game.currentPlayerID.set(model.game.lastMove.get());
 			}
 		});
 		
