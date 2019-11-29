@@ -4,13 +4,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
-import common.Card;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +15,6 @@ import javafx.collections.ObservableList;
  * @author Dominik
  *
  */
-//
 public class ServerModel {
 	private ServerSocket serverSocket;
 	private boolean stop = false;

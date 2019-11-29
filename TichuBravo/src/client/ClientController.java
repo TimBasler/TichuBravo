@@ -9,6 +9,8 @@ import common.Card;
 import common.MsgType;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * @author Tim
@@ -52,6 +54,18 @@ public class ClientController {
 				
 				System.out.println(clientModel.player.table.toString());
 				
+			} 
+		});
+		
+		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
+			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
+				Platform.runLater(() -> {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information");
+				alert.setHeaderText(null);
+				alert.setContentText("You were changed to the other team!");
+				alert.showAndWait();
+				});
 			} 
 		});
 		

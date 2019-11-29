@@ -69,7 +69,13 @@ public class ServerClient {
 			
 		} else if (json.containsKey(MsgType.player.toString())) {
 			String[] strings = ((String) json.get(MsgType.player.toString())).split(",");
-			model.game.players.add(new Player(Integer.parseInt(strings[0]), Boolean.parseBoolean(strings[1])));
+			int ID = Integer.parseInt(strings[0]);
+			boolean isTeamOne = Boolean.parseBoolean(strings[1]);
+			Player player = model.game.createPlayer(ID, isTeamOne);
+			model.game.players.add(player);
+			if (player.isTeamOne() != isTeamOne) {
+				model.broadcast(createJson(MsgType.teamChange.toString(), ID+""));
+			}
 			
 		} else if (json.containsKey(MsgType.pass.toString())) {
 			model.game.passCounter.set(model.game.passCounter.get()+1);

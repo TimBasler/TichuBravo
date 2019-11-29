@@ -21,9 +21,27 @@ public class ServerGame {
 	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty();
 	protected SimpleIntegerProperty passCounter = new SimpleIntegerProperty(0);
 	protected SimpleIntegerProperty lastMove = new SimpleIntegerProperty(0);
+	protected int teamOne = 0;
+	protected int teamTwo = 0;
+	
 	
 	public ServerGame() {
 		
+	}
+	
+	public Player createPlayer(int ID, boolean isteamOne) {
+		if (teamOne < 2 && isteamOne == true) {
+			teamOne++;
+			return new Player(ID, isteamOne);
+		}
+		if (teamTwo < 2 && isteamOne == false) {
+			teamTwo++;
+			return new Player(ID, isteamOne);
+		}
+		if (isteamOne == true) {
+			return new Player(ID, false);
+		} 
+		return new Player(ID, true);
 	}
 	
 	/**
