@@ -8,7 +8,8 @@ import common.Card;
 import common.MsgType;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * @author Tim
@@ -33,6 +34,7 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
+		
 		
 		//Update View after the Winner evaluation
 				clientModel.sspWinnerLabelTeamTwo.addListener((obs,oV,nV)->{
@@ -276,6 +278,11 @@ public class ClientController {
 			
 		});
 
+		//quitGameButton
+		clientView.gameView.controlAreaView.quitGameButton.setOnAction(e->{
+			clientView.stage.close();
+		});
+		
 	}
 
 	public void updateCardEvents() {
