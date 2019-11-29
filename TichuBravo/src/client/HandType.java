@@ -42,9 +42,45 @@ public enum HandType {
 	 * @param hands
 	 * @return ArrayList<ArrayList<Card>>
 	 */
-	public static ArrayList<ArrayList<Card>> compareHandTypes(ArrayList<Card> table, ArrayList<Card> hands){
+	public static ArrayList<ArrayList<Card>> compareHandTypes(ArrayList<Card> table, ArrayList<Card> hands){ //hands = all my cards
 		if (table == null || hands == null || table.size() <= 0 || hands.size() <= 0) return null;
 		HandType ht = evalueateHandType(table);
+		Card tableCard = highestCardOnTable(ht);
+		
+		ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, hands);
+		ArrayList<ArrayList<Card>> newList = new ArrayList<ArrayList<Card>>();
+		
+		if (ht == OnePair || ht == ThreeOfAKind || ht == FullHouse || ht == BombFourOfAKind) {
+			for (int i = 0; i < handsList.size(); i++) {
+				if(handsList.get(i).get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
+					newList.add(handsList.get(i));
+				}
+			}
+		}
+		
+		if (ht == Pairs || ht == Straight || ht == BombStraightFlush) {
+			for (int i = 0; i < handsList.size(); i++) {
+				if(handsList.get(i).get(handsList.get(i).size()-1).getRank().ordinal() > tableCard.getRank().ordinal()) {
+					newList.add(handsList.get(i));
+				}
+			}
+		} 
+		
+		return newList;
+	}
+	
+	public static boolean compareHandTypesBoolean(ArrayList<Card> table, ArrayList<Card> hands){ // hands = one turn
+		HandType ht = evalueateHandType(table);
+		Card tableCard = highestCardOnTable(ht);
+		ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, hands);
+		if (ht == OnePair && handsList.size() == 1 && hands.size() == 2 && hands.get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
+			return true;
+		}
+		
+		return false;		//not done yet
+	}
+	
+	public static Card highestCardOnTable(HandType ht) {
 		Card tableCard = null;
 		if (ht == OnePair) {
 			tableCard = onePairList.get(0).get(0);
@@ -67,34 +103,14 @@ public enum HandType {
 		if (ht == BombStraightFlush) {
 			tableCard = BombStraightFlushList.get(0).get(BombStraightFlushList.get(0).size()-1);
 		}
-		ArrayList<ArrayList<Card>> handsList = null;
-		ArrayList<ArrayList<Card>> newList = new ArrayList<ArrayList<Card>>();
-		evaluateCards(hands);
-		if (ht == OnePair) handsList = onePairList;
-		if (ht == Pairs) handsList = pairsInARow;
-		if (ht == ThreeOfAKind) handsList = threeOfAKindList;
-		if (ht == FullHouse) handsList = fullHouseList;
-		if (ht == Straight) handsList = straightList;
-		if (ht == BombFourOfAKind) handsList = bombList;
-		if (ht == BombStraightFlush) handsList = BombStraightFlushList;
-		
-		if (ht == OnePair || ht == ThreeOfAKind || ht == FullHouse || ht == BombFourOfAKind) {
-			for (int i = 0; i < handsList.size(); i++) {
-				if(handsList.get(i).get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
-					newList.add(handsList.get(i));
-				}
-			}
+		return tableCard;
+	}
+	
+	public static boolean isNormalCards(ArrayList<Card> cards) {
+		for(Card c : cards) {
+			if (c.isSpecial()) return false;
 		}
-		
-		if (ht == Pairs || ht == Straight || ht == BombStraightFlush) {
-			for (int i = 0; i < handsList.size(); i++) {
-				if(handsList.get(i).get(handsList.get(i).size()-1).getRank().ordinal() > tableCard.getRank().ordinal()) {
-					newList.add(handsList.get(i));
-				}
-			}
-		} 
-		
-		return newList;
+		return true;
 	}
 	
 	public static ArrayList<ArrayList<Card>> showlegalCards(HandType ht, ArrayList<Card> cards){
@@ -107,6 +123,31 @@ public enum HandType {
 		if (ht == BombFourOfAKind) return bombList;
 		if (ht == BombStraightFlush) return BombStraightFlushList;
 		return null;
+	}
+	
+	public static boolean legalMoveOnEmptyTable(ArrayList<Card> cards) {
+		if (cards.size() == 1 && cards.get(0).isSpecial()) return true;
+		if (cards.size() == 1 && !cards.get(0).isSpecial()) return true;
+		if (cards.size() > 1 && isNormalCards(cards)) {
+			HandType ht = evalueateHandType(cards);
+			boolean match = false;
+			ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, cards);
+			for (ArrayList<Card> arraylist : handsList) {
+				if (arraylist.size() == cards.size()) {
+					for (int i = 0; i < cards.size(); i++) {
+						if (arraylist.get(i) == cards.get(i)) {
+							match = true;
+						} else {
+							match = false;
+						}
+					}
+					if (match) return match;
+				}
+				
+			}
+			
+		}
+		return false;
 	}
 	
 	public static HandType evalueateHandType(ArrayList<Card> cards) {

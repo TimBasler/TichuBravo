@@ -110,7 +110,7 @@ public class ClientController {
 				}
 				System.out.println(HandType.evalueateHandType(new ArrayList<Card>(clientModel.player.table)).toString()); //TODO delete
 				
-				if (clientModel.player.table.size() > 1) {
+				if (clientModel.player.table.size() > 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					ArrayList<ArrayList<Card>> list = HandType.compareHandTypes(
 							new ArrayList<Card>(clientModel.player.table), 
 							new ArrayList<Card>(clientModel.player.normalCardList));
@@ -128,7 +128,7 @@ public class ClientController {
 							}
 						}
 					}
-				} else if (clientModel.player.table.size() == 1) {
+				} else if (clientModel.player.table.size() == 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
 						if (clientModel.player.table.get(0).getRank().ordinal() < 
 								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank().ordinal()) {
