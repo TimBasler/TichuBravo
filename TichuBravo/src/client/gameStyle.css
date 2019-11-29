@@ -62,6 +62,13 @@
  /*
  * ControlArea  start
  */
+ 
+ #newGameButton{
+ 	-fx-text-fill:red;
+ 	-fx-pref-width:3.0cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
  #passButton{
  	-fx-text-fill:red;
  	-fx-pref-width:3.0cm;

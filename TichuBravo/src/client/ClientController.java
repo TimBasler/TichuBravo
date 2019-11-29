@@ -283,6 +283,10 @@ public class ClientController {
 			clientView.stage.close();
 		});
 		
+		clientView.gameView.controlAreaView.newGameButton.setOnAction(e->{
+			//herea
+		});
+		
 	}
 
 	public void updateCardEvents() {
