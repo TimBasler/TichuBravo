@@ -37,6 +37,66 @@ public enum HandType {
 	// normal cards order: 2,3,4,5,6,7,8,9,10,J,Q,K,A
 	// special cards order: Dog, MahJong, Phenix, Dragon
 	
+	/**
+	 * @param table
+	 * @param hands
+	 * @return ArrayList<ArrayList<Card>>
+	 */
+	public static ArrayList<ArrayList<Card>> compareHandTypes(ArrayList<Card> table, ArrayList<Card> hands){
+		if (table == null || hands == null || table.size() <= 0 || hands.size() <= 0) return null;
+		HandType ht = evalueateHandType(table);
+		Card tableCard = null;
+		if (ht == OnePair) {
+			tableCard = onePairList.get(0).get(0);
+		}
+		if (ht == Pairs) {
+			tableCard = pairsInARow.get(0).get(pairsInARow.get(0).size()-1);
+		}
+		if (ht == ThreeOfAKind) {
+			tableCard = threeOfAKindList.get(0).get(0);
+		}
+		if (ht == FullHouse) {
+			tableCard = fullHouseList.get(0).get(0);
+		}
+		if (ht == Straight) {
+			tableCard = straightList.get(0).get(straightList.get(0).size()-1);
+		}
+		if (ht == BombFourOfAKind) {
+			tableCard = bombList.get(0).get(0);
+		}
+		if (ht == BombStraightFlush) {
+			tableCard = BombStraightFlushList.get(0).get(BombStraightFlushList.get(0).size()-1);
+		}
+		ArrayList<ArrayList<Card>> handsList = null;
+		ArrayList<ArrayList<Card>> newList = new ArrayList<ArrayList<Card>>();
+		evaluateCards(hands);
+		if (ht == OnePair) handsList = onePairList;
+		if (ht == Pairs) handsList = pairsInARow;
+		if (ht == ThreeOfAKind) handsList = threeOfAKindList;
+		if (ht == FullHouse) handsList = fullHouseList;
+		if (ht == Straight) handsList = straightList;
+		if (ht == BombFourOfAKind) handsList = bombList;
+		if (ht == BombStraightFlush) handsList = BombStraightFlushList;
+		
+		if (ht == OnePair || ht == ThreeOfAKind || ht == FullHouse || ht == BombFourOfAKind) {
+			for (int i = 0; i < handsList.size(); i++) {
+				if(handsList.get(i).get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
+					newList.add(handsList.get(i));
+				}
+			}
+		}
+		
+		if (ht == Pairs || ht == Straight || ht == BombStraightFlush) {
+			for (int i = 0; i < handsList.size(); i++) {
+				if(handsList.get(i).get(handsList.get(i).size()-1).getRank().ordinal() > tableCard.getRank().ordinal()) {
+					newList.add(handsList.get(i));
+				}
+			}
+		} 
+		
+		return newList;
+	}
+	
 	public static ArrayList<ArrayList<Card>> showlegalCards(HandType ht, ArrayList<Card> cards){
 		evaluateCards(cards);
 		if (ht == OnePair) return onePairList;
@@ -127,6 +187,7 @@ public enum HandType {
 	 */
 	public static void findPair(ArrayList<Card> cards) {
 		ArrayList<Card> clonedCards = (ArrayList<Card>) cards.clone();
+		Collections.sort(clonedCards);
 
 		for (int i = 0; i < clonedCards.size() - 1; i++) {
 			for (int j = i + 1; j < clonedCards.size(); j++) {

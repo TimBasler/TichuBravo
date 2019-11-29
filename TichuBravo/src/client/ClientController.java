@@ -94,10 +94,12 @@ public class ClientController {
 					}
 				}
 				System.out.println(HandType.evalueateHandType(new ArrayList<Card>(clientModel.player.table)).toString()); //TODO delete
-				if (clientModel.player.table.size() > 0) {
-					ArrayList<ArrayList<Card>> list = HandType.showlegalCards(
-							HandType.evalueateHandType(new ArrayList<Card>(clientModel.player.table)), 
+				
+				if (clientModel.player.table.size() > 1) {
+					ArrayList<ArrayList<Card>> list = HandType.compareHandTypes(
+							new ArrayList<Card>(clientModel.player.table), 
 							new ArrayList<Card>(clientModel.player.normalCardList));
+							
 					for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setDisable(true);
 					}
@@ -109,6 +111,13 @@ public class ClientController {
 									clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
 								}
 							}
+						}
+					}
+				} else if (clientModel.player.table.size() == 1) {
+					for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
+						if (clientModel.player.table.get(0).getRank().ordinal() < 
+								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank().ordinal()) {
+							clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
 						}
 					}
 				} else {
@@ -168,7 +177,9 @@ public class ClientController {
 								new CardLabel(clientModel.player.specialCardList.get(i)));
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 					}
-					//here
+					
+					/**
+					 * //here
 					//generate 6 random inex numbers from 0-13 
 					Random random = new Random();
 					for (int i =0;i<6;i++) {
@@ -183,6 +194,9 @@ public class ClientController {
 					
 					clientView.grandTichuStage.setScene(clientView.grandTichuScene);
 					clientView.grandTichuStage.show();
+					 */
+					
+					
 
 					// Add the selected Cards to the selectedCardList and set the Id for css styling
 					updateCardEvents();
@@ -234,8 +248,9 @@ public class ClientController {
 			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event->{
 				clientModel.player.saidSmallTichu=true;
 			});
-			
-			//GrandTichu
+		
+			/**
+			 * //GrandTichu
 		clientView.grandTichuView.yesButton.setOnMouseClicked(event->{
 			clientModel.player.saidGrandTichu=true;
 			clientView.grandTichuStage.close();
@@ -253,6 +268,8 @@ public class ClientController {
 			}
 			System.out.println(this.intLIst);
 		});
+			 */
+			
 			
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {
