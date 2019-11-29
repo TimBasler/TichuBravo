@@ -33,6 +33,13 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
+		
+		//Update pointsView
+		clientModel.sipPointsTeamOne.addListener((obs,oV,nV)->{
+			Platform.runLater(() -> {
+				clientView.gameView.chatView.teamOneScoreLabel.setText(nV+" Points");
+				});
+		});
 
 		// if myTurn is equal to my ID then my buttons are able to click
 		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
@@ -50,17 +57,15 @@ public class ClientController {
 				}
 				
 				//count points 
-				Platform.runLater(() -> {
 					if(clientModel.player.isTeamOne) {
 						clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
-						clientView.gameView.chatView.teamOneScoreLabel.setText(clientModel.scoreTeamOne+" Points");
+						clientModel.send(clientModel.createJson(MsgType.pointsTeamOne.toString(), clientModel.sipPointsTeamOne.get()+""));
 					}
 					if(!clientModel.player.isTeamOne) {
 						clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
-						clientView.gameView.chatView.teamTwoScoreLabel.setText(clientModel.ScoreTeamTwo+" Points");
+						clientModel.send(clientModel.createJson(MsgType.pointsTeamTwo.toString(), clientModel.sipPointsTeamTwo.get()+""));
 					}
-					});
-				
+					
 				
 				System.out.println(clientModel.player.earnedCards +"kommt vom here");
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));

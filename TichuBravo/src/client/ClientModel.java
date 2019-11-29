@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 
 import common.Card;
 import common.MsgType;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
@@ -29,6 +30,8 @@ public class ClientModel {
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
+	protected SimpleIntegerProperty sipPointsTeamOne=new SimpleIntegerProperty();
+	protected SimpleIntegerProperty sipPointsTeamTwo= new SimpleIntegerProperty();
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int clientId;
@@ -181,6 +184,17 @@ public class ClientModel {
 		if (json.containsKey(MsgType.winnerOfTheRound.toString())) {
 			player.winnerOfTheRound.set(Integer.parseInt((String) json.get(MsgType.winnerOfTheRound.toString())));
 		}
+		
+		if(json.containsKey(MsgType.pointsTeamOne.toString())) {
+			sipPointsTeamOne.set(Integer.parseInt((String) json.get(MsgType.pointsTeamOne.toString())));
+			System.out.println("Kommt vom ClientModel 1");
+		}
+		
+		if(json.containsKey(MsgType.pointsTeamTwo.toString())) {
+			sipPointsTeamTwo.set(Integer.parseInt((String) json.get(MsgType.pointsTeamTwo.toString())));
+			System.out.println("Kommt vom ClientModel 2");
+		}
+		
 	}
 
 	/**
@@ -261,7 +275,7 @@ public class ClientModel {
 
 		}
 
-		this.scoreTeamOne = points;
+		this.sipPointsTeamOne.set(points); 
 	}
 
 	// count Points Team two
@@ -298,7 +312,7 @@ public class ClientModel {
 			}
 
 		}
-		this.ScoreTeamTwo = points;
+		this.sipPointsTeamTwo.set(points);
 	}
 
 }
