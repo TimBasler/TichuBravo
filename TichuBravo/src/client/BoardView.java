@@ -32,7 +32,7 @@ public class BoardView extends VBox {
 		this.backOfCardImageView.setFitHeight(120);
 		this.backOfCardImageView.setFitWidth(120);
 		this.backOfCardImageView.setPreserveRatio(true);
-		this.topLabel = new Label("14");
+		this.topLabel = new Label("");
 		this.topLabel.setId("topLabel");
 		this.topStackPane = new StackPane(this.backOfCardImageView, this.topLabel);
 		this.topBox = new HBox(topStackPane);
@@ -44,7 +44,7 @@ public class BoardView extends VBox {
 		this.backOfCardTurnedImageView.setFitHeight(120);
 		this.backOfCardTurnedImageView.setFitWidth(120);
 		this.backOfCardTurnedImageView.setPreserveRatio(true);
-		this.leftLabel = new Label("14");
+		this.leftLabel = new Label("");
 		this.leftLabel.setId("leftLabel");
 		this.leftStackPane = new StackPane(this.backOfCardTurnedImageView, this.leftLabel);
 		
@@ -63,7 +63,7 @@ public class BoardView extends VBox {
 		this.backOfCardTurnedImageView2.setFitHeight(120);
 		this.backOfCardTurnedImageView2.setFitWidth(120);
 		this.backOfCardTurnedImageView2.setPreserveRatio(true);
-		this.rightLabel = new Label("14");
+		this.rightLabel = new Label("");
 		this.rightLabel.setId("rightLabel");
 		this.rightStackPane = new StackPane(this.backOfCardTurnedImageView2, this.rightLabel);
 
@@ -74,7 +74,6 @@ public class BoardView extends VBox {
 		this.bottomBox.setAlignment(Pos.CENTER);
 		this.bottomBox.setSpacing(-20);
 
-	
 		// Putting everything in the container
 		this.getChildren().addAll(this.topBox, this.middleBox, this.bottomBox);
 		this.setAlignment(Pos.CENTER);

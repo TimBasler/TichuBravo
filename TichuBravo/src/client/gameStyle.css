@@ -13,27 +13,31 @@
 }
  
 #teamOneLabel{
-	-fx-pref-width:80.0;
-	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-pref-width:160;
+	-fx-text-fill:black;
 	-fx-font-weight:bold;
+	-fx-font-size:1.0cm;
 }
 
 #teamOneScoreLabel{
-	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-text-fill:red;
 	-fx-font-weight:bold;
+	-fx-font-size:1.0cm;
 }
 
 #teamTwoLabel{
-	-fx-pref-width:80.0;
-	-fx-pref-height:600.0;
-	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-pref-height:500;
+	-fx-pref-width:160;
+	-fx-text-fill:black;
 	-fx-font-weight:bold;
+	-fx-font-size:1.0cm;
 }
 
 #teamTwoScoreLabel{
-	-fx-pref-height:600.0;
-	-fx-text-fill:rgb(0.0,0.0,64.0);
+	-fx-pref-height:500;
+	-fx-text-fill:red;
 	-fx-font-weight:bold;
+	-fx-font-size:1.0cm;
 }
 
 #chatLabel{
@@ -42,21 +46,48 @@
 }
 
 #chatTextArea{
-	-fx-pref-width:300.0;
-	-fx-background-color:transparent; 
-	-fx-border-color:black;
+	-fx-pref-width:300.0;	
+}
+
+.text-area {
+    -fx-background-color: rgba(0,0,0,0);
+      -fx-text-fill:rgb(0,255,255);
+    -fx-font-size: 20px;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
 
 #chatTextField{
-	-fx-pref-width:250.0;
+	-fx-pref-width:170.0;
 	-fx-background-color:transparent ;
 	-fx-border-color:black;
+	  -fx-text-fill:rgb(0,255,255);
+	-fx-font-size:15px;
+	
 }
 
 #sendButton{
-	-fx-pref-width:50.0;
-	-fx-text-fill:rgb(255.0,255.0,255.0);
-	-fx-background-color:#000040;
+	-fx-pref-height:40;
+	-fx-pref-width:90;
+	-fx-background-color: 
+        rgba(0,0,0,0.08),
+        linear-gradient(#5a61af, #51536d),
+        linear-gradient(#e4fbff 0%,#cee6fb 10%, #a5d3fb 50%, #88c6fb 51%, #d5faff 100%);
+    -fx-background-insets: 0 0 -1 0,0,1;
+    -fx-background-radius: 5,5,4;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: #242d35;
 }
 #sendButton:hover{
 	-fx-background-color:pink;
@@ -69,6 +100,12 @@
  /*
  * ControlArea  start
  */
+ 
+ #spacer{
+ 	-fx-pref-width:0.5cm;
+ 	-fx-pref-height:1.0cm;
+ }
+ 
  #passButton{
  	-fx-background-color: 
         rgba(0,0,0,0.08),
@@ -139,7 +176,7 @@
     -fx-font-size: 14px;
  	-fx-pref-width:3.0cm;
  	-fx-pref-height:1.0cm;
- 	-fx-pref-width:3.0cm;
+ 	-fx-pref-width:3.5cm;
  	-fx-pref-height:1.0cm;
  }
  
@@ -197,7 +234,7 @@
     -fx-font-size: 14px;
  	-fx-pref-width:3.0cm;
  	-fx-pref-height:1.0cm;
- 	-fx-pref-width:3.0cm;
+ 	-fx-pref-width:5.5cm;
  	-fx-pref-height:1.0cm;
 }
 
@@ -235,7 +272,8 @@
 }
 
 #clickedCard{
-	-fx-border-color:yellow;
+	-fx-border-color:pink;
+	-fx-border-style:solid ;
 }
 
 #cardButton{
@@ -243,10 +281,10 @@
 }
 
 #cardButton:hover{
-	-fx-border-color:blue ;
+	-fx-border-color:black ;
 	-fx-pref-width:130px;
 	-fx-pref-height:130px;
-	-fx-background-color:black;
+	-fx-background-color:pink;
 }
 
 #backgroundImageView{

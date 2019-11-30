@@ -22,16 +22,16 @@ public class ChatView  extends VBox{
 	
 	public ChatView() {
 		//topBox
-		this.teamOneLabel=new Label("Team One");
+		this.teamOneLabel=new Label("Team 1");
 		this.teamOneLabel.setId("teamOneLabel");
-		this.teamOneScoreLabel=new Label("Score");
+		this.teamOneScoreLabel=new Label("");
 		this.teamOneScoreLabel.setId("teamOneScoreLabel");
 		this.topBox=new HBox(this.teamOneLabel,this.teamOneScoreLabel);
 		
 		//middleBox
-		this.teamTwoLabel=new Label("Team Two");
+		this.teamTwoLabel=new Label("Team 2");
 		this.teamTwoLabel.setId("teamTwoLabel");
-		this.teamTwoScoreLabel= new Label("Score");
+		this.teamTwoScoreLabel= new Label("");
 		this.teamTwoScoreLabel.setId("teamTwoScoreLabel");
 		this.middleBox=new HBox(this.teamTwoLabel,this.teamTwoScoreLabel);
 		
@@ -52,7 +52,7 @@ public class ChatView  extends VBox{
 		this.sendButton.setId("sendButton");
 		this.textFieldAndButtonHBox=new HBox(this.chatTextField,this.sendButton);
 		this.textFieldAndButtonHBox.setAlignment(Pos.CENTER);
-		this.bottomBox=new VBox(this.ChatLabel,this.chatTextArea,this.textFieldAndButtonHBox);
+		this.bottomBox=new VBox(this.chatTextArea,this.textFieldAndButtonHBox);
 		
 		//container
 		this.getChildren().addAll(this.topBox,this.middleBox,this.winnerLabel,this.bottomBox);
