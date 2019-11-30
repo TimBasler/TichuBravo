@@ -22,15 +22,18 @@ public class Card implements Comparable<Card> {
 
 	// Constructor for the "SpezialCards"
 	public Card(SpecialCard specialCard) {
+		if(specialCard == SpecialCard.MahJong || specialCard == SpecialCard.Dog) {
+			this.rank = Rank.Two;
+			this.suit = Suit.Stars;
+		}
+		if(specialCard == SpecialCard.Phenix || specialCard == SpecialCard.Dragon) {
+			this.rank = Rank.Ace;
+			this.suit = Suit.Stars;
+		}
 		this.specialCard = specialCard;
-		this.rank = null;
-		this.suit = null;
 		isSpecial = true;
-		
-
 	}
-
-
+	
 	// Constructor for the "normal" Cards
 	public Card(Rank rank, Suit suit) {
 		this.rank = rank;
@@ -148,6 +151,14 @@ public class Card implements Comparable<Card> {
 		}
 
 		return card;
+	}
+	
+	public int getRankOrdinal() {
+		if (!isSpecial) return this.rank.ordinal();
+		if (this.specialCard == SpecialCard.MahJong || this.specialCard == SpecialCard.Dog) return this.rank.ordinal()-1;
+		if (this.specialCard == SpecialCard.Phenix) return this.rank.ordinal()+1;
+		if (this.specialCard == SpecialCard.Dragon) return this.rank.ordinal()+2;
+		return 0;
 	}
 
 	public Rank getRank() {

@@ -41,18 +41,6 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
-				//TODO delete
-				HandType.evaluateCards(new ArrayList<Card>(clientModel.player.normalCardList.stream().collect(Collectors.toList())));
-				System.out.println(HandType.onePairList.toString());
-				System.out.println(HandType.pairsInARow.toString());
-				System.out.println(HandType.threeOfAKindList.toString());
-				System.out.println(HandType.fullHouseList.toString());
-				System.out.println(HandType.straightList.toString());
-				System.out.println(HandType.bombList.toString());
-				System.out.println(HandType.BombStraightFlushList.toString());
-				
-				System.out.println(clientModel.player.table.toString());
-				
 			} 
 		});
 		
@@ -129,8 +117,8 @@ public class ClientController {
 					}
 				} else if (clientModel.player.table.size() == 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
-						if (clientModel.player.table.get(0).getRank().ordinal() < 
-								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank().ordinal()) { //Fehler TODO bei leerem Tisch und specialCard
+						if (clientModel.player.table.get(0).getRankOrdinal() < 
+								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRankOrdinal()) {
 							clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
 						}
 					}
@@ -263,7 +251,6 @@ public class ClientController {
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
 				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));	
 				} else {
-					clientModel.player.selectedCardList.clear();
 					Platform.runLater(() -> {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Information");
