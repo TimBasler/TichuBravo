@@ -44,8 +44,10 @@ public class ChatView  extends VBox{
 		this.ChatLabel.setId("chatLabel");
 		this.chatTextArea=new TextArea("");
 		this.chatTextArea.setId("chatTextArea");
+		this.chatTextArea.setEditable(false);
 		this.chatTextField=new TextField();
 		this.chatTextField.setId("chatTextField");
+		this.chatTextField.setStyle("-fx-text-inner-color: black;");
 		this.sendButton=new Button("Send");
 		this.sendButton.setId("sendButton");
 		this.textFieldAndButtonHBox=new HBox(this.chatTextField,this.sendButton);

@@ -19,22 +19,23 @@ public class ClientView {
 	protected GrandTichuView grandTichuView;
 
 	public ClientView(Stage stage,ClientModel clientModel) {
+		
 		this.stage=stage;
 		this.clientModel=clientModel;
 		
 		this.lobbyView=new LobbyView();
 		this.gameView=new GameView();
 		
-		lobbyScene=new Scene(lobbyView,800,800);
+		lobbyScene=new Scene(lobbyView,1550,830);
 		lobbyScene.getStylesheets().add(getClass().getResource("lobbyStyle.css").toExternalForm());
 		this.lobbyView.setId("lobbyView");
 		
-		gameScene=new Scene(gameView,800,800);
+		gameScene=new Scene(gameView,1550,830);
 		gameScene.getStylesheets().add(getClass().getResource("gameStyle.css").toExternalForm());
 		
 		this.grandTichuView=new GrandTichuView();
 		this.grandTichuStage=new Stage();
-		this.grandTichuScene=new Scene(grandTichuView,200,200);
+		this.grandTichuScene=new Scene(grandTichuView,310,200);
 		this.grandTichuView.setId("grandTichuView");
 		grandTichuScene.getStylesheets().add(getClass().getResource("grandTichuViewStyle.css").toExternalForm());
 		

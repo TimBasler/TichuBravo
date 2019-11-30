@@ -31,7 +31,7 @@ public class ControlAreaView extends HBox {
 		this.resetSelectedCardsButton.setId("resetSelectedCardsButton");
 		
 		this.getChildren().addAll(this.passButton,this.quitGameButton,this.confirmButton,this.smallTichu,this.resetSelectedCardsButton);
-		this.setAlignment(Pos.CENTER_LEFT);
+		this.setAlignment(Pos.CENTER);
 		this.setSpacing(90);
 		
 	}

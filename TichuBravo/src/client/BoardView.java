@@ -49,16 +49,15 @@ public class BoardView extends VBox {
 		this.leftStackPane = new StackPane(this.backOfCardTurnedImageView, this.leftLabel);
 		
 		this.middleBoxForCards=new FlowPane();
-		//this.middleBoxForCards=new HBox();
-		//this.middleBoxForCards.setSpacing(-20);
 		
-		this.backGroundImage = new Image(BoardView.class.getResourceAsStream("..//images/background.png"));
+		 this.backGroundImage = new Image(BoardView.class.getResourceAsStream("..//images/background.png"));
 		this.backGroundImageView = new ImageView(backGroundImage);
 		this.backGroundImageView.setFitHeight(650);
 		this.backGroundImageView.setFitWidth(650);
 		this.backGroundImageView.setPreserveRatio(true);
+		this.backGroundImageView.setId("backgroundImageView");
 		this.middleBoardStackPane=new StackPane(this.backGroundImageView,this.middleBoxForCards);
-
+	
 		this.backOfCardTurnedImage2 = new Image(BoardView.class.getResourceAsStream("..//images//backTurned.png"));
 		this.backOfCardTurnedImageView2 = new ImageView(backOfCardTurnedImage2);
 		this.backOfCardTurnedImageView2.setFitHeight(120);
@@ -73,6 +72,7 @@ public class BoardView extends VBox {
 
 		this.bottomBox=new HBox();
 		this.bottomBox.setAlignment(Pos.CENTER);
+		this.bottomBox.setSpacing(-20);
 
 	
 		// Putting everything in the container

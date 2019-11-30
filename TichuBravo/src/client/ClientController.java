@@ -157,9 +157,10 @@ public class ClientController {
 		});
 
 		clientView.gameView.chatView.sendButton.setOnAction(e -> {
-
+			
 			clientModel.send(clientModel.createJson(MsgType.msg.toString(),
 					clientView.gameView.chatView.chatTextField.getText()));
+			clientView.gameView.chatView.chatTextField.clear();
 
 		});
 

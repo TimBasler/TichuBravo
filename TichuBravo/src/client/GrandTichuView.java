@@ -26,8 +26,5 @@ public class GrandTichuView extends BorderPane {
 		this.setCenter(this.middleBox);
 		
 		
-		
-		
-		
 	}
 }
