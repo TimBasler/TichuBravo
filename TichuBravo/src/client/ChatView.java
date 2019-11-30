@@ -50,9 +50,10 @@ public class ChatView  extends VBox{
 		this.chatTextField.setStyle("-fx-text-inner-color: black;");
 		this.sendButton=new Button("Send");
 		this.sendButton.setId("sendButton");
-		this.textFieldAndButtonHBox=new HBox(this.chatTextField,this.sendButton);
-		this.textFieldAndButtonHBox.setAlignment(Pos.CENTER);
-		this.bottomBox=new VBox(this.chatTextArea,this.textFieldAndButtonHBox);
+		//this.textFieldAndButtonHBox=new HBox(this.chatTextField,this.sendButton);
+		//this.textFieldAndButtonHBox.setAlignment(Pos.CENTER);
+		//this.bottomBox=new VBox(this.chatTextArea,this.textFieldAndButtonHBox);
+		this.bottomBox=new VBox(this.chatTextArea);
 		
 		//container
 		this.getChildren().addAll(this.topBox,this.middleBox,this.winnerLabel,this.bottomBox);

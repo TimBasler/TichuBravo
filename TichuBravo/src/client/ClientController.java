@@ -103,7 +103,7 @@ public class ClientController {
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			Platform.runLater(() -> {
-			clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
+			clientView.gameView.chatView.chatTextArea.appendText(" "+newValue + "\n");
 			});
 		});
 
@@ -156,11 +156,11 @@ public class ClientController {
 			clientView.stage.setScene(clientView.lobbyScene);
 		});
 
-		clientView.gameView.chatView.sendButton.setOnAction(e -> {
+		clientView.gameView.controlAreaView.sendButton.setOnAction(e -> {
 			
 			clientModel.send(clientModel.createJson(MsgType.msg.toString(),
-					clientView.gameView.chatView.chatTextField.getText()));
-			clientView.gameView.chatView.chatTextField.clear();
+					clientView.gameView.controlAreaView.chatTextField.getText()));
+			clientView.gameView.controlAreaView.chatTextField.clear();
 
 		});
 
