@@ -108,7 +108,6 @@ public class ClientController {
 						clientModel.player.playedCardsThisRound.add(clientModel.player.table.get(i));
 					}
 				}
-				System.out.println(HandType.evalueateHandType(new ArrayList<Card>(clientModel.player.table)).toString()); //TODO delete
 				
 				if (clientModel.player.table.size() > 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					ArrayList<ArrayList<Card>> list = HandType.compareHandTypes(
@@ -131,7 +130,7 @@ public class ClientController {
 				} else if (clientModel.player.table.size() == 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
 						if (clientModel.player.table.get(0).getRank().ordinal() < 
-								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank().ordinal()) {
+								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank().ordinal()) { //Fehler TODO bei leerem Tisch und specialCard
 							clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
 						}
 					}
@@ -242,9 +241,13 @@ public class ClientController {
 			// confirm Cards
 			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
 				ArrayList<String> temp = new ArrayList<String>();
-				//Disable Small Tichu
-				clientView.gameView.controlAreaView.smallTichu.setDisable(true);
-				for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
+				ArrayList<Card> cards = new ArrayList<Card>();
+				ArrayList<Card> table = new ArrayList<Card>(clientModel.player.table);
+				for (CardLabel cl : clientModel.player.selectedCardList) {
+					cards.add(cl.getCard());
+				}
+				if(table.isEmpty() && HandType.legalMoveOnEmptyTable(cards) || table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) {
+					for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
 						clientModel.player.normalCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
 						clientModel.player.specialCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
 					clientView.gameView.boardView.bottomBox.getChildren().remove((CardLabel) clientModel.player.selectedCardList.get(i));
@@ -254,9 +257,23 @@ public class ClientController {
 				}
 				clientModel.player.selectedCardList.clear();
 				updateCardEvents();
+				//Disable Small Tichu
+				clientView.gameView.controlAreaView.smallTichu.setDisable(true);
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
 				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));	
+				} else {
+					clientModel.player.selectedCardList.clear();
+					Platform.runLater(() -> {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Information");
+						alert.setHeaderText(null);
+						alert.setContentText("Invalid move!");
+						alert.showAndWait();
+						});
+				}
+				
+				
 			});
 			
 			//SmallTichu

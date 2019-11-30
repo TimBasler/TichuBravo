@@ -39,15 +39,15 @@ public enum HandType {
 	
 	/**
 	 * @param table
-	 * @param hands
+	 * @param allMyCards
 	 * @return ArrayList<ArrayList<Card>>
 	 */
-	public static ArrayList<ArrayList<Card>> compareHandTypes(ArrayList<Card> table, ArrayList<Card> hands){ //hands = all my cards
-		if (table == null || hands == null || table.size() <= 0 || hands.size() <= 0) return null;
+	public static ArrayList<ArrayList<Card>> compareHandTypes(ArrayList<Card> table, ArrayList<Card> allMyCards){
+		if (table == null || allMyCards == null || table.size() <= 0 || allMyCards.size() <= 0) return null;
 		HandType ht = evalueateHandType(table);
 		Card tableCard = highestCardOnTable(ht);
 		
-		ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, hands);
+		ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, allMyCards);
 		ArrayList<ArrayList<Card>> newList = new ArrayList<ArrayList<Card>>();
 		
 		if (ht == OnePair || ht == ThreeOfAKind || ht == FullHouse || ht == BombFourOfAKind) {
@@ -70,14 +70,37 @@ public enum HandType {
 	}
 	
 	public static boolean compareHandTypesBoolean(ArrayList<Card> table, ArrayList<Card> hands){ // hands = one turn
+		if (table.size() == 1 && hands.size() == 1 && hands.get(0).getRank().ordinal() > table.get(0).getRank().ordinal()) { //Fehler kann nicht auf special card legen
+			return true;
+		}
 		HandType ht = evalueateHandType(table);
 		Card tableCard = highestCardOnTable(ht);
 		ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, hands);
 		if (ht == OnePair && handsList.size() == 1 && hands.size() == 2 && hands.get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
 			return true;
 		}
-		
-		return false;		//not done yet
+		if (ht == ThreeOfAKind && handsList.size() == 1 && hands.size() == 3 && hands.get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
+			return true;
+		}
+		if (ht == FullHouse && handsList.size() == 1 && hands.size() == 5 && hands.get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
+			return true;
+		}
+		if (ht == BombFourOfAKind && handsList.size() == 1 && hands.size() == 4 && hands.get(0).getRank().ordinal() > tableCard.getRank().ordinal()) {
+			return true;
+		}
+		if (ht == Pairs && hands.size() >= table.size() && hands.get(hands.size()-1).getRank().ordinal() > tableCard.getRank().ordinal() &&
+				legalMoveOnEmptyTable(hands)) {
+			return true;
+		}
+		if (ht == Straight && hands.size() >= table.size() && hands.get(hands.size()-1).getRank().ordinal() > tableCard.getRank().ordinal() &&
+				legalMoveOnEmptyTable(hands)) {
+			return true;
+		}
+		if (ht == BombStraightFlush && hands.size() >= table.size() && hands.get(hands.size()-1).getRank().ordinal() > tableCard.getRank().ordinal() &&
+				legalMoveOnEmptyTable(hands)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public static Card highestCardOnTable(HandType ht) {
