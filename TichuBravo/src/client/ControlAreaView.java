@@ -59,7 +59,7 @@ public class ControlAreaView extends VBox {
 		
 		this.buttonBox.getChildren().addAll(this.spacer,this.passButton,this.confirmButton,this.smallTichu,this.resetSelectedCardsButton,this.quitGameButton,this.spacerAfterQuit,chatHBox);
 		this.buttonBox.setAlignment(Pos.CENTER_LEFT);
-		this.buttonBox.setSpacing(50);
+		this.buttonBox.setSpacing(80);
 		
 		this.getChildren().addAll(this.buttonBox,this.spacerBox);
 		
