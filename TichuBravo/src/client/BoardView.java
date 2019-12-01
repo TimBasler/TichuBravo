@@ -72,7 +72,6 @@ public class BoardView extends VBox {
 
 		this.bottomBox=new HBox();
 		this.bottomBox.setAlignment(Pos.CENTER);
-		this.bottomBox.setSpacing(-20);
 
 		// Putting everything in the container
 		this.getChildren().addAll(this.topBox, this.middleBox, this.bottomBox);

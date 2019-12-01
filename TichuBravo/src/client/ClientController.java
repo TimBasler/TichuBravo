@@ -319,8 +319,7 @@ public class ClientController {
 				clientModel.player.saidSmallTichu=true;
 			});
 		
-			/**
-			 * //GrandTichu
+			 //GrandTichu
 		clientView.grandTichuView.yesButton.setOnMouseClicked(event->{
 			clientModel.player.saidGrandTichu=true;
 			clientView.grandTichuStage.close();
@@ -338,7 +337,7 @@ public class ClientController {
 			}
 			System.out.println(this.intLIst);
 		});
-			 */
+			 
 			
 			
 			// pass
