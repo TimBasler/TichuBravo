@@ -85,7 +85,7 @@ public class HandTypeTest {
 
 	//@Test //ok aber ändern - nur eine Strasse speichern der gleichen Farbe
 	public void findBombStraightFlushTest() {
-		HandType.findBombStraightFlush2(list2);
+		HandType.findBombStraightFlush(list2);
 		for (int i = 0; i < HandType.BombStraightFlushList.size(); i++) {
 			for (int j = 0; j < HandType.BombStraightFlushList.get(i).size(); j++) {
 				System.out.println(HandType.BombStraightFlushList.get(i).get(j).toString());

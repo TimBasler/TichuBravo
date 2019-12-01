@@ -203,6 +203,11 @@ public class ClientModel {
 			sspWinnerLabelTeamTwo.set((String) json.get(MsgType.winnerLabelTeamTwo.toString()));
 		}
 		
+
+		if (json.containsKey(MsgType.teamChange.toString())) {
+			player.teamChange.set(Integer.parseInt((String) json.get(MsgType.teamChange.toString())));
+		}
+
 	}
 
 	/**
