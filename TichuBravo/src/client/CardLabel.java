@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
  * @author Tim
  *
  */
-public class CardLabel extends Button {
+public class CardLabel extends Button implements Comparable<CardLabel>{
 	protected String fileName;
 	protected Card card;
 	
@@ -62,6 +62,11 @@ public class CardLabel extends Button {
 	
 	public String toString() {
 		return this.fileName;
+	}
+
+	@Override
+	public int compareTo(CardLabel cardLabel) {
+		return this.card.compareTo(cardLabel.getCard());
 	}
 
 }
