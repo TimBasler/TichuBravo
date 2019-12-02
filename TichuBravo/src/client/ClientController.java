@@ -235,6 +235,7 @@ public class ClientController {
 				for (CardLabel cl : clientModel.player.selectedCardList) {
 					cards.add(cl.getCard());
 				}
+				Collections.sort(cards);
 				if(table.isEmpty() && HandType.legalMoveOnEmptyTable(cards) || table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) { //FullHouse reorder
 					for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
 						clientModel.player.normalCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
