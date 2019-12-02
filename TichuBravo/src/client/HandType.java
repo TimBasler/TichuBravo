@@ -66,6 +66,11 @@ public enum HandType {
 			}
 		} 
 		
+		if (ht == OnePair || ht == ThreeOfAKind || ht == FullHouse || ht == Pairs || ht == Straight) {
+			newList.addAll(new ArrayList<ArrayList<Card>> (showlegalCards(HandType.BombFourOfAKind, allMyCards)));
+			newList.addAll(new ArrayList<ArrayList<Card>> (showlegalCards(HandType.BombStraightFlush, allMyCards)));
+		}
+		
 		return newList;
 	}
 	
@@ -73,16 +78,31 @@ public enum HandType {
 		if (table.size() == 1 && hands.size() == 1 && hands.get(0).getRankOrdinal() > table.get(0).getRankOrdinal()) {
 			return true;
 		}
+		HandType HandHT = evalueateHandType(hands);
 		HandType ht = evalueateHandType(table);
 		Card tableCard = highestCardOnTable(ht);
 		ArrayList<ArrayList<Card>> handsList = showlegalCards(ht, hands);
+		if (HandHT == BombStraightFlush && ht == OnePair && legalMoveOnEmptyTable(hands) || 
+				HandHT == BombStraightFlush && ht == ThreeOfAKind && legalMoveOnEmptyTable(hands) ||
+				HandHT == BombStraightFlush && ht == FullHouse && legalMoveOnEmptyTable(hands) ||
+				HandHT == BombStraightFlush && ht == Pairs && legalMoveOnEmptyTable(hands)||
+				HandHT == BombStraightFlush && ht == Straight && legalMoveOnEmptyTable(hands)) {
+			return true;
+		}
+		if (HandHT == BombFourOfAKind && ht == OnePair && legalMoveOnEmptyTable(hands) || 
+				HandHT == BombFourOfAKind && ht == ThreeOfAKind && legalMoveOnEmptyTable(hands) ||
+				HandHT == BombFourOfAKind && ht == FullHouse && legalMoveOnEmptyTable(hands) ||
+				HandHT == BombFourOfAKind && ht == Pairs && legalMoveOnEmptyTable(hands)||
+				HandHT == BombFourOfAKind && ht == Straight && legalMoveOnEmptyTable(hands)) {
+			return true;
+		}
 		if (ht == OnePair && handsList.size() == 1 && hands.size() == 2 && hands.get(0).getRankOrdinal() > tableCard.getRankOrdinal()) {
 			return true;
 		}
 		if (ht == ThreeOfAKind && handsList.size() == 1 && hands.size() == 3 && hands.get(0).getRankOrdinal() > tableCard.getRankOrdinal()) {
 			return true;
 		}
-		if (ht == FullHouse && handsList.size() == 1 && hands.size() == 5 && hands.get(0).getRankOrdinal() > tableCard.getRankOrdinal()) {
+		if (ht == FullHouse && handsList.size() == 1 && hands.size() == 5 && hands.get(2).getRankOrdinal() > tableCard.getRankOrdinal()) {
 			return true;
 		}
 		if (ht == BombFourOfAKind && handsList.size() == 1 && hands.size() == 4 && hands.get(0).getRankOrdinal() > tableCard.getRankOrdinal()) {
@@ -115,7 +135,7 @@ public enum HandType {
 			tableCard = threeOfAKindList.get(0).get(0);
 		}
 		if (ht == FullHouse) {
-			tableCard = fullHouseList.get(0).get(0);
+			tableCard = fullHouseList.get(0).get(2);
 		}
 		if (ht == Straight) {
 			tableCard = straightList.get(0).get(straightList.get(0).size()-1);
@@ -149,8 +169,7 @@ public enum HandType {
 	}
 	
 	public static boolean legalMoveOnEmptyTable(ArrayList<Card> cards) {
-		if (cards.size() == 1 && cards.get(0).isSpecial()) return true;
-		if (cards.size() == 1 && !cards.get(0).isSpecial()) return true;
+		if (cards.size() == 1) return true;
 		if (cards.size() > 1 && isNormalCards(cards)) {
 			HandType ht = evalueateHandType(cards);
 			boolean match = false;
@@ -158,7 +177,7 @@ public enum HandType {
 			for (ArrayList<Card> arraylist : handsList) {
 				if (arraylist.size() == cards.size()) {
 					for (int i = 0; i < cards.size(); i++) {
-						if (arraylist.get(i) == cards.get(i)) {
+						if (arraylist.contains(cards.get(i))) {
 							match = true;
 						} else {
 							match = false;
