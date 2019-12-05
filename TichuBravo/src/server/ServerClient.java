@@ -64,6 +64,14 @@ public class ServerClient {
 			model.game.nextPlayer();
 			model.broadcast(json);
 			
+		}else if (json.containsKey(MsgType.dog.toString())) {
+			model.game.passCounter.set(0);
+			model.game.lastMove.set(model.game.currentPlayerID.get());
+			model.game.passToTeamColleague();
+			ArrayList<String> list = (ArrayList<String>) json.get(MsgType.dog.toString());
+			JSONObject newJson = createJsonArray(MsgType.turn.toString(), list);
+			model.broadcast(newJson);
+			
 		}else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
 			model.game.newSequence(Integer.parseInt((String) json.get(MsgType.whoHasMahJong.toString())));
 			
@@ -82,6 +90,10 @@ public class ServerClient {
 			if(model.game.passCounter.get() != 4) {
 				model.game.nextPlayer();
 			}
+
+		}else if (json.containsKey(MsgType.noCards.toString())) {
+			int ID = Integer.parseInt((String) json.get(MsgType.noCards.toString()));
+			model.game.finisherList.add(model.game.getPlayer(ID));
 
 		} else {
 			// wrong key

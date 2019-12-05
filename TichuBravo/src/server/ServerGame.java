@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 public class ServerGame {
 	protected Deck deck = new Deck();
 	protected ObservableList<Player> players = FXCollections.observableArrayList();
+	protected ObservableList<Player> finisherList = FXCollections.observableArrayList();
 	protected ObservableList<Player> newSequence = FXCollections.observableArrayList();
 	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty(0);
 	protected SimpleIntegerProperty passCounter = new SimpleIntegerProperty(0);
@@ -27,6 +28,13 @@ public class ServerGame {
 	
 	public ServerGame() {
 		
+	}
+	
+	public Player getPlayer(int ID) {
+		for (Player p : players) {
+			if (p.getID() == ID) return p;
+		}
+		return null;
 	}
 	
 	/**
@@ -48,6 +56,20 @@ public class ServerGame {
 			return new Player(ID, false);
 		} 
 		return new Player(ID, true);
+	}
+	
+	public void passToTeamColleague() {
+		boolean team = false;
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getID() == currentPlayerID.get()) {
+				team = players.get(i).isTeamOne();
+			}
+		}
+		for (int j = 0; j < newSequence.size(); j++) {
+			if (newSequence.get(j).getID() != currentPlayerID.get() && newSequence.get(j).isTeamOne() == team) {
+				currentPlayerID.set(newSequence.get(j).getID());
+			}
+		}
 	}
 	
 	/**
