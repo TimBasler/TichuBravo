@@ -40,10 +40,12 @@
 	-fx-font-size:1.0cm;
 }
 
-#chatLabel{
-	-fx-text-fill:rgb(0.0,0.0,64.0);
+#currentPlayerLabel{
+	-fx-text-fill:red ;
 	-fx-font-weight:bold;
+	-fx-font-size:0.5cm; 
 }
+
 
 #chatTextArea{
 	-fx-pref-width:300.0;	

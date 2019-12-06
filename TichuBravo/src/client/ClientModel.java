@@ -34,6 +34,7 @@ public class ClientModel {
 	protected SimpleIntegerProperty sipPointsTeamTwo= new SimpleIntegerProperty();
 	protected SimpleStringProperty sspWinnerLabelTeamOne=new SimpleStringProperty();
 	protected SimpleStringProperty sspWinnerLabelTeamTwo=new SimpleStringProperty();
+	protected SimpleStringProperty sspCurrentPlayerLabel = new SimpleStringProperty();
 	protected String playerName;
 	protected boolean isTeamOne;
 	protected int clientId;
@@ -207,6 +208,11 @@ public class ClientModel {
 		if (json.containsKey(MsgType.teamChange.toString())) {
 			player.teamChange.set(Integer.parseInt((String) json.get(MsgType.teamChange.toString())));
 		}
+		
+		if(json.containsKey(MsgType.currentPlayerName.toString())) {
+			this.sspCurrentPlayerLabel.set("");
+			this.sspCurrentPlayerLabel.set((String) json.get(MsgType.currentPlayerName.toString()));
+		}
 
 	}
 
@@ -294,6 +300,18 @@ public class ClientModel {
 	// count Points Team two
 	public void countPointsFromTeamTwo(ObservableList<Card> earnedCards) {
 		int points = 0;
+		if(player.isWinner&&player.saidGrandTichu) {
+			points += 200;
+		}else if(player.isWinner&&player.saidSmallTichu) {
+		points +=100;
+		}else if(player.isWinner==false&&player.saidGrandTichu) {
+		 points-=200;
+		}else if(player.isWinner==false&&player.saidSmallTichu) {
+		points-= 100;
+		}else {
+			points=0;
+		}
+		
 		for (Card c : earnedCards) {
 			if (c.isSpecial() == false) {// Normal Cards
 				switch (c.getRank().ordinal()) {

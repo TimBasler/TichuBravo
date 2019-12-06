@@ -77,7 +77,14 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
+				//Show who has played the Cards
+				clientModel.send(clientModel.createJson(MsgType.currentPlayerName.toString(),clientModel.player.playerName));//here
 			} 
+		});
+		
+		//Listener for line 81
+		clientModel.sspCurrentPlayerLabel.addListener((o,oldValue,newValue)->{
+			clientView.gameView.chatView.currentPlayerLabel.setText(newValue);
 		});
 		
 		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
@@ -207,7 +214,7 @@ public class ClientController {
 
 		clientView.gameView.controlAreaView.sendButton.setOnAction(e -> {
 			
-			clientModel.send(clientModel.createJson(MsgType.msg.toString(),
+			clientModel.send(clientModel.createJson(MsgType.msg.toString(),clientModel.player.playerName +":"+
 					clientView.gameView.controlAreaView.chatTextField.getText()));
 			clientView.gameView.controlAreaView.chatTextField.clear();
 

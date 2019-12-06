@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 public class ChatView  extends VBox{	
 	protected HBox topBox,middleBox,textFieldAndButtonHBox;
 	protected VBox bottomBox;
-	protected Label teamOneLabel, teamOneScoreLabel, teamTwoLabel, teamTwoScoreLabel, ChatLabel,winnerLabel;
+	protected Label teamOneLabel, teamOneScoreLabel, teamTwoLabel, teamTwoScoreLabel, ChatLabel,winnerLabel,currentPlayerLabel;
 	protected TextArea chatTextArea;
 	protected TextField chatTextField;
 	protected Button sendButton;
@@ -39,6 +39,10 @@ public class ChatView  extends VBox{
 		this.winnerLabel=new Label();
 		this.winnerLabel.setId("winnerLabel");
 		
+		//CurrentPlayerLabel
+		this.currentPlayerLabel=new Label("");
+		this.currentPlayerLabel.setId("currentPlayerLabel");
+		
 		//bottomBox
 		this.ChatLabel=new Label("Chat");
 		this.ChatLabel.setId("chatLabel");
@@ -56,7 +60,7 @@ public class ChatView  extends VBox{
 		this.bottomBox=new VBox(this.chatTextArea);
 		
 		//container
-		this.getChildren().addAll(this.topBox,this.middleBox,this.winnerLabel,this.bottomBox);
+		this.getChildren().addAll(this.topBox,this.middleBox,this.winnerLabel,this.currentPlayerLabel,this.bottomBox);
 		this.setAlignment(Pos.CENTER);
 	}
 
