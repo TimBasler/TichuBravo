@@ -26,8 +26,8 @@ public class ClientController {
 	private int isPlayerTwoCounter = 0;
 
 	Player player;
-	
-	ArrayList <Integer> intLIst  = new ArrayList<Integer>();
+
+	ArrayList<Integer> intLIst = new ArrayList<Integer>();
 
 	/**
 	 * @param clientModel
@@ -36,40 +36,41 @@ public class ClientController {
 	public ClientController(ClientModel clientModel, ClientView clientView) {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
-		
-		
-		//Update View after the Winner evaluation
-				clientModel.sspWinnerLabelTeamTwo.addListener((obs,oV,nV)->{
-					Platform.runLater(() -> {
-						clientView.gameView.chatView.winnerLabel.setText(nV);
-						});
-				});
-		
-		//Update View after the Winner evaluation
-		clientModel.sspWinnerLabelTeamOne.addListener((obs,oV,nV)->{
+
+		// Update View after the Winner evaluation
+		clientModel.sspWinnerLabelTeamTwo.addListener((obs, oV, nV) -> {
 			Platform.runLater(() -> {
 				clientView.gameView.chatView.winnerLabel.setText(nV);
-				});
-		});
-		
-		//Update pointsView Team 1
-		clientModel.sipPointsTeamOne.addListener((obs,oV,nV)->{
-			Platform.runLater(() -> {
-				clientView.gameView.chatView.teamOneScoreLabel.setText(nV+" Points");
-				if((int)nV>=1000) {
-					clientModel.send(clientModel.createJson(MsgType.winnerLabelTeamOne.toString(), "Team 1 is the Winner"));
-				}
-				});
+			});
 		});
 
-		//Update pointsView Team 2
-		clientModel.sipPointsTeamTwo.addListener((obs,oV,nV)->{
+		// Update View after the Winner evaluation
+		clientModel.sspWinnerLabelTeamOne.addListener((obs, oV, nV) -> {
 			Platform.runLater(() -> {
-				clientView.gameView.chatView.teamTwoScoreLabel.setText(nV+" Points");
-				if((int)nV>=1000) {
-					clientModel.send(clientModel.createJson(MsgType.winnerLabelTeamTwo.toString(), "Team 2 is the Winner"));
+				clientView.gameView.chatView.winnerLabel.setText(nV);
+			});
+		});
+
+		// Update pointsView Team 1
+		clientModel.sipPointsTeamOne.addListener((obs, oV, nV) -> {
+			Platform.runLater(() -> {
+				clientView.gameView.chatView.teamOneScoreLabel.setText(nV + " Points");
+				if ((int) nV >= 1000) {
+					clientModel.send(
+							clientModel.createJson(MsgType.winnerLabelTeamOne.toString(), "Team 1 is the Winner"));
 				}
-				});
+			});
+		});
+
+		// Update pointsView Team 2
+		clientModel.sipPointsTeamTwo.addListener((obs, oV, nV) -> {
+			Platform.runLater(() -> {
+				clientView.gameView.chatView.teamTwoScoreLabel.setText(nV + " Points");
+				if ((int) nV >= 1000) {
+					clientModel.send(
+							clientModel.createJson(MsgType.winnerLabelTeamTwo.toString(), "Team 2 is the Winner"));
+				}
+			});
 		});
 
 		// if myTurn is equal to my ID then my buttons are able to click
@@ -77,58 +78,61 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
-				//Show who has played the Cards
-				clientModel.send(clientModel.createJson(MsgType.currentPlayerName.toString(),clientModel.player.playerName));//here
-			} 
+				// Show who has played the Cards
+				clientModel.send(
+						clientModel.createJson(MsgType.currentPlayerName.toString(), clientModel.player.playerName));// here
+			}
 		});
-		
-		//Listener for line 81
-		clientModel.sspCurrentPlayerLabel.addListener((o,oldValue,newValue)->{
+
+		// Listener for line 81
+		clientModel.sspCurrentPlayerLabel.addListener((o, oldValue, newValue) -> {
 			clientView.gameView.chatView.currentPlayerLabel.setText(newValue);
 		});
-		
+
 		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
-				if (clientModel.player.isTeamOne()) clientModel.player.setIsTeamOne(false);
-				else clientModel.player.setIsTeamOne(true);
+				if (clientModel.player.isTeamOne())
+					clientModel.player.setIsTeamOne(false);
+				else
+					clientModel.player.setIsTeamOne(true);
 				Platform.runLater(() -> {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Information");
-				alert.setHeaderText(null);
-				alert.setContentText("You were changed to the other team!");
-				alert.showAndWait();
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information");
+					alert.setHeaderText(null);
+					alert.setContentText("You were changed to the other team!");
+					alert.showAndWait();
 				});
-			} 
+			}
 		});
-		
+
 		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
-				//add cards to earnedCards
-				for(Card c : clientModel.player.playedCardsThisRound) {
+				// add cards to earnedCards
+				for (Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
 
-				
-				//count points 
-					if(clientModel.player.isTeamOne) {
-						clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
-						clientModel.send(clientModel.createJson(MsgType.pointsTeamOne.toString(), clientModel.sipPointsTeamOne.get()+""));
-					}
-					if(!clientModel.player.isTeamOne) {
-						clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
-						clientModel.send(clientModel.createJson(MsgType.pointsTeamTwo.toString(), clientModel.sipPointsTeamTwo.get()+""));
-					}
-					
-				
-				System.out.println(clientModel.player.earnedCards +"kommt vom here");
+				// count points
+				if (clientModel.player.isTeamOne) {
+					clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
+					clientModel.send(clientModel.createJson(MsgType.pointsTeamOne.toString(),
+							clientModel.sipPointsTeamOne.get() + ""));
+				}
+				if (!clientModel.player.isTeamOne) {
+					clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
+					clientModel.send(clientModel.createJson(MsgType.pointsTeamTwo.toString(),
+							clientModel.sipPointsTeamTwo.get() + ""));
+				}
+
+				System.out.println(clientModel.player.earnedCards + "kommt vom here");
 
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
-			} 
+			}
 		});
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
 			Platform.runLater(() -> {
-			clientView.gameView.chatView.chatTextArea.appendText(" "+newValue + "\n");
+				clientView.gameView.chatView.chatTextArea.appendText(" " + newValue + "\n");
 			});
 		});
 
@@ -141,42 +145,45 @@ public class ClientController {
 
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
 		});
-		
+
 		clientModel.player.table.addListener((ListChangeListener<? super Card>) (e -> {
 			Platform.runLater(() -> {
 				clientView.gameView.boardView.middleBoxForCards.getChildren().clear();
-				
+
 				for (int i = 0; i < clientModel.player.table.size(); i++) {
 					clientView.gameView.boardView.middleBoxForCards.getChildren()
-					.add(new CardLabel(clientModel.player.table.get(i)));
-					
+							.add(new CardLabel(clientModel.player.table.get(i)));
+
 					if (!clientModel.player.playedCardsThisRound.contains(clientModel.player.table.get(i))) {
 						clientModel.player.playedCardsThisRound.add(clientModel.player.table.get(i));
 					}
 				}
-				
-				if (clientModel.player.table.size() > 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
+
+				if (clientModel.player.table.size() > 1
+						&& HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					ArrayList<ArrayList<Card>> list = HandType.compareHandTypes(
-							new ArrayList<Card>(clientModel.player.table), 
+							new ArrayList<Card>(clientModel.player.table),
 							new ArrayList<Card>(clientModel.player.normalCardList));
-							
+
 					for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setDisable(true);
 					}
 					for (int i = 0; i < list.size(); i++) {
 						for (int j = 0; j < list.get(i).size(); j++) {
 							for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
-								if (list.get(i).get(j).getRank() == 
-										((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRank()) {
+								if (list.get(i).get(j).getRank() == ((CardLabel) clientView.gameView.boardView.bottomBox
+										.getChildren().get(k)).getCard().getRank()) {
 									clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
 								}
 							}
 						}
 					}
-				} else if (clientModel.player.table.size() == 1 && HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
+				} else if (clientModel.player.table.size() == 1
+						&& HandType.isNormalCards(new ArrayList<Card>(clientModel.player.table))) {
 					for (int k = 0; k < clientView.gameView.boardView.bottomBox.getChildren().size(); k++) {
-						if (clientModel.player.table.get(0).getRankOrdinal() < 
-								((CardLabel)clientView.gameView.boardView.bottomBox.getChildren().get(k)).getCard().getRankOrdinal()) {
+						if (clientModel.player.table.get(0)
+								.getRankOrdinal() < ((CardLabel) clientView.gameView.boardView.bottomBox.getChildren()
+										.get(k)).getCard().getRankOrdinal()) {
 							clientView.gameView.boardView.bottomBox.getChildren().get(k).setDisable(false);
 						}
 					}
@@ -212,51 +219,71 @@ public class ClientController {
 			clientView.stage.setScene(clientView.lobbyScene);
 		});
 
+		// SendButton
 		clientView.gameView.controlAreaView.sendButton.setOnAction(e -> {
-			
-			clientModel.send(clientModel.createJson(MsgType.msg.toString(),clientModel.player.playerName +":"+
-					clientView.gameView.controlAreaView.chatTextField.getText()));
-			clientView.gameView.controlAreaView.chatTextField.clear();
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			BadWordsFilter bwf = new BadWordsFilter();
+			ArrayList<String> inputList = new ArrayList<>();
+			String[] splited = clientView.gameView.controlAreaView.chatTextField.getText().split("\\s+");
+			for (String s : splited) {
+				inputList.add(s);
+			}
+
+			if (!bwf.checkInput(inputList)) {
+				System.out.println("Ist leer");
+				clientModel.send(clientModel.createJson(MsgType.msg.toString(),
+						clientView.gameView.controlAreaView.chatTextField.getText()));
+				clientView.gameView.controlAreaView.chatTextField.clear();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Bad Word Error");
+				alert.getDialogPane().setContentText("Don't use such bad words please");
+				alert.showAndWait();
+				System.out.println("ist im else");
+			}
 
 		});
 
 		clientModel.player.allCardsReceived.addListener((o, oldValue, newValue) -> {
-			if(newValue == true) {
+			if (newValue == true) {
 				// Display the player Cards
 				Platform.runLater(() -> {
 					Collections.sort(clientModel.player.normalCardList);
 					Collections.sort(clientModel.player.specialCardList);
 
-					for (int i = 0; i < clientModel.player.normalCardList.size(); i++) { 																
-						clientView.gameView.boardView.bottomBox.getChildren().add(
-								new CardLabel(clientModel.player.normalCardList.get(i)));
+					for (int i = 0; i < clientModel.player.normalCardList.size(); i++) {
+						clientView.gameView.boardView.bottomBox.getChildren()
+								.add(new CardLabel(clientModel.player.normalCardList.get(i)));
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 					}
 
 					for (int i = 0; i < clientModel.player.specialCardList.size(); i++) {
-						clientView.gameView.boardView.bottomBox.getChildren().add(
-								new CardLabel(clientModel.player.specialCardList.get(i)));
+						clientView.gameView.boardView.bottomBox.getChildren()
+								.add(new CardLabel(clientModel.player.specialCardList.get(i)));
 						clientView.gameView.boardView.bottomBox.getChildren().get(i).setId("cardButton");
 					}
 
-					
-					//generate 6 random inex numbers from 0-13 
+					// generate 6 random inex numbers from 0-13
 					Random random = new Random();
-					for (int i =0;i<6;i++) {
-						int randomInt=random.nextInt(14);
-						while(this.intLIst.contains(randomInt)) {
-							randomInt=random.nextInt(14);
+					for (int i = 0; i < 6; i++) {
+						int randomInt = random.nextInt(14);
+						while (this.intLIst.contains(randomInt)) {
+							randomInt = random.nextInt(14);
 						}
 						this.intLIst.add(randomInt);
 						clientView.gameView.boardView.bottomBox.getChildren().get(randomInt).setVisible(false);
-						
+
 					}
-					
+
 					clientView.grandTichuStage.setScene(clientView.grandTichuScene);
 					clientView.grandTichuStage.show();
-					
-					
-					
 
 					// Add the selected Cards to the selectedCardList and set the Id for css styling
 					updateCardEvents();
@@ -283,7 +310,6 @@ public class ClientController {
 			clientModel.send(clientModel.createJson(MsgType.player.toString(),
 					clientModel.player.playerID + "," + clientModel.player.isTeamOne));
 
-			
 			// confirm Cards
 			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
 				ArrayList<String> temp = new ArrayList<String>();
@@ -292,22 +318,26 @@ public class ClientController {
 				for (CardLabel cl : clientModel.player.selectedCardList) {
 					cards.add(cl.getCard());
 				}
-				if(table.isEmpty() && HandType.legalMoveOnEmptyTable(cards) || table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) { //FullHouse reorder
+				if (table.isEmpty() && HandType.legalMoveOnEmptyTable(cards)
+						|| table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) { // FullHouse reorder
 					for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
-						clientModel.player.normalCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
-						clientModel.player.specialCardList.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
-					clientView.gameView.boardView.bottomBox.getChildren().remove((CardLabel) clientModel.player.selectedCardList.get(i));
-				}	
-				for (CardLabel cl : clientModel.player.selectedCardList) {
-					temp.add(cl.getCard().toString());
-				}
-				clientModel.player.selectedCardList.clear();
-				updateCardEvents();
-				//Disable Small Tichu
-				clientView.gameView.controlAreaView.smallTichu.setDisable(true);
-				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
-				clientView.gameView.controlAreaView.passButton.setDisable(true);
-				clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));	
+						clientModel.player.normalCardList
+								.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
+						clientModel.player.specialCardList
+								.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
+						clientView.gameView.boardView.bottomBox.getChildren()
+								.remove((CardLabel) clientModel.player.selectedCardList.get(i));
+					}
+					for (CardLabel cl : clientModel.player.selectedCardList) {
+						temp.add(cl.getCard().toString());
+					}
+					clientModel.player.selectedCardList.clear();
+					updateCardEvents();
+					// Disable Small Tichu
+					clientView.gameView.controlAreaView.smallTichu.setDisable(true);
+					clientView.gameView.controlAreaView.confirmButton.setDisable(true);
+					clientView.gameView.controlAreaView.passButton.setDisable(true);
+					clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));
 
 				} else {
 					Platform.runLater(() -> {
@@ -316,38 +346,35 @@ public class ClientController {
 						alert.setHeaderText(null);
 						alert.setContentText("Invalid move!");
 						alert.showAndWait();
-						});
+					});
 				}
-				
-				
+
 			});
-			
-			//SmallTichu
-			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event->{
-				clientModel.player.saidSmallTichu=true;
+
+			// SmallTichu
+			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event -> {
+				clientModel.player.saidSmallTichu = true;
 			});
-		
-			 //GrandTichu
-		clientView.grandTichuView.yesButton.setOnMouseClicked(event->{
-			clientModel.player.saidGrandTichu=true;
-			clientView.grandTichuStage.close();
-			for(int i=0;i<intLIst.size();i++) {
-				clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
-			}
-			
-		});
-		
-		clientView.grandTichuView.noButton.setOnAction(event->{
-			clientView.grandTichuStage.close();
-			for(int i=0;i<intLIst.size();i++) {
-				clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
-				System.out.println(this.intLIst.get(i));
-			}
-			System.out.println(this.intLIst);
-		});
-			 
-			
-			
+
+			// GrandTichu
+			clientView.grandTichuView.yesButton.setOnMouseClicked(event -> {
+				clientModel.player.saidGrandTichu = true;
+				clientView.grandTichuStage.close();
+				for (int i = 0; i < intLIst.size(); i++) {
+					clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
+				}
+
+			});
+
+			clientView.grandTichuView.noButton.setOnAction(event -> {
+				clientView.grandTichuStage.close();
+				for (int i = 0; i < intLIst.size(); i++) {
+					clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
+					System.out.println(this.intLIst.get(i));
+				}
+				System.out.println(this.intLIst);
+			});
+
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {
 				clientModel.player.selectedCardList.clear();
@@ -355,14 +382,14 @@ public class ClientController {
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
 				clientModel.send(clientModel.createJson(MsgType.pass.toString(), new String("x")));
 			});
-			
+
 		});
 
-		//quitGameButton
-		clientView.gameView.controlAreaView.quitGameButton.setOnAction(e->{
+		// quitGameButton
+		clientView.gameView.controlAreaView.quitGameButton.setOnAction(e -> {
 			clientView.stage.close();
 		});
-		
+
 	}
 
 	public void updateCardEvents() {
