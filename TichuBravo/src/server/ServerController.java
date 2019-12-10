@@ -28,6 +28,12 @@ public class ServerController {
 			if (model.game.players.size() == 4) model.game.sendNewCards();
 		}));
 		
+		model.game.finisherList.addListener((ListChangeListener<? super Player>)(e ->{
+			if (model.game.finisherList.size() == 3) {
+				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "stopRound"));
+			}
+		}));
+		
 		model.sspGame.addListener((o, oldValue, newValue) -> {
 			if (newValue.equals("dealCards")) {
 				model.game.sendNewCards();

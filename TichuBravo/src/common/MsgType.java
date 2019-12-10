@@ -17,8 +17,9 @@ package common;
  */
 public enum MsgType {
 
-	name, msg, turn, game, clientId, card, cards, whoHasMahJong, player, currentPlayerID, pass, winnerOfTheRound,pointsTeamOne,
-	pointsTeamTwo,winnerLabelTeamOne,winnerLabelTeamTwo,teamChange;
+	name, msg, turn, game, clientId, card, cards, whoHasMahJong, player,
+	currentPlayerID, pass, winnerOfTheRound, pointsTeamOne, pointsTeamTwo, winnerLabelTeamOne,winnerLabelTeamTwo, teamChange, dog, noCards, 
+	fromTeamOne, fromTeamTwo, playerIDOne, playerIDTwo, playerIDThree, playerIDFour,
+	toFastestFinisher;
 
-	
 }

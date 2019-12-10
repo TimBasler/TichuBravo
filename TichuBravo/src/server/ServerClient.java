@@ -66,6 +66,14 @@ public class ServerClient {
 			model.game.nextPlayer();
 			model.broadcast(json);
 			
+		}else if (json.containsKey(MsgType.dog.toString())) {
+			model.game.passCounter.set(0);
+			model.game.lastMove.set(model.game.currentPlayerID.get());
+			model.game.passToTeamColleague();
+			ArrayList<String> list = (ArrayList<String>) json.get(MsgType.dog.toString());
+			JSONObject newJson = createJsonArray(MsgType.turn.toString(), list);
+			model.broadcast(newJson);
+			
 		}else if (json.containsKey(MsgType.whoHasMahJong.toString())) {
 			model.game.newSequence(Integer.parseInt((String) json.get(MsgType.whoHasMahJong.toString())));
 			
@@ -85,6 +93,73 @@ public class ServerClient {
 				model.game.nextPlayer();
 			}
 
+		} else if (json.containsKey(MsgType.noCards.toString())) {
+			int ID = Integer.parseInt((String) json.get(MsgType.noCards.toString()));
+			model.game.finisherList.add(model.game.getPlayer(ID));
+
+		} else if (json.containsKey(MsgType.toFastestFinisher.toString())) {
+			ArrayList<String> list = (ArrayList<String>) json.get(MsgType.toFastestFinisher.toString());
+			int ID = model.game.finisherList.get(0).getID();
+			
+			if(ID == 1) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDOne.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 2) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDTwo.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 3) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDThree.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 4) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDFour.toString(), list);
+				model.broadcast(newJson);
+			}
+
+		} else if (json.containsKey(MsgType.fromTeamOne.toString())) {
+			int ID = model.game.getNextPlayerFromOtherTeam(true);
+			ArrayList<String> list = (ArrayList<String>) json.get(MsgType.fromTeamOne.toString());
+			
+			if(ID == 1) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDOne.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 2) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDTwo.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 3) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDThree.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 4) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDFour.toString(), list);
+				model.broadcast(newJson);
+			}
+			
+		} else if (json.containsKey(MsgType.fromTeamTwo.toString())) {
+			int ID = model.game.getNextPlayerFromOtherTeam(false);
+			ArrayList<String> list = (ArrayList<String>) json.get(MsgType.fromTeamTwo.toString());
+			
+			if(ID == 1) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDOne.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 2) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDTwo.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 3) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDThree.toString(), list);
+				model.broadcast(newJson);
+			}
+			if(ID == 4) {
+				JSONObject newJson = createJsonArray(MsgType.playerIDFour.toString(), list);
+				model.broadcast(newJson);
+			}
+			
 		} else {
 			// wrong key
 		}
