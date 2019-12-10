@@ -178,6 +178,34 @@ public class ClientModel {
 		if (json.containsKey(MsgType.teamChange.toString())) {
 			player.teamChange.set(Integer.parseInt((String) json.get(MsgType.teamChange.toString())));
 		}
+		if (json.containsKey(MsgType.playerIDOne.toString()) && clientId == 1) {
+			JSONArray list = (JSONArray) json.get(MsgType.playerIDOne.toString());
+			for (int i = 0; i < list.size(); i++) {
+				Card c = Card.makeCard((String) list.get(i));
+				player.earnedCards.add(c);
+			}
+		}
+		if (json.containsKey(MsgType.playerIDTwo.toString()) && clientId == 2) {
+			JSONArray list = (JSONArray) json.get(MsgType.playerIDTwo.toString());
+			for (int i = 0; i < list.size(); i++) {
+				Card c = Card.makeCard((String) list.get(i));
+				player.earnedCards.add(c);
+			}
+		}
+		if (json.containsKey(MsgType.playerIDThree.toString()) && clientId == 3) {
+			JSONArray list = (JSONArray) json.get(MsgType.playerIDThree.toString());
+			for (int i = 0; i < list.size(); i++) {
+				Card c = Card.makeCard((String) list.get(i));
+				player.earnedCards.add(c);
+			}
+		}
+		if (json.containsKey(MsgType.playerIDFour.toString()) && clientId == 4) {
+			JSONArray list = (JSONArray) json.get(MsgType.playerIDFour.toString());
+			for (int i = 0; i < list.size(); i++) {
+				Card c = Card.makeCard((String) list.get(i));
+				player.earnedCards.add(c);
+			}
+		}
 	}
 
 	/**

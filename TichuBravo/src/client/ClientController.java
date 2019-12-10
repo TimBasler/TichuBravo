@@ -86,7 +86,7 @@ public class ClientController {
 				clientModel.player.table.clear();
 				clientModel.player.playedCardsThisRound.clear();
 			}
-			if (newValue.equals("stopRound")) {//--------------------------------------------------------------------------------------------
+			if (newValue.equals("stopRound")) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
 				clientModel.player.table.clear();
@@ -95,9 +95,26 @@ public class ClientController {
 					for (Card c : clientModel.player.normalCardList) {
 						temp.add(c.toString());
 					}
+					clientModel.player.normalCardList.clear();
 					for (Card c : clientModel.player.specialCardList) {
 						temp.add(c.toString());
-					}//json schicken mit ID und Karten, die werden dem gegnerischen team angerechnet
+					}
+					clientModel.player.specialCardList.clear();
+					
+					//send json array with the cards in my hand to the other team
+					if(clientModel.player.isTeamOne == true) {
+						clientModel.send(clientModel.createJsonArray(MsgType.fromTeamOne.toString(), temp));
+					} else {
+						clientModel.send(clientModel.createJsonArray(MsgType.fromTeamTwo.toString(), temp));
+					}
+					
+					//send all my earned cards to the fastest finisher
+					ArrayList<String> temp2 = new ArrayList<String>();
+					for (Card c : clientModel.player.earnedCards) {
+						temp2.add(c.toString());
+					}
+					clientModel.player.earnedCards.clear();
+					clientModel.send(clientModel.createJsonArray(MsgType.toFastestFinisher.toString(), temp2));
 				}
 				
 				

@@ -30,6 +30,15 @@ public class ServerGame {
 		
 	}
 	
+	public int getNextPlayerFromOtherTeam(boolean isTeamOne) {
+		for (int i = 0; i < newSequence.size(); i++) {
+			if (newSequence.get(i).isTeamOne() != isTeamOne) {
+				return newSequence.get(i).getID();
+			}
+		}
+		return 0;
+	}
+	
 	public Player getPlayer(int ID) {
 		for (Player p : players) {
 			if (p.getID() == ID) return p;
