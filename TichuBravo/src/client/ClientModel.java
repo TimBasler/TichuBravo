@@ -169,8 +169,9 @@ public class ClientModel {
 			sspGame.set((String) json.get(MsgType.game.toString()));
 		}
 		if (json.containsKey(MsgType.cards.toString())) {
-			player.normalCardList.clear();
-			player.specialCardList.clear();
+			player.allCardsReceived.set(false);
+			
+			
 			JSONArray list = (JSONArray) json.get(MsgType.cards.toString());
 			for (int i = 0; i < list.size(); i++) {
 				Card c = Card.makeCard((String) list.get(i));

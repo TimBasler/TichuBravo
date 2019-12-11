@@ -303,6 +303,16 @@ public class ClientController {
 						}
 					});
 				});
+			} else {
+				player.playedCardsThisRound.clear();
+				player.selectedCardList.clear();
+				player.normalCardList.clear();
+				player.specialCardList.clear();
+				player.table.clear();
+				Platform.runLater(() -> {
+					clientView.gameView.boardView.bottomBox.getChildren().clear();
+					clientView.gameView.boardView.middleBoxForCards.getChildren().clear();
+				});
 			}
 		});
 

@@ -117,6 +117,7 @@ public class ServerClient {
 				JSONObject newJson = createJsonArray(MsgType.playerIDFour.toString(), list);
 				model.broadcast(newJson);
 			}
+			model.game.sendNewCards();
 
 		} else if (json.containsKey(MsgType.fromTeamOne.toString())) {
 			int ID = model.game.getNextPlayerFromOtherTeam(true);
