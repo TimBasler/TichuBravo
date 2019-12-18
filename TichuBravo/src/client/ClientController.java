@@ -86,6 +86,7 @@ public class ClientController {
 			}
 		});
 
+		// if I was transferred to the other team, then show me a alert
 		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				if (clientModel.player.isTeamOne())
@@ -102,6 +103,7 @@ public class ClientController {
 			}
 		});
 
+		// if I won the round, then I earn all played cards
 		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				// add cards to earnedCards
@@ -121,8 +123,6 @@ public class ClientController {
 							clientModel.sipPointsTeamTwo.get() + ""));
 				}
 
-				System.out.println(clientModel.player.earnedCards + "kommt vom here");
-
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
 			}
 		});
@@ -136,14 +136,17 @@ public class ClientController {
 		});
 
 		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
+			// reset the table
 			if (newValue.equals("resetTable")) {
 				clientModel.player.table.clear();
 				clientModel.player.playedCardsThisRound.clear();
 			}
+			// the round is finish and make important buttons disable
 			if (newValue.equals("stopRound")) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
 				clientModel.player.table.clear();
+				// if I have still cards, then send my hand cards to the other team
 				if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() > 0) {
 					ArrayList<String> temp = new ArrayList<String>();
 					for (Card c : clientModel.player.normalCardList) {
@@ -177,6 +180,7 @@ public class ClientController {
 		clientModel.sspName.addListener((o, oldValue, newValue) -> {
 		});
 
+		// evaluate the cards on the table and show me all cards which I can play
 		clientModel.player.table.addListener((ListChangeListener<? super Card>) (e -> {
 			Platform.runLater(() -> {
 				clientView.gameView.boardView.middleBoxForCards.getChildren().clear();
@@ -226,6 +230,7 @@ public class ClientController {
 			});
 		}));
 
+		// normal cards
 		clientModel.player.normalCardList.addListener((ListChangeListener<? super Card>) (e -> {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
@@ -234,6 +239,7 @@ public class ClientController {
 			}
 		}));
 
+		// special cards
 		clientModel.player.specialCardList.addListener((ListChangeListener<? super Card>) (e -> {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
@@ -250,14 +256,14 @@ public class ClientController {
 			clientView.stage.setScene(clientView.lobbyScene);
 		});
 
+		// send a chat message
 		clientView.gameView.controlAreaView.sendButton.setOnAction(e -> {
-
 			clientModel.send(clientModel.createJson(MsgType.msg.toString(),
 					clientView.gameView.controlAreaView.chatTextField.getText()));
 			clientView.gameView.controlAreaView.chatTextField.clear();
-
 		});
 
+		// if the player received all cards, then show it in the view
 		clientModel.player.allCardsReceived.addListener((o, oldValue, newValue) -> {
 			if (newValue == true) {
 				// Display the player Cards
@@ -304,6 +310,7 @@ public class ClientController {
 					});
 				});
 			} else {
+				// clean everything
 				player.playedCardsThisRound.clear();
 				player.selectedCardList.clear();
 				player.normalCardList.clear();
@@ -316,14 +323,16 @@ public class ClientController {
 			}
 		});
 
+		// login button
 		clientView.lobbyView.loginButton.setOnAction(e -> {
 			clientModel.send(
 					clientModel.createJson(MsgType.name.toString(), clientView.lobbyView.userTextField.getText()));
 			clientView.stage.setScene(clientView.gameScene);
 			clientModel.playerName = clientView.lobbyView.userTextField.getText();
 			clientModel.isTeamOne = clientView.lobbyView.teamOne.isSelected();
+			// create a player object
 			clientModel.createPlayer();
-
+			// send player information to the server
 			clientModel.send(clientModel.createJson(MsgType.player.toString(),
 					clientModel.player.playerID + "," + clientModel.player.isTeamOne));
 
@@ -336,10 +345,12 @@ public class ClientController {
 					cards.add(cl.getCard());
 				}
 				Collections.sort(cards);
+				// check if the move is legal
 				if (table.isEmpty() && HandType.legalMoveOnEmptyTable(cards)
 						|| table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) {
 					for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
 
+						// remove the played cards from the lists
 						clientModel.player.normalCardList
 								.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
 						clientModel.player.specialCardList
@@ -364,6 +375,7 @@ public class ClientController {
 					}
 
 				} else {
+					// show an alert
 					Platform.runLater(() -> {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Information");
@@ -416,6 +428,7 @@ public class ClientController {
 
 	}
 
+	// create new events for my hand cards
 	public void updateCardEvents() {
 		for (int i = 0; i < clientView.gameView.boardView.bottomBox.getChildren().size(); i++) {
 			int x = i;

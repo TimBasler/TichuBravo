@@ -4,7 +4,7 @@ package server;
  * @author Dominik
  *
  */
-public class Player {
+public class Player { //represent a player on the server side
 	private int ID;
 	private boolean isTeamOne;
 	

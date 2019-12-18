@@ -9,9 +9,9 @@ import common.Card;
 */
 public class Deck{
 	
-	private final ArrayList<Card>cards=new ArrayList<>();
+	private final ArrayList<Card> cards = new ArrayList<>();
 	
-	public Deck() { //52 normal cards + 4 spezial cards =56 cards
+	public Deck() { //52 normal cards + 4 special cards = 56 cards
 		createDeck();
 	}
 	
@@ -28,7 +28,7 @@ public class Deck{
 				cards.add(card);
 			}
 		}
-		//create spezial cards
+		//create special cards
 		for(Card.SpecialCard spezial : Card.SpecialCard.values()) {
 			Card card = new Card(spezial);
 			cards.add(card);

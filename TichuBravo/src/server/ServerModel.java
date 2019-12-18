@@ -27,12 +27,6 @@ public class ServerModel {
 		game = new ServerGame();
 	}
 
-	
-	
-
-	
-//TODO client name einlesen
-	
 	/**
 	 * for each request create a ServerClient and add it to the list
 	 * @param port
@@ -59,7 +53,6 @@ public class ServerModel {
 								clients.add(c);
 							} catch (IOException e) {
 								e.printStackTrace();
-								// break;
 							}
 						}
 					}
@@ -98,12 +91,5 @@ public class ServerModel {
 			sc.send(json);
 		}
 	}
-	
-	public void broadcastString(String s) {
-		for (ServerClient sc : clients) {
-			sc.sendString(s);
-		}
-	}
-	
 	
 }

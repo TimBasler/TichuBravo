@@ -25,7 +25,7 @@ public class ServerClient {
 	private ServerModel model;
 
 	/**
-	 * constructor starts a threat for this object
+	 * constructor starts a threat for the object
 	 * 
 	 * @param socket
 	 * @param name
@@ -51,6 +51,10 @@ public class ServerClient {
 		t.start();
 	}
 
+	/**
+	 * depending on what the key from the json object is something else will be executed
+	 * @param json
+	 */
 	public void decide(JSONObject json) {
 		if (json.containsKey(MsgType.name.toString()) || json.containsKey(MsgType.msg.toString())||
 				json.containsKey(MsgType.pointsTeamOne.toString())||json.containsKey(MsgType.pointsTeamTwo.toString())||
@@ -182,17 +186,6 @@ public class ServerClient {
 		}
 	}
 
-	public void sendString(String s) {
-		try {
-			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-			out.write(s + "\n");
-			out.flush();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * read from a ServerClient socket and parse the content to a json
 	 * 
@@ -214,21 +207,9 @@ public class ServerClient {
 		try {
 			json = (JSONObject) parser.parse(inputString);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return json;
-	}
-
-	public String readString() {
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			String inputString = in.readLine();
-			return inputString;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	/**
@@ -267,7 +248,7 @@ public class ServerClient {
 	}
 
 	/**
-	 * stop the socket
+	 * close the socket
 	 */
 	public void stop() {
 		try {

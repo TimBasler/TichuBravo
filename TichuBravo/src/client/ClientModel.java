@@ -95,18 +95,7 @@ public class ClientModel {
 			e.printStackTrace();
 		}
 	}
-
-	public void sendString(String s) {
-		try {
-			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-			out.write(s + "\n");
-			out.flush();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	/**
 	 * read from the socket and parse the content to a json
 	 * 
@@ -124,17 +113,6 @@ public class ClientModel {
 			e.printStackTrace();
 		}
 		return json;
-	}
-
-	public String readString() {
-		String inputString = null;
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			inputString = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return inputString;
 	}
 
 	/**

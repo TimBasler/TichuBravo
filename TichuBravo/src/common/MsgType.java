@@ -13,6 +13,13 @@ package common;
  * whoHasMahJong = ID from the player with MahJong card
  * player = playerID + isTeamOne send to the server
  * cards = dealt cards from the deck
+ * pass = next player
+ * winnerOfTheRound = ID from winner of the round
+ * teamChange = player will be changed to the other team
+ * dog = next player in the same team
+ * noCards = the player is finish
+ * fromTeamOne = msg from team one
+ * toFastestFinisher = player who finished first
  * 
  */
 public enum MsgType {

@@ -15,12 +15,18 @@ import javafx.collections.ObservableList;
  *
  */
 public class ServerGame {
+	// all 56 cards
 	protected Deck deck = new Deck();
+	// all clients
 	protected ObservableList<Player> players = FXCollections.observableArrayList();
+	// all players who finished
 	protected ObservableList<Player> finisherList = FXCollections.observableArrayList();
+	// the sequence with players
 	protected ObservableList<Player> newSequence = FXCollections.observableArrayList();
+	// the player who can do a move
 	protected SimpleIntegerProperty currentPlayerID = new SimpleIntegerProperty(0);
 	protected SimpleIntegerProperty passCounter = new SimpleIntegerProperty(0);
+	// the player who made the last move
 	protected SimpleIntegerProperty lastMove = new SimpleIntegerProperty(0);
 	protected int teamOne = 0;
 	protected int teamTwo = 0;
@@ -30,6 +36,11 @@ public class ServerGame {
 		
 	}
 	
+	/**
+	 * the next player who is not in my team
+	 * @param isTeamOne
+	 * @return int
+	 */
 	public int getNextPlayerFromOtherTeam(boolean isTeamOne) {
 		for (int i = 0; i < newSequence.size(); i++) {
 			if (newSequence.get(i).isTeamOne() != isTeamOne) {
@@ -39,6 +50,11 @@ public class ServerGame {
 		return 0;
 	}
 	
+	/**
+	 * return the player object with the matching ID
+	 * @param ID
+	 * @return Player
+	 */
 	public Player getPlayer(int ID) {
 		for (Player p : players) {
 			if (p.getID() == ID) return p;
@@ -67,6 +83,9 @@ public class ServerGame {
 		return new Player(ID, true);
 	}
 	
+	/**
+	 * pass the move to the team colleague
+	 */
 	public void passToTeamColleague() {
 		boolean team = false;
 		for (int i = 0; i < players.size(); i++) {

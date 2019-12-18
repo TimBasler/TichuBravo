@@ -83,7 +83,7 @@ public class HandTypeTest {
 			assertTrue(HandType.fullHouseList.size() == 14);
 		}
 
-	//@Test //ok aber ändern - nur eine Strasse speichern der gleichen Farbe
+	//@Test //ok 
 	public void findBombStraightFlushTest() {
 		HandType.findBombStraightFlush(list2);
 		for (int i = 0; i < HandType.BombStraightFlushList.size(); i++) {

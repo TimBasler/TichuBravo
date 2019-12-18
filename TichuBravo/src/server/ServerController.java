@@ -20,14 +20,17 @@ public class ServerController {
 		this.view = view;
 		this.model = model;
 		
+		// if there is a new player ID, then send it to all clients
 		model.game.currentPlayerID.addListener(((o, oldValue, newValue) ->{
 			model.broadcast(ServerClient.createJson(MsgType.currentPlayerID.toString(),newValue.toString()));
 		}));
 		
+		// if we have four players, then deal cards
 		model.game.players.addListener((ListChangeListener<? super Player>)(e ->{
 			if (model.game.players.size() == 4) model.game.sendNewCards();
 		}));
 		
+		// if three clients are finish, then we know the round is finish
 		model.game.finisherList.addListener((ListChangeListener<? super Player>)(e ->{
 			if (model.game.finisherList.size() == 3) {
 				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "stopRound"));
@@ -35,9 +38,11 @@ public class ServerController {
 		}));
 		
 		model.sspGame.addListener((o, oldValue, newValue) -> {
+			// send new cards to all clients
 			if (newValue.equals("dealCards")) {
 				model.game.sendNewCards();
 			}
+			// clear the table and the player who made the last move can continue
 			if (newValue.equals("resetTable")) {
 				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "resetTable"));
 				model.game.currentPlayerID.set(0);
@@ -45,6 +50,7 @@ public class ServerController {
 			}
 		});
 		
+		// if all clients pass, send the winner of the round
 		model.game.passCounter.addListener(((o, oldValue, newValue) ->{
 			if ((Integer)newValue == 4) {
 				model.broadcast(ServerClient.createJson(MsgType.winnerOfTheRound.toString(), model.game.lastMove.get()+""));
