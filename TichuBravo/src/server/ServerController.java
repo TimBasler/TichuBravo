@@ -33,6 +33,9 @@ public class ServerController {
 		
 		// if three clients are finish, then we know the round is finish
 		model.game.finisherList.addListener((ListChangeListener<? super Player>)(e ->{
+			if (model.game.finisherList.size() == 1) {
+				model.broadcast(ServerClient.createJson(MsgType.announcementEvaluation.toString(), model.game.finisherList.get(0).getID()+""));
+			}
 			if (model.game.finisherList.size() == 3) {
 				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "stopRound"));
 			}

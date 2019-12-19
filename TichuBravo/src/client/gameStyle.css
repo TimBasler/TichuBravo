@@ -282,7 +282,8 @@
 
 #clickedCard{
 	-fx-border-color:pink;
-	-fx-border-style:solid ;
+	-fx-border-style:solid;
+	-fx-background-color:red;
 }
 
 #cardButton{

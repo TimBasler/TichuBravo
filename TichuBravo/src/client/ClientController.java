@@ -73,12 +73,44 @@ public class ClientController {
 				}
 			});
 		});
+		
+		clientModel.player.finisher.addListener((obs, oV, nV) -> {
+			if (clientModel.player != null && (int) nV == clientModel.player.getPlayerID()) {
+				if(clientModel.player.saidGrandTichu && clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamOne.set(clientModel.sipPointsTeamOne.get()+200);
+				}
+				if(clientModel.player.saidGrandTichu && !clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamTwo.set(clientModel.sipPointsTeamTwo.get()+200);
+				}
+				if(clientModel.player.saidSmallTichu && clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamOne.set(clientModel.sipPointsTeamOne.get()+100);
+				}
+				if(clientModel.player.saidSmallTichu && !clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamTwo.set(clientModel.sipPointsTeamTwo.get()+100);
+				}
+			} else {
+				if(clientModel.player.saidGrandTichu && clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamOne.set(clientModel.sipPointsTeamOne.get()-200);
+				}
+				if(clientModel.player.saidGrandTichu && !clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamTwo.set(clientModel.sipPointsTeamTwo.get()-200);
+				}
+				if(clientModel.player.saidSmallTichu && clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamOne.set(clientModel.sipPointsTeamOne.get()-100);
+				}
+				if(clientModel.player.saidSmallTichu && !clientModel.player.isTeamOne) {
+					clientModel.sipPointsTeamTwo.set(clientModel.sipPointsTeamTwo.get()-100);
+				}
+			}
+		});
 
 		// if myTurn is equal to my ID then my buttons are able to click
 		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
+				Platform.runLater(() -> {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
+				});
 			}
 
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
@@ -109,8 +141,10 @@ public class ClientController {
 		clientModel.player.earnedCards.addListener((ListChangeListener<? super Card>) (e -> {
 			if (clientModel.player.isTeamOne) {
 				clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
+				clientModel.send(clientModel.createJson(MsgType.pointsTeamOne.toString(), clientModel.sipPointsTeamOne.get()+""));
 			} else {
 				clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
+				clientModel.send(clientModel.createJson(MsgType.pointsTeamTwo.toString(), clientModel.sipPointsTeamTwo.get()+""));
 			}
 		}));
 

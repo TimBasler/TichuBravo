@@ -221,6 +221,9 @@ public class ClientModel {
 				player.earnedCards.add(c);
 			}
 		}
+		if (json.containsKey(MsgType.announcementEvaluation.toString())) {
+			player.finisher.set(Integer.parseInt((String) json.get(MsgType.announcementEvaluation.toString())));
+		}
 
 	}
 
@@ -271,17 +274,7 @@ public class ClientModel {
 	public void countPointsFromTeamOne(ObservableList<Card> earnedCards) {
 		if (!earnedCards.isEmpty()) {
 			int points = this.sipPointsTeamOne.get();
-			if(player.isWinner&&player.saidGrandTichu) {
-				points += 200;
-			}else if(player.isWinner&&player.saidSmallTichu) {
-			points +=100;
-			}else if(player.isWinner==false&&player.saidGrandTichu) {
-			 points-=200;
-			}else if(player.isWinner==false&&player.saidSmallTichu) {
-			points-= 100;
-			}else {
-				points=0;
-			}
+
 			for (Card c : earnedCards) {
 				if (c.isSpecial() == false) {// Normal Cards
 					switch (c.getRank().ordinal()) {
@@ -320,17 +313,6 @@ public class ClientModel {
 	public void countPointsFromTeamTwo(ObservableList<Card> earnedCards) {
 		if (!earnedCards.isEmpty()) {
 			int points = this.sipPointsTeamTwo.get();
-			if(player.isWinner&&player.saidGrandTichu) {
-				points += 200;
-			}else if(player.isWinner&&player.saidSmallTichu) {
-			points +=100;
-			}else if(player.isWinner==false&&player.saidGrandTichu) {
-			 points-=200;
-			}else if(player.isWinner==false&&player.saidSmallTichu) {
-			points-= 100;
-			}else {
-				points=0;
-			}
 			
 			for (Card c : earnedCards) {
 				if (c.isSpecial() == false) {// Normal Cards
