@@ -269,99 +269,101 @@ public class ClientModel {
 
 	// count Points Team one
 	public void countPointsFromTeamOne(ObservableList<Card> earnedCards) {
-		int points = this.sipPointsTeamOne.get();
-		if(player.isWinner&&player.saidGrandTichu) {
-			points += 200;
-		}else if(player.isWinner&&player.saidSmallTichu) {
-		points +=100;
-		}else if(player.isWinner==false&&player.saidGrandTichu) {
-		 points-=200;
-		}else if(player.isWinner==false&&player.saidSmallTichu) {
-		points-= 100;
-		}else {
-			points=0;
-		}
-		for (Card c : earnedCards) {
-			if (c.isSpecial() == false) {// Normal Cards
-				switch (c.getRank().ordinal()) {
-				case 3:
-					points += 5;
-					break;
-				case 8:
-					points += 10;
-					break;
-				case 11:
-					points += 10;
-					break;
-				default: // no such cards found
-					break;
+		if (!earnedCards.isEmpty()) {
+			int points = this.sipPointsTeamOne.get();
+			if(player.isWinner&&player.saidGrandTichu) {
+				points += 200;
+			}else if(player.isWinner&&player.saidSmallTichu) {
+			points +=100;
+			}else if(player.isWinner==false&&player.saidGrandTichu) {
+			 points-=200;
+			}else if(player.isWinner==false&&player.saidSmallTichu) {
+			points-= 100;
+			}else {
+				points=0;
+			}
+			for (Card c : earnedCards) {
+				if (c.isSpecial() == false) {// Normal Cards
+					switch (c.getRank().ordinal()) {
+					case 3:
+						points += 5;
+						break;
+					case 8:
+						points += 10;
+						break;
+					case 11:
+						points += 10;
+						break;
+					default: // no such cards found
+						break;
+					}
+				}
+
+				if (c.isSpecial()) {
+					switch (c.getSpecialCard().ordinal()) {// Spezial Cards
+					case 2:
+						points -= 25;
+						break;
+					case 3:
+						points += 25;
+						break;
+					default: // no such cards found
+						break;
+					}
 				}
 			}
-
-			if (c.isSpecial()) {
-				switch (c.getSpecialCard().ordinal()) {// Spezial Cards
-				case 2:
-					points -= 25;
-					break;
-				case 3:
-					points += 25;
-					break;
-				default: // no such cards found
-					break;
-				}
-			}
-
+			this.sipPointsTeamOne.set(points); 
 		}
-		this.sipPointsTeamOne.set(points); 
 	}
 
 	// count Points Team two
 	public void countPointsFromTeamTwo(ObservableList<Card> earnedCards) {
-		int points = this.sipPointsTeamTwo.get();
-		if(player.isWinner&&player.saidGrandTichu) {
-			points += 200;
-		}else if(player.isWinner&&player.saidSmallTichu) {
-		points +=100;
-		}else if(player.isWinner==false&&player.saidGrandTichu) {
-		 points-=200;
-		}else if(player.isWinner==false&&player.saidSmallTichu) {
-		points-= 100;
-		}else {
-			points=0;
-		}
-		
-		for (Card c : earnedCards) {
-			if (c.isSpecial() == false) {// Normal Cards
-				switch (c.getRank().ordinal()) {
-				case 3:
-					points += 5;
-					break;
-				case 8:
-					points += 10;
-					break;
-				case 11:
-					points += 10;
-					break;
-				default: // no such cards found
-					break;
+		if (!earnedCards.isEmpty()) {
+			int points = this.sipPointsTeamTwo.get();
+			if(player.isWinner&&player.saidGrandTichu) {
+				points += 200;
+			}else if(player.isWinner&&player.saidSmallTichu) {
+			points +=100;
+			}else if(player.isWinner==false&&player.saidGrandTichu) {
+			 points-=200;
+			}else if(player.isWinner==false&&player.saidSmallTichu) {
+			points-= 100;
+			}else {
+				points=0;
+			}
+			
+			for (Card c : earnedCards) {
+				if (c.isSpecial() == false) {// Normal Cards
+					switch (c.getRank().ordinal()) {
+					case 3:
+						points += 5;
+						break;
+					case 8:
+						points += 10;
+						break;
+					case 11:
+						points += 10;
+						break;
+					default: // no such cards found
+						break;
+					}
+				}
+
+				if (c.isSpecial()) {
+					switch (c.getSpecialCard().ordinal()) {// Spezial Cards
+					case 2:
+						points -= 25;
+						break;
+					case 3:
+						points += 25;
+						break;
+					default: // no such cards found
+						break;
+					}
 				}
 			}
-
-			if (c.isSpecial()) {
-				switch (c.getSpecialCard().ordinal()) {// Spezial Cards
-				case 2:
-					points -= 25;
-					break;
-				case 3:
-					points += 25;
-					break;
-				default: // no such cards found
-					break;
-				}
-			}
-
+			this.sipPointsTeamTwo.set(points);
 		}
-		this.sipPointsTeamTwo.set(points);
 	}
 
 }

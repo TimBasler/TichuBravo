@@ -105,6 +105,14 @@ public class ClientController {
 				});
 			}
 		});
+		
+		clientModel.player.earnedCards.addListener((ListChangeListener<? super Card>) (e -> {
+			if (clientModel.player.isTeamOne) {
+				clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
+			} else {
+				clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
+			}
+		}));
 
 		// if I won the round, then I earn all played cards
 		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
@@ -113,19 +121,6 @@ public class ClientController {
 				for (Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
-
-				// count points
-				if (clientModel.player.isTeamOne) {
-					clientModel.countPointsFromTeamOne(clientModel.player.earnedCards);
-					clientModel.send(clientModel.createJson(MsgType.pointsTeamOne.toString(),
-							clientModel.sipPointsTeamOne.get() + ""));
-				}
-				if (!clientModel.player.isTeamOne) {
-					clientModel.countPointsFromTeamTwo(clientModel.player.earnedCards);
-					clientModel.send(clientModel.createJson(MsgType.pointsTeamTwo.toString(),
-							clientModel.sipPointsTeamTwo.get() + ""));
-				}
-
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
 				//Delete the earned CardList
 				clientModel.player.earnedCards.clear();
