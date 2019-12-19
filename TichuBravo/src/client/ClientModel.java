@@ -30,8 +30,8 @@ public class ClientModel {
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
-	protected SimpleIntegerProperty sipPointsTeamOne=new SimpleIntegerProperty();
-	protected SimpleIntegerProperty sipPointsTeamTwo= new SimpleIntegerProperty();
+	protected SimpleIntegerProperty sipPointsTeamOne=new SimpleIntegerProperty(0);
+	protected SimpleIntegerProperty sipPointsTeamTwo= new SimpleIntegerProperty(0);
 	protected SimpleStringProperty sspWinnerLabelTeamOne=new SimpleStringProperty();
 	protected SimpleStringProperty sspWinnerLabelTeamTwo=new SimpleStringProperty();
 	protected SimpleStringProperty sspCurrentPlayerLabel = new SimpleStringProperty();
@@ -269,7 +269,18 @@ public class ClientModel {
 
 	// count Points Team one
 	public void countPointsFromTeamOne(ObservableList<Card> earnedCards) {
-		int points = 0;
+		int points = this.sipPointsTeamOne.get();
+		if(player.isWinner&&player.saidGrandTichu) {
+			points += 200;
+		}else if(player.isWinner&&player.saidSmallTichu) {
+		points +=100;
+		}else if(player.isWinner==false&&player.saidGrandTichu) {
+		 points-=200;
+		}else if(player.isWinner==false&&player.saidSmallTichu) {
+		points-= 100;
+		}else {
+			points=0;
+		}
 		for (Card c : earnedCards) {
 			if (c.isSpecial() == false) {// Normal Cards
 				switch (c.getRank().ordinal()) {
@@ -301,13 +312,12 @@ public class ClientModel {
 			}
 
 		}
-
 		this.sipPointsTeamOne.set(points); 
 	}
 
 	// count Points Team two
 	public void countPointsFromTeamTwo(ObservableList<Card> earnedCards) {
-		int points = 0;
+		int points = this.sipPointsTeamTwo.get();
 		if(player.isWinner&&player.saidGrandTichu) {
 			points += 200;
 		}else if(player.isWinner&&player.saidSmallTichu) {

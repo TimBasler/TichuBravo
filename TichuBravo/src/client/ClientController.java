@@ -126,9 +126,9 @@ public class ClientController {
 							clientModel.sipPointsTeamTwo.get() + ""));
 				}
 
-				System.out.println(clientModel.player.earnedCards + "kommt vom here");
-
 				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
+				//Delete the earned CardList
+				clientModel.player.earnedCards.clear();
 			}
 		});
 
