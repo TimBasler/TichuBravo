@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Tim
+ * @author Loris
  *
  */
 public class GameView extends BorderPane {

@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * @author Dominik
+ * @author Loris
  *
  */
 public class TichuClient extends Application {

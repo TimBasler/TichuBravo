@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Tim
+ * @author Loria
  *
  */
 public class ChatView  extends VBox{	

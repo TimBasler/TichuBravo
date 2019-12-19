@@ -7,7 +7,8 @@ import common.Card;
 
 
 /**
- * @author Tim
+ * @author Dominik
+ * @author few things from Tim
  *
  */
 public enum HandType {

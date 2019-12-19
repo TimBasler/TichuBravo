@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Tim
+ * @author Loris
  *
  */
 public class BoardView extends VBox {

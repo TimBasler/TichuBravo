@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * @author Loris
+ *
+ */
 public class BadWordsFilter {
 	public  ArrayList<String> badWordsList;
 	public ArrayList<String>checkList;
+	
 	
 	public BadWordsFilter() {
 		this.badWordsList=new ArrayList<>();
@@ -17,6 +22,7 @@ public class BadWordsFilter {
 		this.badWordsList.add("Dummkopf");
 		this.badWordsList.add("Hoe");
 		this.badWordsList.add("Wixxer");
+		//If we want to check for more words add a list
 	}
 	
 	public boolean  checkInput(ArrayList<String> inputList) {

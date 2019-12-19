@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 
 /**
  * @author Dominik
+ * @author Tim (some in saveInput and the counter Method)
  * 
  */
 public class ClientModel {

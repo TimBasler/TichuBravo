@@ -6,7 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author Tim
+ * @author Loris+Tim
+ *
  *
  */
 public class CardLabel extends Button implements Comparable<CardLabel>{

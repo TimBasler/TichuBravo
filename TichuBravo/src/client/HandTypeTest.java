@@ -12,6 +12,10 @@ import common.Card;
 import common.Card.Rank;
 import common.Card.Suit;
 
+/**
+ * @author Dominik
+ *
+ */
 public class HandTypeTest {
 
 	Card m4 = new Card(Rank.Four, Suit.Machete);

@@ -8,7 +8,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Tim
+ * @author Loris
  *
  */
 public class ControlAreaView extends VBox {

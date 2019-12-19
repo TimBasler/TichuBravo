@@ -1,7 +1,7 @@
 package common;
 
 /**
- * @author Dominik
+ * @author Tim+Dominik
  *
  */
 

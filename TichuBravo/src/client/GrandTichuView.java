@@ -6,6 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * @author Loris
+ *
+ */
 public class GrandTichuView extends BorderPane { 
 	protected Button yesButton;
 	protected Button noButton;

@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Tim
+ * @author Loris
  *
  */
 public class LobbyView  extends BorderPane {
