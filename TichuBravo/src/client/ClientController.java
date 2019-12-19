@@ -107,10 +107,14 @@ public class ClientController {
 		// if myTurn is equal to my ID then my buttons are able to click
 		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
-				Platform.runLater(() -> {
+				/*
+				 * Platform.runLater(() -> {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
 				});
+				 */
+				//here4
+				
 			}
 
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
@@ -176,7 +180,7 @@ public class ClientController {
 			}
 			// the round is finish and make important buttons disable
 			if (newValue.equals("stopRound")) {
-				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
+				clientView.gameView.controlAreaView.confirmButton.setDisable(true); //here3
 				clientView.gameView.controlAreaView.passButton.setDisable(true);
 				clientModel.player.table.clear();
 				// if I have still cards, then send my hand cards to the other team
@@ -210,8 +214,6 @@ public class ClientController {
 			}
 		});
 
-		clientModel.sspName.addListener((o, oldValue, newValue) -> {
-		});
 
 		// evaluate the cards on the table and show me all cards which I can play
 		clientModel.player.table.addListener((ListChangeListener<? super Card>) (e -> {
@@ -398,57 +400,70 @@ public class ClientController {
 
 			// confirm Cards
 			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
-				// Show who has played the Cards
-				clientModel.send(
-						clientModel.createJson(MsgType.currentPlayerName.toString(), clientModel.player.playerName));
+				if(clientModel.player.myTurn.get() == clientModel.player.getPlayerID()) {
+					// Show who has played the Cards
+					clientModel.send(
+							clientModel.createJson(MsgType.currentPlayerName.toString(), clientModel.player.playerName));
 
-				ArrayList<String> temp = new ArrayList<String>();
-				ArrayList<Card> cards = new ArrayList<Card>();
-				ArrayList<Card> table = new ArrayList<Card>(clientModel.player.table);
-				for (CardLabel cl : clientModel.player.selectedCardList) {
-					cards.add(cl.getCard());
-				}
-
-				Collections.sort(cards);
-				// check if the move is legal
-				if (table.isEmpty() && HandType.legalMoveOnEmptyTable(cards)
-						|| table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) {
-					for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
-						// remove the played cards from the lists
-						clientModel.player.normalCardList
-								.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
-						clientModel.player.specialCardList
-								.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
-						clientView.gameView.boardView.bottomBox.getChildren()
-								.remove((CardLabel) clientModel.player.selectedCardList.get(i));
-					}
+					ArrayList<String> temp = new ArrayList<String>();
+					ArrayList<Card> cards = new ArrayList<Card>();
+					ArrayList<Card> table = new ArrayList<Card>(clientModel.player.table);
 					for (CardLabel cl : clientModel.player.selectedCardList) {
-						temp.add(cl.getCard().toString());
-					}
-					clientModel.player.selectedCardList.clear();
-					updateCardEvents();
-					// Disable Small Tichu
-					clientView.gameView.controlAreaView.smallTichu.setDisable(true);
-					clientView.gameView.controlAreaView.confirmButton.setDisable(true);
-					clientView.gameView.controlAreaView.passButton.setDisable(true);
-					if (cards.size() == 1 && cards.get(0).isSpecial()
-							&& cards.get(0).getSpecialCard() == SpecialCard.Dog) {
-						clientModel.send(clientModel.createJsonArray(MsgType.dog.toString(), temp));
-					} else {
-						clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));
+						cards.add(cl.getCard());
 					}
 
-				} else {
+					Collections.sort(cards);
+					// check if the move is legal
+					if (table.isEmpty() && HandType.legalMoveOnEmptyTable(cards)
+							|| table.size() > 0 && HandType.compareHandTypesBoolean(table, cards)) {
+						for (int i = 0; i < clientModel.player.selectedCardList.size(); i++) {
+							// remove the played cards from the lists
+							clientModel.player.normalCardList
+									.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
+							clientModel.player.specialCardList
+									.remove(((CardLabel) clientModel.player.selectedCardList.get(i)).getCard());
+							clientView.gameView.boardView.bottomBox.getChildren()
+									.remove((CardLabel) clientModel.player.selectedCardList.get(i));
+						}
+						for (CardLabel cl : clientModel.player.selectedCardList) {
+							temp.add(cl.getCard().toString());
+						}
+						clientModel.player.selectedCardList.clear();
+						updateCardEvents();
+						// Disable Small Tichu
+						clientView.gameView.controlAreaView.smallTichu.setDisable(true);
+						//clientView.gameView.controlAreaView.confirmButton.setDisable(true); //here2
+						//clientView.gameView.controlAreaView.passButton.setDisable(true);
+						if (cards.size() == 1 && cards.get(0).isSpecial()
+								&& cards.get(0).getSpecialCard() == SpecialCard.Dog) {
+							clientModel.send(clientModel.createJsonArray(MsgType.dog.toString(), temp));
+						} else {
+							clientModel.send(clientModel.createJsonArray(MsgType.turn.toString(), temp));
+						}
+
+					} else {
+						// show an alert
+						Platform.runLater(() -> {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Information");
+							alert.setHeaderText(null);
+							alert.setContentText("Invalid move!");
+							alert.showAndWait();
+
+						});
+					}
+				}else {
 					// show an alert
 					Platform.runLater(() -> {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Information");
 						alert.setHeaderText(null);
-						alert.setContentText("Invalid move!");
+						alert.setContentText("Not your turn!");
 						alert.showAndWait();
 
 					});
 				}
+			
 
 			});
 
@@ -480,10 +495,21 @@ public class ClientController {
 
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {
-				clientModel.player.selectedCardList.clear();
-				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
-				clientView.gameView.controlAreaView.passButton.setDisable(true);
-				clientModel.send(clientModel.createJson(MsgType.pass.toString(), new String("x")));
+				if(clientModel.player.myTurn.get() == clientModel.player.getPlayerID()) {
+					clientModel.player.selectedCardList.clear();
+					//clientView.gameView.controlAreaView.confirmButton.setDisable(true); //here
+				    //clientView.gameView.controlAreaView.passButton.setDisable(true);
+					clientModel.send(clientModel.createJson(MsgType.pass.toString(), new String("x")));
+				}else {
+					Platform.runLater(() -> {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Information");
+						alert.setHeaderText(null);
+						alert.setContentText("Not your turn!");
+						alert.showAndWait();
+					});
+				}
+
 			});
 
 		});
