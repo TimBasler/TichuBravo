@@ -32,6 +32,7 @@ public class Player {
 	protected SimpleIntegerProperty winnerOfTheRound = new SimpleIntegerProperty();
 	protected boolean saidSmallTichu=false;
 	protected boolean saidGrandTichu=false;
+	protected boolean isWinner = false;
 	
 	public Player() {
 		this.playerName=null;
