@@ -468,10 +468,9 @@ public class ClientController {
 			});
 
 			// SmallTichu
-			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event ->
-
-			{
+			clientView.gameView.controlAreaView.smallTichu.setOnMouseClicked(event ->	{
 				clientModel.player.saidSmallTichu = true;
+				clientView.gameView.controlAreaView.smallTichu.setDisable(true);
 			});
 
 			// GrandTichu

@@ -30,14 +30,14 @@ public class ControlAreaView extends VBox {
 		
 		this.passButton=new Button("Pass");
 		this.passButton.setId("passButton");
-		this.passButton.setDisable(true);
+		//this.passButton.setDisable(true);
 		
 		this.quitGameButton=new Button("Quit");
 		this.quitGameButton.setId("quitGameButton");
 		
 		this.confirmButton=new Button("Confirm");
 		this.confirmButton.setId("confirmButton");
-		this.confirmButton.setDisable(true);
+	//	this.confirmButton.setDisable(true);
 		
 		this.smallTichu=new Button("Small Tichu");
 		this.smallTichu.setId("smallTichu");
