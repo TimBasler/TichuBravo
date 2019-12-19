@@ -270,7 +270,7 @@ public class ClientController {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
 			} else {
-				clientModel.player.allCardsReceived.set(false);
+				//clientModel.player.allCardsReceived.set(false);
 			}
 		}));
 
@@ -279,7 +279,7 @@ public class ClientController {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
 			} else {
-				clientModel.player.allCardsReceived.set(false);
+				//clientModel.player.allCardsReceived.set(false);
 			}
 			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {
 				clientModel.send(

@@ -26,7 +26,7 @@ import javafx.collections.ObservableList;
 public class ClientModel {
 	private Socket socket;
 	protected int portNr = 4444;
-	protected String ip = "localhost";
+	protected String ip = "172.20.10.2";
 	protected SimpleStringProperty sspName = new SimpleStringProperty();
 	protected SimpleStringProperty sspMsg = new SimpleStringProperty();
 	protected SimpleStringProperty sspGame = new SimpleStringProperty();
