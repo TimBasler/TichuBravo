@@ -49,8 +49,10 @@ public class ServerController {
 			// clear the table and the player who made the last move can continue
 			if (newValue.equals("resetTable")) {
 				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "resetTable"));
-				model.game.currentPlayerID.set(0);
+				//model.game.currentPlayerID.set(0);
 				model.game.currentPlayerID.set(model.game.lastMove.get());
+				model.broadcast(ServerClient.createJson(MsgType.currentPlayerID.toString(), model.game.currentPlayerID.get()+""));
+				model.game.passCounter.set(0);
 			}
 		});
 		

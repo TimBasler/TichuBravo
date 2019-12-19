@@ -107,10 +107,8 @@ public class ClientController {
 		// if myTurn is equal to my ID then my buttons are able to click
 		clientModel.player.myTurn.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
-				Platform.runLater(() -> {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
-				});
 			}
 
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
