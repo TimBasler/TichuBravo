@@ -40,6 +40,12 @@
 	-fx-font-size:1.0cm;
 }
 
+#cardsPlayedBy{
+	-fx-text-fill:black ;
+	-fx-font-weight:bold;
+	-fx-font-size:0.5cm; 
+}
+
 #currentPlayerLabel{
 	-fx-text-fill:red ;
 	-fx-font-weight:bold;

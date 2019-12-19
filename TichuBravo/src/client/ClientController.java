@@ -378,7 +378,10 @@ public class ClientController {
 
 			// Listener for line 314
 			clientModel.sspCurrentPlayerLabel.addListener((o, oldValue, newValue) -> {
-				clientView.gameView.chatView.currentPlayerLabel.setText(newValue);
+				Platform.runLater(()->{
+					clientView.gameView.chatView.currentPlayerLabel.setText(newValue+"");
+				});
+				
 			});
 
 			// confirm Cards
