@@ -1,6 +1,7 @@
 package server;
 
 import common.MsgType;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 
 /**
@@ -66,6 +67,9 @@ public class ServerController {
 			view.startBtn.setDisable(true);
 			model.serverStart(Integer.parseInt(view.tfPort.getText()));
 		} );
-		view.getStage().setOnCloseRequest( e -> model.stopServer());
+		view.getStage().setOnCloseRequest( e -> {
+			model.stopServer();
+			Platform.exit();
+		});
 	}
 }
