@@ -78,16 +78,10 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
-				// Show who has played the Cards
-				clientModel.send(
-						clientModel.createJson(MsgType.currentPlayerName.toString(), clientModel.player.playerName));// here
 			}
 		});
 
-		// Listener for line 81
-		clientModel.sspCurrentPlayerLabel.addListener((o, oldValue, newValue) -> {
-			clientView.gameView.chatView.currentPlayerLabel.setText(newValue);
-		});
+		
 
 		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
@@ -309,9 +303,19 @@ public class ClientController {
 
 			clientModel.send(clientModel.createJson(MsgType.player.toString(),
 					clientModel.player.playerID + "," + clientModel.player.isTeamOne));
+			
+			// Listener for line 314 
+			clientModel.sspCurrentPlayerLabel.addListener((o, oldValue, newValue) -> {
+				clientView.gameView.chatView.currentPlayerLabel.setText(newValue);
+			});
 
 			// confirm Cards
 			clientView.gameView.controlAreaView.confirmButton.setOnMouseClicked(abc -> {
+				// Show who has played the Cards
+				clientModel.send(
+						clientModel.createJson(MsgType.currentPlayerName.toString(), clientModel.player.playerName));// 
+			
+				
 				ArrayList<String> temp = new ArrayList<String>();
 				ArrayList<Card> cards = new ArrayList<Card>();
 				ArrayList<Card> table = new ArrayList<Card>(clientModel.player.table);
