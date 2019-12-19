@@ -136,9 +136,6 @@ public class ClientController {
 			Platform.runLater(() -> {
 
 				clientView.gameView.chatView.chatTextArea.appendText(newValue + "\n");
-
-				clientView.gameView.chatView.chatTextArea.appendText(" " + newValue + "\n");
-
 			});
 		});
 
@@ -266,20 +263,7 @@ public class ClientController {
 		// send a chat message
 
 		// SendButton
-
 		clientView.gameView.controlAreaView.sendButton.setOnAction(e -> {
-
-			clientModel.send(clientModel.createJson(MsgType.msg.toString(),
-					clientView.gameView.controlAreaView.chatTextField.getText()));
-			clientView.gameView.controlAreaView.chatTextField.clear();
-
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
 			BadWordsFilter bwf = new BadWordsFilter();
 			ArrayList<String> inputList = new ArrayList<>();
 			String[] splited = clientView.gameView.controlAreaView.chatTextField.getText().split("\\s+");
@@ -288,9 +272,8 @@ public class ClientController {
 			}
 
 			if (!bwf.checkInput(inputList)) {
-				System.out.println("Ist leer");
-				clientModel.send(clientModel.createJson(MsgType.msg.toString(),
-						clientView.gameView.controlAreaView.chatTextField.getText()));
+				clientModel.send(clientModel.createJson(MsgType.msg.toString(), clientModel.player.playerName + ": "
+						+ clientView.gameView.controlAreaView.chatTextField.getText()));
 				clientView.gameView.controlAreaView.chatTextField.clear();
 			} else {
 				Alert alert = new Alert(AlertType.ERROR);
@@ -298,7 +281,7 @@ public class ClientController {
 				alert.setHeaderText("Bad Word Error");
 				alert.getDialogPane().setContentText("Don't use such bad words please");
 				alert.showAndWait();
-				System.out.println("ist im else");
+				clientView.gameView.controlAreaView.chatTextField.clear();
 			}
 
 		});
@@ -378,10 +361,10 @@ public class ClientController {
 
 			// Listener for line 314
 			clientModel.sspCurrentPlayerLabel.addListener((o, oldValue, newValue) -> {
-				Platform.runLater(()->{
-					clientView.gameView.chatView.currentPlayerLabel.setText(newValue+"");
+				Platform.runLater(() -> {
+					clientView.gameView.chatView.currentPlayerLabel.setText(newValue + "");
 				});
-				
+
 			});
 
 			// confirm Cards
