@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * @author Dominik  //
+ * @author Dominik  
  *
  */
 
