@@ -11,9 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * @author Dominik
+ * @author Dominik  //
  *
  */
+
 public class ServerGame {
 	// all 56 cards
 	protected Deck deck = new Deck();
