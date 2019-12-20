@@ -59,7 +59,6 @@ public class ServerController {
 		
 		// if all clients pass, send the winner of the round
 		model.game.passCounter.addListener(((o, oldValue, newValue) ->{
-			System.out.println("pass counter  "+model.game.passCounter.get());
 			if ((Integer)newValue == 4) {
 				model.broadcast(ServerClient.createJson(MsgType.winnerOfTheRound.toString(), model.game.lastMove.get()+""));
 			}

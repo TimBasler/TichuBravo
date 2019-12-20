@@ -166,7 +166,6 @@ public class ClientModel {
 			player.myTurn.set(Integer.parseInt((String) json.get(MsgType.currentPlayerID.toString())));
 		}
 		if (json.containsKey(MsgType.winnerOfTheRound.toString())) {
-			System.out.println("winnerOfTheRound msg erhalten");
 			player.winnerOfTheRound.set(0);
 			player.winnerOfTheRound.set(Integer.parseInt((String) json.get(MsgType.winnerOfTheRound.toString())));
 		}

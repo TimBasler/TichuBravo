@@ -92,7 +92,6 @@ public class ServerClient {
 			}
 			
 		} else if (json.containsKey(MsgType.pass.toString())) {
-			System.out.println("pass msg received");
 			model.game.passCounter.set(model.game.passCounter.get()+1);
 			if(model.game.passCounter.get() != 4) {
 				model.game.nextPlayer();
