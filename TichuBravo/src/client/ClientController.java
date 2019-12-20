@@ -79,6 +79,7 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
+				System.out.println("player ID Turn  "+clientModel.player.getPlayerID()); //TODO löschen
 			}
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
 				clientModel.send(
@@ -235,7 +236,7 @@ public class ClientController {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
 			} else {
-				clientModel.player.allCardsReceived.set(false);
+				//clientModel.player.allCardsReceived.set(false);
 			}
 		}));
 
@@ -244,7 +245,7 @@ public class ClientController {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
 			} else {
-				clientModel.player.allCardsReceived.set(false);
+				//clientModel.player.allCardsReceived.set(false);
 			}
 			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {
 				clientModel.send(
