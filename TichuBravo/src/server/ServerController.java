@@ -34,11 +34,12 @@ public class ServerController {
 		// if three clients are finish, then we know the round is finish
 		model.game.finisherList.addListener((ListChangeListener<? super Player>)(e ->{
 			if (model.game.finisherList.size() == 1) {
-				model.broadcast(ServerClient.createJson(MsgType.announcementEvaluation.toString(), model.game.finisherList.get(0).getID()+""));
+				model.broadcast(ServerClient.createJson(MsgType.announcementEvaluation.toString(), model.game.finisherList.get(0).getID()+"")); //TODO NULLPOINTEREXCEPTION
 			}
 			if (model.game.finisherList.size() == 3) {
 				model.broadcast(ServerClient.createJson(MsgType.game.toString(), "stopRound"));
 			}
+			
 		}));
 		
 		model.sspGame.addListener((o, oldValue, newValue) -> {
@@ -58,6 +59,7 @@ public class ServerController {
 		
 		// if all clients pass, send the winner of the round
 		model.game.passCounter.addListener(((o, oldValue, newValue) ->{
+			System.out.println("pass counter  "+model.game.passCounter.get());
 			if ((Integer)newValue == 4) {
 				model.broadcast(ServerClient.createJson(MsgType.winnerOfTheRound.toString(), model.game.lastMove.get()+""));
 			}

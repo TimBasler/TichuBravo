@@ -109,17 +109,16 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
+				System.out.println("player id turn  "+clientModel.player.getPlayerID()); //TODO
+				
+				if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
+					clientModel.send(
+							clientModel.createJson(MsgType.noCards.toString(), clientModel.player.getPlayerID() + ""));
+				}
 			}
-
-			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
-				clientModel.send(
-						clientModel.createJson(MsgType.noCards.toString(), clientModel.player.getPlayerID() + ""));
-			}
-
 		});
 
 		// if I was transferred to the other team, then show me a alert
-
 		clientModel.player.teamChange.addListener((o, oldValue, newValue) -> {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				if (clientModel.player.isTeamOne())
@@ -148,15 +147,21 @@ public class ClientController {
 
 		// if I won the round, then I earn all played cards
 		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
+			System.out.println("winnerOfTheRound listener");//TODO
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				// add cards to earnedCards
 				for (Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
-				clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable"));
+				//clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable")); //TODO DELETE
+				
 				//Delete the earned CardList
-				clientModel.player.earnedCards.clear();
+				//clientModel.player.earnedCards.clear();//TODO öndern
+				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
+				clientView.gameView.controlAreaView.passButton.setDisable(false);
 			}
+			clientModel.player.table.clear();
+			clientModel.player.playedCardsThisRound.clear();
 		});
 
 		clientModel.sspMsg.addListener((o, oldValue, newValue) -> {
@@ -168,7 +173,7 @@ public class ClientController {
 
 		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
 			// reset the table
-			if (newValue.equals("resetTable")) {
+			if (newValue.equals("resetTable")) {//TODO
 				clientModel.player.table.clear();
 				clientModel.player.playedCardsThisRound.clear();
 			}
@@ -266,7 +271,7 @@ public class ClientController {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
 			} else {
-				clientModel.player.allCardsReceived.set(false);
+				//clientModel.player.allCardsReceived.set(false);
 			}
 		}));
 
@@ -275,7 +280,7 @@ public class ClientController {
 			if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 14) {
 				clientModel.player.allCardsReceived.set(true);
 			} else {
-				clientModel.player.allCardsReceived.set(false);
+				//clientModel.player.allCardsReceived.set(false);
 			}
 			if (HandType.hasMahJong(new ArrayList<Card>(clientModel.player.specialCardList))) {
 				clientModel.send(
@@ -478,6 +483,7 @@ public class ClientController {
 
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {
+				System.out.println("send pass from client");
 				clientModel.player.selectedCardList.clear();
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);

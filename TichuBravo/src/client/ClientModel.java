@@ -162,9 +162,12 @@ public class ClientModel {
 			}
 		}
 		if (json.containsKey(MsgType.currentPlayerID.toString())) {
+			player.myTurn.set(0);
 			player.myTurn.set(Integer.parseInt((String) json.get(MsgType.currentPlayerID.toString())));
 		}
 		if (json.containsKey(MsgType.winnerOfTheRound.toString())) {
+			System.out.println("winnerOfTheRound msg erhalten");
+			player.winnerOfTheRound.set(0);
 			player.winnerOfTheRound.set(Integer.parseInt((String) json.get(MsgType.winnerOfTheRound.toString())));
 		}
 		
@@ -225,7 +228,6 @@ public class ClientModel {
 		if (json.containsKey(MsgType.announcementEvaluation.toString())) {
 			player.finisher.set(Integer.parseInt((String) json.get(MsgType.announcementEvaluation.toString())));
 		}
-
 	}
 
 	/**
@@ -307,6 +309,7 @@ public class ClientModel {
 				}
 			}
 			this.sipPointsTeamOne.set(points); 
+			player.earnedCards.clear();
 		}
 	}
 
@@ -346,6 +349,7 @@ public class ClientModel {
 				}
 			}
 			this.sipPointsTeamTwo.set(points);
+			player.earnedCards.clear();
 		}
 	}
 

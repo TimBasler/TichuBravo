@@ -92,6 +92,7 @@ public class ServerClient {
 			}
 			
 		} else if (json.containsKey(MsgType.pass.toString())) {
+			System.out.println("pass msg received");
 			model.game.passCounter.set(model.game.passCounter.get()+1);
 			if(model.game.passCounter.get() != 4) {
 				model.game.nextPlayer();
@@ -99,7 +100,13 @@ public class ServerClient {
 
 		} else if (json.containsKey(MsgType.noCards.toString())) {
 			int ID = Integer.parseInt((String) json.get(MsgType.noCards.toString()));
-			model.game.finisherList.add(model.game.getPlayer(ID));
+			if (!model.game.finisherList.contains(model.game.getPlayer(ID))) {
+				model.game.finisherList.add(model.game.getPlayer(ID));
+			}
+			model.game.passCounter.set(model.game.passCounter.get()+1);
+			if(model.game.passCounter.get() != 4) {
+				model.game.nextPlayer();
+			}
 
 		} else if (json.containsKey(MsgType.toFastestFinisher.toString())) {
 			ArrayList<String> list = (ArrayList<String>) json.get(MsgType.toFastestFinisher.toString());
