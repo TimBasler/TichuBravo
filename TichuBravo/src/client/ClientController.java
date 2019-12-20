@@ -109,7 +109,10 @@ public class ClientController {
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
+<<<<<<< HEAD
 			
+=======
+>>>>>>> branch 'master' of https://github.com/TimBasler/TichuBravo.git
 				
 				if (clientModel.player.normalCardList.size() + clientModel.player.specialCardList.size() == 0) {
 					clientModel.send(
@@ -147,16 +150,16 @@ public class ClientController {
 
 		// if I won the round, then I earn all played cards
 		clientModel.player.winnerOfTheRound.addListener((o, oldValue, newValue) -> {
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'master' of https://github.com/TimBasler/TichuBravo.git
 			if (clientModel.player != null && (int) newValue == clientModel.player.getPlayerID()) {
 				// add cards to earnedCards
 				for (Card c : clientModel.player.playedCardsThisRound) {
 					clientModel.player.earnedCards.add(c);
 				}
-				//clientModel.send(clientModel.createJson(MsgType.game.toString(), "resetTable")); //TODO DELETE
-				
-				//Delete the earned CardList
-				//clientModel.player.earnedCards.clear();//TODO öndern
+
 				clientView.gameView.controlAreaView.confirmButton.setDisable(false);
 				clientView.gameView.controlAreaView.passButton.setDisable(false);
 			}
@@ -173,7 +176,7 @@ public class ClientController {
 
 		clientModel.sspGame.addListener((o, oldValue, newValue) -> {
 			// reset the table
-			if (newValue.equals("resetTable")) {//TODO
+			if (newValue.equals("resetTable")) {
 				clientModel.player.table.clear();
 				clientModel.player.playedCardsThisRound.clear();
 			}
@@ -476,14 +479,23 @@ public class ClientController {
 				clientView.grandTichuStage.close();
 				for (int i = 0; i < intLIst.size(); i++) {
 					clientView.gameView.boardView.bottomBox.getChildren().get(this.intLIst.get(i)).setVisible(true);
+<<<<<<< HEAD
 				
+=======
+>>>>>>> branch 'master' of https://github.com/TimBasler/TichuBravo.git
 				}
+<<<<<<< HEAD
 				
+=======
+>>>>>>> branch 'master' of https://github.com/TimBasler/TichuBravo.git
 			});
 
 			// pass
 			clientView.gameView.controlAreaView.passButton.setOnMouseClicked(abc -> {
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'master' of https://github.com/TimBasler/TichuBravo.git
 				clientModel.player.selectedCardList.clear();
 				clientView.gameView.controlAreaView.confirmButton.setDisable(true);
 				clientView.gameView.controlAreaView.passButton.setDisable(true);

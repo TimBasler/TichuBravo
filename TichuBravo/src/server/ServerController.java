@@ -59,7 +59,10 @@ public class ServerController {
 		
 		// if all clients pass, send the winner of the round
 		model.game.passCounter.addListener(((o, oldValue, newValue) ->{
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'master' of https://github.com/TimBasler/TichuBravo.git
 			if ((Integer)newValue == 4) {
 				model.broadcast(ServerClient.createJson(MsgType.winnerOfTheRound.toString(), model.game.lastMove.get()+""));
 			}
