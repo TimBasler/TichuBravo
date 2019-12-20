@@ -23,7 +23,6 @@ public class CardLabel extends Button implements Comparable<CardLabel>{
 		this.card = card;
 		if(card!=null) {
 			String fileNameString=cardToFileName(card);
-			System.out.println(fileNameString);
 			Image image = new Image(CardLabel.class.getResourceAsStream("..//images//"+fileNameString));
 			ImageView imageView = new ImageView(image);
 			imageView.setFitHeight(120);
